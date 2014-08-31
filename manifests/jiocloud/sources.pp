@@ -1,6 +1,8 @@
 class rjil::jiocloud::sources($snapshot_version = false) {
   include apt
 
+  Apt::Source<||> -> Package<||>
+
   $ubuntu_url = $snapshot_version ? {
     false   => "http://archive.ubuntu.com/ubuntu",
     default => "http://archive.internal/${snapshot_version}/archive.ubuntu.com/ubuntu"
@@ -55,24 +57,4 @@ Chk4NnD90SYZt36sTLITe5O/BgYlRMqVo+bVj0tmjMJP/B4PZjABX7A=
 =iZW7
 -----END PGP PUBLIC KEY BLOCK-----',
   }
-
-
-  # XXX: This needs to be snapshotted as well.
-  apt::key { '3695394E':
-    key_content => '-----BEGIN PGP PUBLIC KEY BLOCK-----
-Version: GnuPG v1
-
-mI0EUiawUAEEAM9/ECoc/GkWl5lxFybOMxAEuWyXcTlqQeOJZFwB/FYd1b8MS12Y
-81a6HVLU9SAjZS531LwsyZc8CmZYbCT4NWbTxDJGeZQX0UkdZ1K4aGcjyLCkSi21
-pJ4izrWu1qJfmYfJbiWItRbZ7sBPUbtx45y98plBn3XmHWNEczaoTS9BABEBAAG0
-IkxhdW5jaHBhZCBQUEEgZm9yIEJlbmphbWluIFN0YWZmaW6IuAQTAQIAIgUCUiaw
-UAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQUdPWHjaVOU4oNwP/QjJ/
-8HHH1wRow3UYZO2XTSqzuT7wMPtWxeF48CL2wLFJ4oKaF6EcL80emcGq9G5UGZqt
-ov/HLX6kmL+s9NKFPrlgF1vPEzoj6As05DQmtiMCZZUMubdXeWcwqf2H/yzwW11s
-ZJLc7lQ0gUibky1GWuXx66wCyc68ucnJLfI3jqE=
-=kTTQ
------END PGP PUBLIC KEY BLOCK-----',
-  } ->
-  apt::ppa { 'ppa:benley/etcd': }
-
 }

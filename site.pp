@@ -22,7 +22,9 @@ node /apache/ inherits base {
 }
 
 node /openstackclient/ inherits base {
-  class { 'openstack_extras::repo::uca': }
+  class { 'openstack_extras::repo::uca':
+    release => 'juno'
+  }
   class { 'openstack_extras::client':
     ceilometer => false,
   }
