@@ -1,0 +1,9 @@
+## rjil::ceph::mon_config: - A hash defines all mon nodes
+## Currently this is moved to environment specific hiera file.
+## Note: Ideally these IP addresses will be consumed from service discovery, but in
+## service discovery in current form doesnt support this scenario.
+
+rjil::ceph::mon_config:
+  st1: { mon_addr: '10.1.0.51'}
+  st2: { mon_addr: '10.1.0.52'}
+  st3: { mon_addr: '10.1.0.53'}

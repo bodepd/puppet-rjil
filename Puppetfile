@@ -64,6 +64,11 @@ mod 'puppetlabs/concat',
   :git => "#{base_url}/puppetlabs/puppetlabs-concat",
   :ref => '1.1.1'
 
+mod 'enovance/ceph',
+  :git => "#{base_url}/jiocloud/puppet-ceph",
+  :ref => 'svn_to_git_2'
+
+
 mod 'stackforge/glance',
   :git => "#{base_url}/stackforge/puppet-glance",
   :ref => 'stable/icehouse'

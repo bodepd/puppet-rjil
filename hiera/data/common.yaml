@@ -211,3 +211,79 @@ rjil::system::apt::enable_rustedhalo: true
 
 rabbitmq::manage_repos: false
 rabbitmq::admin_enable: false
+
+
+###########################################
+############ Ceph Configuration ###########
+###########################################
+
+########## Ceph common configuration
+####################################
+
+### These should go to environment specific yaml
+
+## fsid: unique uuid
+rjil::ceph::fsid: fac04d85-db48-4564-b821-deebda046261
+
+
+rjil::ceph::storage_cluster_if: eth1
+rjil::ceph::public_if: eth0
+
+## rjil::ceph::mon_config: - A hash defines all mon nodes
+## Currently this is moved to environment specific hiera file.
+## Ideally these IP addresses will be consumed from service discovery, but in
+## service discovery in current form doesnt support this scenario.
+
+## rjil::ceph::mon_initial_members: This is a comma separated value which
+##      defines initial mon members, if not define, this is derived from mon_config
+#rjil::ceph::mon_initial_members: 'st2,st3'
+
+########## Ceph Mon configuration
+####################################
+rjil::ceph::mon::public_if: "%{hiera('rjil::ceph::public_if')}"
+
+## rjil::ceph::mon::key: ceph mon key
+rjil::ceph::mon::key: 'AQBRSfNSQNCMAxAA/wSNgHmHwzjnl2Rk22P4jA=='
+
+
+########## Ceph OSD configuration
+####################################
+rjil::ceph::osd::public_if: "%{hiera('rjil::ceph::public_if')}"
+rjil::ceph::osd::storage_cluster_if: "%{hiera('rjil::ceph::storage_cluster_if')}"
+
+### This may be override in clientcert
+
+##
+## if autodetect is yes, puppet will detect all blank disks
+##    using $::blankorcephdisks custom facter
+## Actual disks to be used for ceph osd is the difference
+## between detected disks and rjil::ceph::osd::disk_exceptions array
+##
+
+# rjil::ceph::osd::autodetect: true
+
+##
+##  disk_exceptions to be configured for any exceptions on disk autodetect
+##
+## Note: All devices should be mentioned with device names only
+## e.g. for /dev/sdb, just specify sdb.
+##
+# rjil::ceph::osd::disk_exceptions:
+#  - sdb
+
+##
+## In case autodetect is false, rjil::ceph::osd::osds
+## should be configured with an array of disks as below example
+##
+# rjil::ceph::osd::osds:
+#  - sdb
+#  - sdc
+
+##
+## if rjil::ceph::osd::autogenerate is true, the code will generate a loopback
+## disk, and use it for osd.
+## rjil::ceph::osd::autodisk_size: The size of loopback disk in GB (Default 10GB) which is minimum
+## Note: The above settings are only required for testing. In production or
+## staging, real disks will be used.
+
+#rjil::ceph::osd::autogenerate: true
