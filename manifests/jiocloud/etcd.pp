@@ -17,4 +17,9 @@ class rjil::jiocloud::etcd(
   package { 'etcdctl':
     require => Exec['apt_update']
   }
+  # for some reason, etcd requires an extra restart to come up sucessfully
+  exec { '/bin/sleep 5; /usr/sbin/service etcd restart':
+    refreshonly => true,
+    subscribe   => Service['etcd'],
+  }
 }
