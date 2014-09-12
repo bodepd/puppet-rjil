@@ -71,3 +71,7 @@ $timeout 600 bash -c "while ! ssh -o UserKnownHostsFile=/dev/null -o StrictHostK
 
 $timeout 600 bash -c "while ! python -m jiocloud.apply_resources list --project_tag=test${BUILD_NUMBER} environment/cloud.${env}.yaml | sed -e 's/_/-/g' | python -m jiocloud.orchestrate --host ${ip} verify_hosts ${BUILD_NUMBER} ; do sleep 5; done"
 $timeout 600 bash -c "while ! python -m jiocloud.orchestrate --host ${ip} check_single_version -v ${BUILD_NUMBER} ; do sleep 5; done"
+# make sure that there are not any failures
+if ! python -m jiocloud.orchestrate --host ${ip} get_failures; then
+  echo "Failures occurred"
+fi
