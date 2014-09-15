@@ -43,7 +43,7 @@ mod 'nanliu/staging',
 
 mod 'puppetlabs/apache',
   :git => "#{base_url}/puppetlabs/puppetlabs-apache",
-  :ref => '1.1.1'
+  :ref => 'eb191cbeb0d3ca'
 
 mod 'puppetlabs/apt',
   :git => "#{base_url}/puppetlabs/puppetlabs-apt",
@@ -55,7 +55,7 @@ mod 'stackforge/cinder',
 
 mod 'puppetlabs/concat',
   :git => "#{base_url}/puppetlabs/puppetlabs-concat",
-  :ref => '162048133d1579a4c6d0268d8e0d29fecdbb73d9'
+  :ref => '1.1.1'
 
 mod 'stackforge/glance',
   :git => "#{base_url}/jiocloud/puppet-glance",
