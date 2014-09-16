@@ -5,6 +5,8 @@ class rjil::jiocloud::etcd(
   $discovery_token = '',
   $discovery_endpoint = 'https://discovery.etcd.io/',
  ) {
+  Apt::Ppa['ppa:lynxman/ppa'] -> Package['etcd']
+  apt::ppa { 'ppa:lynxman/ppa': }
   class { '::etcd':
     addr               => $addr,
     bind_addr          => "0.0.0.0:4001",
@@ -18,8 +20,8 @@ class rjil::jiocloud::etcd(
     require => Exec['apt_update']
   }
   # for some reason, etcd requires an extra restart to come up sucessfully
-  exec { '/bin/sleep 5; /usr/sbin/service etcd restart':
-    refreshonly => true,
-    subscribe   => Service['etcd'],
-  }
+#  exec { '/bin/sleep 5; /usr/sbin/service etcd restart':
+#    refreshonly => true,
+#    subscribe   => Service['etcd'],
+#  }
 }
