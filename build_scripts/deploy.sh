@@ -22,6 +22,11 @@ then
     etcd_discovery_token=$(python -m jiocloud.orchestrate new_discovery_token)
 fi
 
+if [ -z "${env}" ]
+then
+    env='acceptance'
+fi
+
 cat <<EOF >userdata.txt
 #!/bin/bash
 release="\$(lsb_release -cs)"
@@ -56,6 +61,7 @@ if [ -n "${puppet_modules_source_repo}" ]; then
 fi
 sudo mkdir -p /etc/facter/facts.d
 echo 'etcd_discovery_token='${etcd_discovery_token} > /etc/facter/facts.d/etcd.txt
+echo 'env='=${env} > /etc/facter/facts.d/env.txt
 puppet apply --debug -e "include rjil::jiocloud"
 EOF
 
