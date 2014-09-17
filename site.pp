@@ -31,7 +31,7 @@ node /haproxy/ {
 }
 
 ## Setup databases on db node
-node /db\d*/ {
+node /^db\d*/ {
   include rjil::base
   include rjil::db
 }
@@ -60,7 +60,7 @@ node /apache\d*/ {
 
 }
 
-node /keystonewithdb/ {
+node /keystonewithdb\d+/ {
   include rjil::base
   include rjil::memcached
   include rjil::db
@@ -71,7 +71,7 @@ node /keystonewithdb/ {
   include rjil::keystone::test_user
 }
 
-node /keystone/ {
+node /keystone\d+/ {
   include rjil::base
   include rjil::memcached
   include rjil::keystone
