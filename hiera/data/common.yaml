@@ -18,7 +18,6 @@ rjil::db::dbs:
 keystone_db_user: keystone
 keystone_db_password: keystone
 
-openstack_extras::auth_file::admin_password: "%{hiera('admin_password')}"
 
 rjil::openstack::keystone_db_user: keystone
 rjil::openstack::keystone_db_password: keystone
@@ -43,6 +42,14 @@ debug: 'false'
 verbose: 'false'
 region: RegionOne
 admin_email: cloud.devops@ril.com
+
+########### auth for test user
+##################################
+
+rjil::keystone::test_user::password: test_password
+openstack_extras::auth_file::admin_password: "%{hiera('rjil::keystone::test_user::password')}"
+openstack_extras::auth_file::admin_user: test_user
+openstack_extras::auth_file::admin_tenant: test_tenant
 
 ########### Keystone config
 ###################################
