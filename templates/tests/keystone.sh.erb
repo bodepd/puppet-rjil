@@ -1,0 +1,4 @@
+#!/bin/bash
+set -e
+/usr/lib/nagios/plugins/check_http -H <%= admin_address %> -p 35357
+/usr/lib/nagios/plugins/check_http -H <%= public_address %> -p 5000

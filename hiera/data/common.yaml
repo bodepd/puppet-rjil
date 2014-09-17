@@ -65,7 +65,9 @@ keystone::verbose: "%{hiera('verbose')}"
 keystone::admin_port: '35357'
 keystone::public_port: '5000'
 keystone::admin_bind_host: 127.0.0.1
+rjil::test::keystone::admin_address: "%{hiera('keystone::admin_bind_host')}"
 keystone::public_bind_host: 127.0.0.1
+rjil::test::keystone::public_address: "%{hiera('keystone::public_bind_host')}"
 #keystone::token_provider: keystone.token.providers.pki.Provider
 keystone::token_format: uuid
 keystone::mysql_module: 2.3

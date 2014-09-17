@@ -17,7 +17,7 @@ class rjil::keystone(
   $cache_backend_argument = undef,
 ) {
 
-  rjil::test { 'keystone.sh': }
+  include rjil::test::keystone
 
   if $ssl {
     include rjil::apache
