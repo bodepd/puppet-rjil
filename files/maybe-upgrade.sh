@@ -10,7 +10,16 @@ python -m jiocloud.orchestrate --discovery_token=$discovery_token pending_update
 rv=$?
 
 run_puppet() {
+        # ensure that our service catalog hiera data is available
+        python -m jiocloud.orchestrate --discovery_token=$discovery_token cache_services
+        # now run puppet
         puppet apply --detailed-exitcodes --logdest=syslog `puppet config print manifestdir`/site.pp
+        # publish the results of that run
+        ret_code=$?
+        if [[ $ret_code = 1 || $ret_code = 4 || $ret_code = 6 ]]; then
+                echo "Puppet failed with return code ${ret_code}"
+                exit 1
+        fi
         python -m jiocloud.orchestrate --discovery_token=$discovery_token update_own_status puppet $?
 }
 
@@ -39,4 +48,5 @@ then
        run_puppet
 fi
 validate_service
+python -m jiocloud.orchestrate --discovery_token=$discovery_token publish_service
 python -m jiocloud.orchestrate --discovery_token=$discovery_token update_own_info
