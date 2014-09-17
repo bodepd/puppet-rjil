@@ -45,6 +45,9 @@ if [ -n "${puppet_modules_source_repo}" ]; then
   gem install librarian-puppet-simple --no-ri --no-rdoc;
   mkdir -p /etc/puppet/manifests.overrides
   cp /tmp/rjil/site.pp /etc/puppet/manifests.overrides/
+  mkdir -p /etc/puppet/hiera
+  cp /tmp/rjil/hiera/hiera.yaml /etc/puppet
+  cp -Rvf /tmp/rjil/hiera/data /etc/puppet/hiera
   mkdir -p /etc/puppet/modules.overrides/rjil
   cp -Rvf /tmp/rjil/* /etc/puppet/modules.overrides/rjil/
   librarian-puppet install --puppetfile=/tmp/rjil/Puppetfile --path=/etc/puppet/modules.overrides
