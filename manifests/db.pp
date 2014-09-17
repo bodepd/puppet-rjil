@@ -17,8 +17,9 @@ class rjil::db (
 
 
   ## Setup test code
-
   rjil::test { 'mysql.sh': }
+
+  rjil::profile { 'db': }
 
   ## Call db_def to create databases, users and grants
   create_resources('rjil::db::instance', $dbs)

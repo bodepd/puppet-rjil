@@ -18,6 +18,7 @@ class rjil::keystone(
 ) {
 
   include rjil::test::keystone
+  rjil::profile { 'keystone': }
 
   if $ssl {
     include rjil::apache
