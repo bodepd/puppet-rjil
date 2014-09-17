@@ -1,0 +1,9 @@
+# uggh this is weird...
+db_host: "%{lookup_array_first_element('services::db::eth1')}"
+rjil::db::bind_address: "%{ipaddress_eth1}"
+
+keystone::admin_bind_host: "%{ipaddress_eth1}"
+keystone::public_bind_host: "%{ipaddress_eth0}"
+
+rjil::haproxy::openstack::keystone_ips: "%{lookup_array('services::keystone::eth0')}"
+rjil::haproxy::openstack::keystone_internal_ips: "%{lookup_array('services::keystone::eth1')}"

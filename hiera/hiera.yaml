@@ -1,5 +1,6 @@
 ---
 :backends:
+  - array_lookup
   - yaml
 :yaml:
   :datadir: /etc/puppet/hiera/data
