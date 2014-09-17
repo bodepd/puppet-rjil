@@ -27,10 +27,7 @@ node /openstackclient\d*/ {
 node /haproxy/ {
   include rjil::base
   include rjil::haproxy
-  class { 'rjil::haproxy::openstack' :
-    keystone_ips => '10.0.0.1',
-  }
-
+  include rjil::haproxy::openstack
 }
 
 ## Setup databases on db node
@@ -63,9 +60,19 @@ node /apache\d*/ {
 
 }
 
-node /keystone/ {
+node /keystonewithdb/ {
   include rjil::base
   include rjil::memcached
   include rjil::db
+  include rjil::keystone
+  # if I include these everywhere, it could lead to race conditions
+  # for now, I am just going to include it on the keystone 'leader'
+  include openstack_extras::keystone_endpoints
+  include rjil::keystone::test_user
+}
+
+node /keystone/ {
+  include rjil::base
+  include rjil::memcached
   include rjil::keystone
 }

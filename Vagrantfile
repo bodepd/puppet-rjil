@@ -13,6 +13,7 @@ Vagrant.configure("2") do |config|
     :db              => '19',
     :memcached       => '20',
     :keystone        => '21',
+    :keystonewithdb  => '22',
   }.each do |node_name, number|
 
     config.vm.define(node_name) do |config|

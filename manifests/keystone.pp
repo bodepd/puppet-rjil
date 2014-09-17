@@ -24,7 +24,6 @@ class rjil::keystone(
   }
 
   class { '::keystone': }
-  include openstack_extras::keystone_endpoints
   # class { 'keystone::cron::token_flush': }
 
   if $ceph_radosgw_enabled {

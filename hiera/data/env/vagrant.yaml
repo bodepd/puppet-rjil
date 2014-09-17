@@ -1,2 +1,12 @@
 rjil::jiocloud::etcd::addr: "%{ipaddress_eth1}:4001"
 rjil::jiocloud::etcd::peer_addr: "%{ipaddress_eth1}:7001"
+db_host: 10.22.4.22
+rjil::db::bind_address: "%{ipaddress_eth2}"
+keystone::admin_bind_host: "%{ipaddress_eth2}"
+keystone::public_bind_host: "%{ipaddress_eth1}"
+rjil::haproxy::openstack::keystone_ips:
+  - 10.22.3.22
+  - 10.22.3.21
+rjil::haproxy::openstack::keystone_internal_ips:
+  - 10.22.4.22
+  - 10.22.4.22
