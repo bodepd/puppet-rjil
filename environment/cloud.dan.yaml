@@ -4,9 +4,19 @@ resources:
     flavor: 3
     image: ffd597d6-2cc4-4b43-b8f4-b1006715b84e
     config_drive: True
+  keystonewithdb:
+    number: 1
+    flavor: 3
+    image: ffd597d6-2cc4-4b43-b8f4-b1006715b84e
+    config_drive: True
 #    networks:
 #      - d7c83218-276b-4e4c-8ed1-1165b44c3a44
-  apache:
+  keystone:
+    number: 1
+    flavor: 3
+    image: ffd597d6-2cc4-4b43-b8f4-b1006715b84e
+    config_drive: True
+  haproxy:
     number: 1
     flavor: 3
     image: ffd597d6-2cc4-4b43-b8f4-b1006715b84e
