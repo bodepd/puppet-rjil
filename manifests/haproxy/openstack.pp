@@ -5,10 +5,21 @@ class rjil::haproxy::openstack(
   $glance_ips            = [],
   $cinder_ips            = [],
   $nova_ips              = [],
+  $horizon_port          = '80',
+  $horizon_https_port    = '443',
+  $novncproxy_port       = '6080',
+  $keystone_public_port  = '5000',
+  $keystone_admin_port   = '35357',
+  $glance_port           = '9292',
+  $glance_registry_port  = '9191',
+  $cinder_port           = '8776',
+  $nova_port             = '8774',
+  $metadata_port         = '8775',
+  $nova_ec2_port         = '8773',
 ) {
 
   rjil::haproxy_service { 'horizon':
-    balancer_ports    => '80',
+    balancer_ports    => $horizon_port,
     cluster_addresses => $horizon_ips,
     listen_options   =>  {
       'tcpka'        => '',
@@ -18,47 +29,47 @@ class rjil::haproxy::openstack(
   }
 
   rjil::haproxy_service { 'horizon-https':
-    balancer_ports    => '443',
+    balancer_ports    => $horizon_https_port,
     cluster_addresses => $horizon_ips,
   }
 
   rjil::haproxy_service { 'novncproxy':
-    balancer_ports    => '6080',
+    balancer_ports    => $novncproxy_port,
     cluster_addresses => $nova_ips,
   }
 
   rjil::haproxy_service { 'keystone':
-    balancer_ports    => '5000',
+    balancer_ports    => $keystone_public_port,
     cluster_addresses => $keystone_ips,
   }
 
   rjil::haproxy_service { 'keystone-admin':
-    balancer_ports    => '35357',
+    balancer_ports    => $keystone_admin_port,
     cluster_addresses => $keystone_internal_ips,
   }
 
   rjil::haproxy_service { 'glance':
-    balancer_ports    => '9292',
+    balancer_ports    => $glance_port,
     cluster_addresses => $glance_ips,
   }
 
   rjil::haproxy_service { 'glance-registry':
-    balancer_ports    => '9191',
+    balancer_ports    => $glance_registry_port,
     cluster_addresses => $glance_ips,
   }
 
   rjil::haproxy_service { 'cinder':
-    balancer_ports    => '8776',
+    balancer_ports    => $cinder_port,
     cluster_addresses => $cinder_ips,
   }
 
   rjil::haproxy_service { 'nova':
-    balancer_ports    => '8774',
+    balancer_ports    => $nova_port,
     cluster_addresses => $nova_ips,
   }
 
   rjil::haproxy_service { 'metadata':
-    balancer_ports    => '8775',
+    balancer_ports    => $metadata_port,
     cluster_addresses => $nova_ips,
     listen_options   =>  {
       'tcpka'        => '',
@@ -69,7 +80,7 @@ class rjil::haproxy::openstack(
   }
 
   rjil::haproxy_service { 'nova-ec2':
-    balancer_ports    => '8773',
+    balancer_ports    => $nova_ec2_port,
     cluster_addresses => $nova_ips,
   }
 
