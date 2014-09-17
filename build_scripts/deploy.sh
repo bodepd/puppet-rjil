@@ -61,7 +61,7 @@ if [ -n "${puppet_modules_source_repo}" ]; then
 fi
 sudo mkdir -p /etc/facter/facts.d
 echo 'etcd_discovery_token='${etcd_discovery_token} > /etc/facter/facts.d/etcd.txt
-echo 'env='=${env} > /etc/facter/facts.d/env.txt
+echo 'env='${env} > /etc/facter/facts.d/env.txt
 puppet apply --debug -e "include rjil::jiocloud"
 EOF
 
