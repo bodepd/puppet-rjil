@@ -6,6 +6,7 @@
 :hierarchy:
   - "clientcert/%{::clientcert}"
   - user
+  - services
   - "env/%{env}"
   - secrets
   - common
