@@ -65,14 +65,12 @@ node /keystonewithdb\d+/ {
   include rjil::memcached
   include rjil::db
   include rjil::keystone
-  # if I include these everywhere, it could lead to race conditions
-  # for now, I am just going to include it on the keystone 'leader'
-  include openstack_extras::keystone_endpoints
-  include rjil::keystone::test_user
 }
 
 node /keystone\d+/ {
   include rjil::base
   include rjil::memcached
   include rjil::keystone
+  include openstack_extras::keystone_endpoints
+  include rjil::keystone::test_user
 }
