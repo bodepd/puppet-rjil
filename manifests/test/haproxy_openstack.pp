@@ -11,6 +11,10 @@ class rjil::test::haproxy_openstack(
 
   include rjil::test::base
 
+  if ($keystone_ips != [] or $keystone_internal_ips != []) {
+    include keystone::client
+  }
+
   file { "/usr/lib/jiocloud/tests/haproxy_openstack.sh":
     content => template('rjil/tests/haproxy_openstack.sh.erb'),
     owner   => 'root',
