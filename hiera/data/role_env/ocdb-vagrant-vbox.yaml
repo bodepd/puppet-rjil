@@ -1,0 +1,2 @@
+rjil::db::bind_address: "%{ipaddress_eth1}"
+services::db::eth1: ["%{ipaddress_eth1}"]
