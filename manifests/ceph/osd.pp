@@ -18,7 +18,7 @@
 #    An array to configure any disks to be ignored from autodetected disks.
 #
 # [*osd_journal_size*]
-#    size of journal
+#    size of journal in GB
 #
 # [*storage_cluster_if*]
 #    storage cluster interface
@@ -43,7 +43,6 @@
 # Note: both autogenerate and autodisk_size is only required while testing in
 # dev machines or Vagrant.
 #
-
 class rjil::ceph::osd (
   $osds                     = [],
   $autodetect               = false,
@@ -56,8 +55,7 @@ class rjil::ceph::osd (
   $public_if                = eth0,
   $autogenerate             = false,
   $autodisk_size            = 10,
-)
-{
+) {
 
   if $storage_cluster_address {
     $storage_cluster_address_orig = $storage_cluster_address
@@ -104,16 +102,10 @@ class rjil::ceph::osd (
       fail("Autodisk size must be at least 10GB (current size: ${autodisk_size})")
     }
 
-    ##
-    ## fix osd_journal_size to autodisk_size/4 if not less than that.
-    ##
-
     if $osd_journal_size > $autodisk_size/4 {
-      warning("Configured OSD journal size (${osd_journal_size}) is less than Disk size (${autodisk_size}), reverting to 2GB")
-      $osd_journal_size_orig = 2
-    } else {
-      $osd_journal_size_orig = $osd_journal_size
+      fail("Your journal size ${osd_journal_size} should not be greater than your autodisk_size/4 ${autodisk_size}/4.")
     }
+    $osd_journal_size_orig = $osd_journal_size
     $autodisk_size_4k = $autodisk_size*1000000/4
     exec { 'make_disk_file':
       command => "dd if=/dev/zero of=/var/lib/ceph/disk-1 bs=4k \
@@ -130,7 +122,6 @@ class rjil::ceph::osd (
     }
     $osds_orig = ['loop0']
 
-#    fail("osds_orig: $osds_orig")
   } elsif $autodetect {
     $disks = split($::blankorcephdisks,',')
     $osds_orig = difference($disks,$disk_exceptions)
