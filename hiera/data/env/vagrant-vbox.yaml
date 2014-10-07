@@ -24,3 +24,23 @@ rjil::keystone::public_port: 5000
 rjil::keystone::admin_port: 35357
 rjil::jiocloud::etcd::addr: "%{ipaddress_eth1}:4001"
 rjil::jiocloud::etcd::peer_addr: "%{ipaddress_eth1}:7001"
+
+# ceph config
+#
+# currently, this ceph configuration just deploys a single ceph node until
+# we understand how we are going to model the requirements for the ceph
+# cluster
+#
+# currently, we are just putting everything onto one network for testing
+rjil::ceph::storage_cluster_if: eth1
+rjil::ceph::public_if: eth1
+
+# autogenerate disks just to get functional storage nodes going
+# until we better understand requirements for external disks
+rjil::ceph::osd::autogenerate: true
+
+rjil::ceph::osd::autodisk_size: 10
+rjil::ceph::osd::osd_journal_size: 2
+
+rjil::ceph::mon_leader: "%{lookup_array_first_element('services::stmonleader::eth1')}"
+rjil::ceph::mon_array: "%{lookup_array('services::stmon::eth1')}"

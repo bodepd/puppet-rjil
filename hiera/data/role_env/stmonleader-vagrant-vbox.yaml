@@ -1,0 +1,1 @@
+rjil::ceph::mon_leader: "%{ipaddress_eth1}"
