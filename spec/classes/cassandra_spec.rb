@@ -55,7 +55,7 @@ describe 'rjil::cassandra' do
       {
         'thread_stack_size' => 220,
       }
-    end 
+    end
     it do
      expect { should compile }.to raise_error()
     end
