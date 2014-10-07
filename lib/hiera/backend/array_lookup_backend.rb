@@ -19,7 +19,12 @@ class Hiera
           if data[key] =~ /^%\{(lookup_array|lookup_array_first_element)\(['"]([^"']*)["']\)\}$/
             value = Hiera::Backend.lookup($2, nil, scope, nil, :priority)
             if value == nil
-              answer = nil
+              case $1
+              when 'lookup_array'
+                answer = []
+              when 'lookup_array_first_element'
+                answer = nil
+              end
               break
             else
               unless value.class == Array
