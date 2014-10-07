@@ -1,6 +1,7 @@
 Exec { path => [ "/bin/", "/sbin/" , "/usr/bin/", "/usr/sbin/", "/usr/local/bin/","/usr/local/sbin/" ] }
 
 node /etcd/ {
+
   include rjil::base
 
   if $::etcd_discovery_token {
@@ -14,74 +15,33 @@ node /etcd/ {
   }
 }
 
-node /openstackclient\d*/ {
-  include rjil::base
-  class { 'openstack_extras::repo::uca':
-    release => 'juno'
-  }
-  class { 'openstack_extras::client':
-    ceilometer => false,
-  }
-}
-
-node /haproxy/ {
-  include rjil::base
-  include rjil::haproxy
-  include rjil::haproxy::openstack
-}
-
-## Setup databases on db node
-node /^db\d*/ {
-  include rjil::base
-  include rjil::db
-}
-
-## Setup memcache on mc node
-node /mc\d*/ {
-  include rjil::base
-  include rjil::memcached
-}
-
-## Setup ceph base config on oc, and cp nodes
-node /^(oc|cp)\d+/ {
-  include rjil::base
-  include rjil::ceph
-}
-
 ## setup ceph configuration and osds on st nodes
-node /st\d+/ {
+node /^st\d+$/ {
   include rjil::base
   include rjil::ceph
   include rjil::ceph::osd
+}
+
+# single leader that will be used to ensure that all
+# mons form a single cluster
+node /^stmonleader1$/ {
+  include rjil::base
+  include rjil::ceph
+  include rjil::ceph::mon
+  include rjil::ceph::osd
+  rjil::profile { 'stmonleader': }
 }
 
 ## setup ceph osd and mon configuration on ceph
 ## Mon nodes.
 ## Note: This node list can be derived from hiera - rjil::ceph::mon_config
 
-node 'st1','st2','st3' {
+node /^stmon\d+$/ {
   include rjil::base
   include rjil::ceph
   include rjil::ceph::mon
   include rjil::ceph::osd
-}
-
-node /apache\d*/ {
-  include rjil::base
-  ## Configure apache reverse proxy
-  include rjil::apache
-  apache::vhost { 'nova-api':
-    servername      => $::ipaddress_eth1,
-    serveradmin     => 'root@localhost',
-    port            => 80,
-    ssl             => false,
-    docroot         => '/var/www',
-    error_log_file  => 'test.error.log',
-    access_log_file => 'test.access.log',
-    logroot         => '/var/log/httpd',
-    #proxy_pass => [ { path => '/', url => "http://localhost:${nova_osapi_compute_listen_port}/"  } ],
-  }
-
+  rjil::profile { 'stmon': }
 }
 
 ##
@@ -97,11 +57,21 @@ node /^ct\d+/ {
   include rjil::haproxy::contrail
 }
 
-
 ##
 ## oc is openstack controller node which will have all
 ## openstack controller applications
 ##
+
+node /^oc\d+/ {
+  include rjil::base
+  include rjil::memcached
+  include rjil::keystone
+  include rjil::glance
+}
+
+#
+# this is a variation of the controller that has a database installed
+#
 
 node /^ocdb\d+/ {
   include rjil::base
@@ -112,12 +82,10 @@ node /^ocdb\d+/ {
   include openstack_extras::keystone_endpoints
   include rjil::keystone::test_user
 }
-node /^oc\d+/ {
-  include rjil::base
-  include rjil::memcached
-  include rjil::keystone
-  include rjil::glance
-}
+
+#
+# A variation of the controller that also runs a load balancer
+#
 
 node /^oclb\d+/ {
   include rjil::base
@@ -131,17 +99,7 @@ node /^oclb\d+/ {
   include rjil::haproxy::openstack
 }
 
-node /keystonewithdb\d+/ {
+node /^cp\d+/ {
   include rjil::base
-  include rjil::memcached
-  include rjil::db
-  include rjil::keystone
-}
-
-node /keystone\d+/ {
-  include rjil::base
-  include rjil::memcached
-  include rjil::keystone
-  include openstack_extras::keystone_endpoints
-  include rjil::keystone::test_user
+  include rjil::ceph
 }
