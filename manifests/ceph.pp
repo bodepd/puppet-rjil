@@ -1,8 +1,13 @@
+#
 ###Class: rjil::ceph
+#
+#
+#
+#
 class rjil::ceph (
-  $mon_config, ## a hash of mon hostname and ip address
   $fsid,
-  $mon_initial_members = undef,
+  $mon_leader,
+  $mon_array  = [],
   $admin_key = undef,
   $keyring  = '/etc/ceph/keyring',
   $auth_type  = 'cephx',
@@ -20,7 +25,6 @@ class rjil::ceph (
   anchor {'rjil::ceph::end':
     require => Class['::ceph::conf']
   }
-
 
   ##
   ## Here is set of ceph nagios plugins (https://github.com/valerytschopp/ceph-nagios-plugins).
@@ -46,17 +50,16 @@ class rjil::ceph (
   } elsif $public_if {
     $pub_net   = inline_template("<%= scope.lookupvar('network_' + @public_if) %>")
     $pub_mask  = inline_template("<%= scope.lookupvar('netmask_' + @public_if) %>")
-  #notice($public_if,$pub_net,$pub_mask)
     if $pub_mask {
       $pub_cidr  = netmask2cidr($pub_mask)
       $public_network_orig = "${pub_net}/${pub_cidr}"
     }
   }
-  if $mon_initial_members {
-    $mon_initial_members_orig = $mon_initial_members
-  } else {
-    $mon_initial_members_orig = join(keys($mon_config),',')
-  }
+
+  $local_mon_ip = inline_template("<%= scope.lookupvar('ipaddress_' + @public_if) %>")
+
+  $mon_array_orig  = concat([$mon_leader], $mon_array)
+  $mon_config_orig = create_mon_hash($::hostname, $local_mon_ip, $mon_array_orig)
 
   ## run base ceph installation and config  which is to be setup
   ## on all systems which need ceph to be called
@@ -77,16 +80,16 @@ class rjil::ceph (
     auth_type        => $auth_type,
     cluster_network  => $storage_cluster_network_orig,
     public_network   => $public_network_orig,
-    mon_init_members => $mon_initial_members_orig,
+    mon_init_members => $mon_array_orig,
     osd_journal_type => $osd_journal_type,
     require          => File['/etc/ceph'],
   }
 
   ## specify mon cluster details
-  if is_hash($mon_config) {
-    create_resources(::ceph::conf::mon_config,$mon_config)
+  if is_hash($mon_config_orig) {
+    create_resources(::ceph::conf::mon_config,$mon_config_orig)
   } else {
-    fail("Incorrect ceph mon definition: ${mon_config}")
+    fail("Incorrect ceph mon definition: ${mon_config_orig}")
   }
 
 }
