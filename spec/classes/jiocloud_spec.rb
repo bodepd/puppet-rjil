@@ -13,9 +13,13 @@ describe 'rjil::jiocloud' do
     }
   end
 
-  context 'consul default install' do
-    it 'should install consul agent by default' do
+  context 'Default install' do
+    it 'should with defaults' do
       should contain_class('rjil::jiocloud::consul::agent')
+      should contain_cron('maybe-upgrade').with({
+        'command' => 'run-one /usr/local/bin/maybe-upgrade.sh',
+        'user'    => 'root',
+      })
     end
   end
 
@@ -39,5 +43,20 @@ describe 'rjil::jiocloud' do
       'section' => 'main',
       'setting' => 'templatedir',
     })}
+  end
+  context 'when there is data to be eaten' do
+    let :params do
+      {
+        'eat_data' => true
+      }
+    end
+    it 'should configure for data eating' do
+      should contain_cron('maybe-upgrade').with({
+        'command' => 'run-one eatmydata /usr/local/bin/maybe-upgrade.sh',
+        'user'    => 'root',
+      })
+      should contain_package('eatmydata').with_ensure('present')
+    end
+
   end
 end

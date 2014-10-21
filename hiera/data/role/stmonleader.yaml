@@ -1,1 +1,2 @@
 rjil::ceph::mon::mon_config::leader: true
+rjil::jiocloud::eat_data: false

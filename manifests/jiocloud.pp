@@ -1,5 +1,6 @@
 class rjil::jiocloud (
-  $consul_role = 'agent'
+  $consul_role  = 'agent',
+  $eat_data     = false,
 ) {
 
   if ! member(['agent', 'server', 'bootstrapserver'], $consul_role) {
@@ -33,6 +34,16 @@ class rjil::jiocloud (
 
   package { 'python-jiocloud': }
 
+  if $eat_data {
+    package { 'eatmydata':
+      ensure => present,
+      before => Cron['maybe-upgrade'],
+    }
+    $upgrade_command = 'run-one eatmydata /usr/local/bin/maybe-upgrade.sh'
+  } else {
+    $upgrade_command = 'run-one /usr/local/bin/maybe-upgrade.sh'
+  }
+
   file { '/usr/local/bin/maybe-upgrade.sh':
     source => 'puppet:///modules/rjil/maybe-upgrade.sh',
     mode   => '0755',
@@ -40,7 +51,7 @@ class rjil::jiocloud (
     group  => 'root'
   }
   cron { 'maybe-upgrade':
-    command => 'run-one /usr/local/bin/maybe-upgrade.sh',
+    command => $upgrade_command,
     user    => 'root',
     require => Package['run-one'],
   }
