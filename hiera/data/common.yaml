@@ -305,7 +305,7 @@ rjil::ceph::osd::storage_cluster_if: "%{hiera('rjil::ceph::storage_cluster_if')}
 # specific override
 
 ntp::servers:
-  - ntp.service.consul
+  - pool.ntp.org
 ntp::udlc: yes
 
 ssh::server::storeconfigs_enabled: false

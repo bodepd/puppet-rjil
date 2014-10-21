@@ -13,3 +13,5 @@ resources:
     number: 1
   stmon:
     number: 2
+  logserver:
+    number: 1

@@ -149,3 +149,8 @@ node /^uc\d+/ {
   include rjil::undercloud
   include rjil::jiocloud::consul::agent
 }
+
+node /^logserver\d+/ {
+  include rjil::base
+  include rjil::logserver
+}
