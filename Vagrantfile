@@ -32,7 +32,10 @@ Vagrant.configure("2") do |config|
   machines.each do |node_name, number|
 
     config.vm.provider :virtualbox do |vb, override|
-      if node_name =~ /ct/
+      if node_name =~ /^ct/
+        vb.memory = 2048
+      end
+      if node_name =~ /^logserver/
         vb.memory = 2048
       end
     end
