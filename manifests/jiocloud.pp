@@ -1,5 +1,6 @@
 class rjil::jiocloud (
-  $consul_role = 'agent'
+  $consul_role = 'agent',
+  $forward_logs = false,
 ) {
 
   if ! member(['agent', 'server', 'bootstrapserver'], $consul_role) {
@@ -19,6 +20,10 @@ class rjil::jiocloud (
     }
   }
   include "rjil::jiocloud::consul::${consul_role}"
+
+  if $forward_logs {
+    include rjil::logforwarder
+  }
 
   package { 'run-one':
     ensure => present,

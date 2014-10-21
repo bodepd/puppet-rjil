@@ -1,0 +1,20 @@
+filter {
+  if [type] == "syslog" and [message] =~ ":\d{2}Z" {
+    grok {
+    match => { "message" => "<%{POSINT:syslog_pri}>%{SYSLOGTIMESTAMP:syslog_timestamp} %{SYSLOGHOST:syslog_hostname} (?::\d{2}Z) (?:\S+) %{DATA:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: (?:\S+) (?:\S+) %{GREEDYDATA:syslog_message}"}
+      add_field => [ "received_at", "%{@timestamp}" ]
+      add_field => [ "received_from", "%{host}" ]
+    }
+    syslog_pri { }
+  } else if [type] == "syslog" {
+    grok {
+    match => { "message" => "<%{POSINT:syslog_pri}>%{SYSLOGTIMESTAMP:syslog_timestamp} %{SYSLOGHOST:syslog_hostname} %{DATA:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{GREEDYDATA:syslog_message}" }
+      add_field => [ "received_at", "%{@timestamp}" ]
+      add_field => [ "received_from", "%{host}" ]
+    }
+    syslog_pri { }
+    date {
+      match => [ "syslog_timestamp", "MMM  d HH:mm:ss", "MMM dd HH:mm:ss" ]
+    }
+  }
+}

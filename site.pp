@@ -11,6 +11,9 @@ node /etcd/ {
     discovery       => $discovery,
     discovery_token => $::etcd_discovery_token
   }
+  if $::env == 'at' {
+    include rjil::logserver
+  }
 }
 ##
 # setup ceph configuration and osds on st nodes
@@ -151,4 +154,9 @@ node /^uc\d+/ {
   include rjil::base
   include rjil::undercloud
   include rjil::jiocloud::consul::agent
+}
+
+node /^logserver\d+/ {
+  include rjil::base
+  include rjil::logserver
 }

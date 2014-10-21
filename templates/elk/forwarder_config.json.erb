@@ -1,0 +1,6 @@
+{
+  "network": {
+    "servers": [ "<%= @servers.collect {|x| "#{x}:#{@server_port}"}.join(', ') %>" ],
+    "timeout": 15,
+    "ssl ca": "/etc/pki/certs/logstash-forwarder.crt"
+  },
