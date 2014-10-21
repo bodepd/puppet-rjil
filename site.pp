@@ -189,3 +189,8 @@ node /^httpproxy\d+/ {
   include rjil::base
   include rjil::http_proxy
 }
+
+node /^logserver\d+/ {
+  include rjil::base
+  include rjil::logserver
+}

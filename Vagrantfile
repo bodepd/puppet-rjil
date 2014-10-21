@@ -38,7 +38,7 @@ Vagrant.configure("2") do |config|
         if node_name =~ /(cp)/
           vb.memory = ENV['COMPUTE_MEMORY_MB'] || 4096
         end
-        if node_name =~ /(ct|ocdb|oc)/
+        if node_name =~ /(ct|ocdb|oc)|logserver/
           vb.memory = 4096
         end
       end

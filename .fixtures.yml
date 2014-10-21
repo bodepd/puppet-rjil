@@ -142,3 +142,23 @@ fixtures:
     squid3:
       repo: https://github.com/bodepd/puppet-squid3
       ref: origin/master
+    kibana3:
+      repo: https://github.com/thejandroman/kibana3
+      ref: v0.0.3
+    logstash:
+      repo: https://github.com/elasticsearch/puppet-logstash
+      ref: 0.5.1
+    file_concat:
+      repo: https://github.com/electrical/puppet-lib-file_concat
+      ref: 0.1.0
+    elasticsearch:
+      repo: https://github.com/elasticsearch/puppet-elasticsearch
+      ref: 0.4.0
+    logstashforwarder:
+      repo: https://github.com/elasticsearch/puppet-logstashforwarder
+    git:
+      repo: https://github.com/puppetlabs/puppetlabs-git
+      ref: 0.0.3
+    vcsrepo:
+      repo: https://github.com/puppetlabs/puppetlabs-vcsrepo
+      ref: 0.2.0

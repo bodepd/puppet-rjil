@@ -194,3 +194,32 @@ mod 'thias/squid3',
 mod 'puppetlabs/dhcp',
   :git => "#{base_url}/JioCloud/puppetlabs-dhcp",
   :ref => 'origin/master'
+
+# modules related to setting up a logging server
+mod 'thejandroman/kibana3',
+  :git => 'https://github.com/thejandroman/kibana3',
+  :ref => 'v0.0.3'
+
+mod  'elasticsearch/logstash',
+  :git => 'https://github.com/elasticsearch/puppet-logstash',
+  :ref => '0.5.1'
+
+mod 'ispavailability/file_concat',
+  :git => 'https://github.com/electrical/puppet-lib-file_concat',
+  :ref => '0.1.0'
+
+mod 'elasticsearch/elasticsearch',
+  :git => 'https://github.com/elasticsearch/puppet-elasticsearch',
+  :ref =>  '0.4.0'
+
+mod 'elasticsearch/logstashforwarder',
+  :git => 'https://github.com/elasticsearch/puppet-logstashforwarder',
+  :ref => 'origin/master'
+
+mod 'puppetlabs/git',
+  :git => 'https://github.com/puppetlabs/puppetlabs-git',
+  :ref => '0.0.3'
+
+mod 'puppetlabs/vcsrepo',
+  :git => 'https://github.com/puppetlabs/puppetlabs-vcsrepo',
+  :ref => '0.2.0'
