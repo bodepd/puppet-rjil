@@ -2,6 +2,7 @@
 ########  Database config #########
 ###################################
 
+rjil::db::bind_address: "%{hiera('private_address')}"
 rjil::db::mysql_datadir: /data
 rjil::db::dbs:
   novadb: { db: "%{hiera('rjil::openstack::nova_db_name')}", user: "%{hiera('rjil::openstack::nova_db_user')}", pass: "%{hiera('rjil::openstack::nova_db_password')}" }
@@ -81,7 +82,7 @@ glance::backend::rbd::rbd_store_user: "%{hiera('rjil::glance::rbd_user')}"
 glance::backend::rbd::rbd_store_pool: images
 ### End: rbd backend specific settings
 
-
+glance::bind_host: "%{hiera('private_address')}"
 glance::api::debug: "%{hiera('debug')}"
 glance::api::verbose: "%{hiera('verbose')}"
 glance::api::registry_host: "localhost"
@@ -92,8 +93,6 @@ glance::api::auth_uri: "%{hiera('rjil::keystone::protocol')}://%{hiera('glance::
 glance::api::keystone_password: "%{hiera('glance::keystone::auth::password')}"
 glance::api::database_connection: "mysql://%{hiera('glance_db_user')}:%{hiera('glance_db_password')}@%{hiera('db_host')}/glance"
 glance::api::mysql_module: 2.3
-
-
 
 glance::registry::debug: "%{hiera('debug')}"
 glance::registry::verbose: "%{hiera('verbose')}"
@@ -133,7 +132,7 @@ rjil::keystone::public_port: 80
 rjil::keystone::public_port_internal: "%{hiera('keystone::public_port')}"
 rjil::keystone::admin_port: 81
 rjil::keystone::admin_port_internal: "%{hiera('keystone::admin_port')}"
-rjil::keystone::public_address: "0.0.0.0"
+rjil::keystone::public_address: "%{hiera('public_address')}"
 keystone::roles::admin::email: "%{hiera('admin_email')}"
 keystone::roles::admin::password: "%{hiera('admin_password')}"
 keystone::admin_password: "%{hiera('admin_password')}"
@@ -142,9 +141,9 @@ keystone::debug: "%{hiera('debug')}"
 keystone::verbose: "%{hiera('verbose')}"
 keystone::admin_port: '35357'
 keystone::public_port: '5000'
-keystone::admin_bind_host: 127.0.0.1
+keystone::admin_bind_host: "%{hiera('private_address')}"
 rjil::test::keystone::admin_address: "%{hiera('keystone::admin_bind_host')}"
-keystone::public_bind_host: 127.0.0.1
+keystone::public_bind_host: "%{hiera('public_address')}"
 rjil::test::keystone::public_address: "%{hiera('keystone::public_bind_host')}"
 keystone::token_provider: keystone.token.providers.uuid.Provider
 keystone::mysql_module: 2.3
@@ -246,8 +245,8 @@ rabbitmq::admin_enable: false
 rjil::ceph::fsid: fac04d85-db48-4564-b821-deebda046261
 
 
-rjil::ceph::storage_cluster_if: eth1
-rjil::ceph::public_if: eth0
+rjil::ceph::storage_cluster_if: "%{hiera('private_interface')}"
+rjil::ceph::public_if: "%{hiera('public_interface')}"
 
 ## rjil::ceph::mon_config: - A hash defines all mon nodes
 ## Currently this is moved to environment specific hiera file.
@@ -260,13 +259,13 @@ rjil::ceph::public_if: eth0
 
 ########## Ceph Mon configuration
 ####################################
-rjil::ceph::mon::public_if: "%{hiera('rjil::ceph::public_if')}"
+rjil::ceph::mon::public_if: "%{hiera('public_interface')}"
 
 
 ########## Ceph OSD configuration
 ####################################
-rjil::ceph::osd::public_if: "%{hiera('rjil::ceph::public_if')}"
-rjil::ceph::osd::storage_cluster_if: "%{hiera('rjil::ceph::storage_cluster_if')}"
+rjil::ceph::osd::public_if: "%{hiera('public_interface')}"
+rjil::ceph::osd::storage_cluster_if: "%{hiera('private_interface')}"
 
 ### This may be override in clientcert
 
@@ -304,6 +303,15 @@ rjil::ceph::osd::storage_cluster_if: "%{hiera('rjil::ceph::storage_cluster_if')}
 ## staging, real disks will be used.
 
 #rjil::ceph::osd::autogenerate: true
+
+########### consul settings
+###############################
+
+rjil::jiocloud::etcd::addr: "%{hiera('public_address')}:4001"
+rjil::jiocloud::etcd::peer_addr: "%{hiera('private_address')}:7001"
+rjil::jiocloud::consul::server::bind_addr: "%{hiera('private_address')}"
+rjil::jiocloud::consul::bootstrapserver::bind_addr: "%{hiera('private_address')}"
+rjil::jiocloud::consul::agent::bind_addr: "%{hiera('private_address')}"
 
 ########### ntp  settings
 ###############################

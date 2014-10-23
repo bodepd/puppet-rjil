@@ -1,10 +1,7 @@
-rjil::db::bind_address: "%{ipaddress_eth0}"
-
-keystone::admin_bind_host: "%{ipaddress_eth0}"
-keystone::public_bind_host: "%{ipaddress_eth0}"
-
-glance::bind_host: "%{ipaddress_eth0}"
-#glance::registry::bind_host: "%{ipaddress_eth0}"
+public_address: "%{ipaddress_eth0}"
+public_interface: eth0
+private_address: "%{ipaddress_eth0}"
+private_interface: eth0
 
 keystone_public_address: "identity-beta.jiocloud.com"
 keystone_private_address: "identity-beta.jiocloud.com"
@@ -20,11 +17,6 @@ neutron_internal_address: "network-beta.jiocloud.com"
 
 cinder_public_address: "volume-beta.jiocloud.com"
 cinder_internal_address: "volume-beta.jiocloud.com"
-
-rjil::jiocloud::etcd::addr: "%{ipaddress_eth0}:4001"
-rjil::jiocloud::etcd::peer_addr: "%{ipaddress_eth0}:7001"
-
-rjil::keystone::public_address: "%{ipaddress_eth0}"
 
 # Don't let Jenkins log in in production
 rjil::system::accounts::active_users: [soren,bodepd,hkumar]

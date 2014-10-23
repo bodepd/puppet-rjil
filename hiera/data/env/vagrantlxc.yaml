@@ -1,12 +1,4 @@
-rjil::db::bind_address: "%{ipaddress_eth0}"
-
-keystone::admin_bind_host: "%{ipaddress_eth0}"
-keystone::public_bind_host: "%{ipaddress_eth0}"
-
-glance::bind_host: "%{ipaddress_eth0}"
-#glance::registry::bind_host: "%{ipaddress_eth0}"
-
-rjil::jiocloud::etcd::addr: "%{ipaddress_eth0}:4001"
-rjil::jiocloud::etcd::peer_addr: "%{ipaddress_eth0}:7001"
-
-rjil::keystone::public_address: "%{ipaddress_eth0}"
+public_address: "%{ipaddress_eth1}"
+public_interface: eth1
+private_address: "%{ipaddress_eth1}"
+private_interface: eth1
