@@ -1,21 +1,7 @@
-rjil::db::bind_address: "%{ipaddress_eth1}"
-
-keystone::admin_bind_host: "%{ipaddress_eth1}"
-keystone::public_bind_host: "%{ipaddress_eth1}"
-
-glance::bind_host: "%{ipaddress_eth1}"
-#glance::registry::bind_host: "%{ipaddress_eth1}"
-
-rjil::jiocloud::etcd::addr: "%{ipaddress_eth1}:4001"
-rjil::jiocloud::etcd::peer_addr: "%{ipaddress_eth1}:7001"
-rjil::jiocloud::consul::server::bind_addr: "%{ipaddress_eth1}"
-rjil::jiocloud::consul::bootstrapserver::bind_addr: "%{ipaddress_eth1}"
-rjil::jiocloud::consul::agent::bind_addr: "%{ipaddress_eth1}"
-
-rjil::keystone::public_address: "%{ipaddress_eth1}"
-
-rjil::ceph::storage_cluster_if: eth1
-rjil::ceph::public_if: eth1
+public_address: "%{ipaddress_eth1}"
+public_interface: eth1
+private_address: "%{ipaddress_eth1}"
+private_interface: eth1
 
 rjil::ceph::osd::autogenerate: true
 rjil::ceph::osd::autodisk_size: 10

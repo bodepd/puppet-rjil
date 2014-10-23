@@ -1,17 +1,7 @@
-rjil::db::bind_address: "%{ipaddress_eth2}"
+public_address: "%{ipaddress_eth2}"
+public_interface: eth2
+private_address: "%{ipaddress_eth2}"
+private_interface: eth2
 
-keystone::admin_bind_host: "%{ipaddress_eth2}"
-keystone::public_bind_host: "%{ipaddress_eth2}"
-
-glance::bind_host: "%{ipaddress_eth2}"
-#glance::registry::bind_host: "%{ipaddress_eth0}"
-
-rjil::jiocloud::etcd::addr: "%{ipaddress_eth2}:4001"
-rjil::jiocloud::etcd::peer_addr: "%{ipaddress_eth2}:7001"
-
-rjil::keystone::public_address: "%{ipaddress_eth2}"
-
-rjil::ceph::storage_cluster_if: eth2
-rjil::ceph::public_if: eth2
 rjil::ceph::osd::autodetect: true
 rjil::ceph::osd::osd_journal_size: 2
