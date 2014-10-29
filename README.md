@@ -558,6 +558,19 @@ Branch that should be used from the provided puppet-rjil repo.
 export puppet\_modules\_source\_branch=origin/deploy\_script
 ````
 
+### python\_jiocloud\_source\_repo (optional)
+
+Allows a user to specify an alternative location
+for python jiocloud so that users can test builds
+with patches to this repository.
+
+This is intended to make testing changes to
+this external python library easier.
+
+### python\_jiocloud\_source\_branch (optional)
+
+Branch that should be used to install python-jiocloud.
+
 ### ssh\_user
 
 User to that build process should use to ssh into etcd server.

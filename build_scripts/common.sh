@@ -40,7 +40,14 @@ then
 
     # This speeds the whole process up *a lot*
     pip install pip-accel
-    pip-accel install -e git+https://github.com/JioCloud/python-jiocloud#egg=jiocloud
+    if [ -n "${python_jiocloud_source_branch}" ]; then
+      if [ -z "${python_jiocloud_source_branch}" ]; then
+        python_jiocloud_source_branch='master'
+      fi
+      pip-accel install -e "${python_jiocloud_source_repo}@${python_jiocloud_source_branch}#egg=jiocloud"
+    else
+      pip-accel install -e git+https://github.com/JioCloud/python-jiocloud#egg=jiocloud
+    fi
     deactivate
 fi
 
@@ -49,4 +56,3 @@ fi
 # this is here to allow a user to override the command used for
 # the timeout function just incase it happens to be gtimeout
 timeout=${timeout_command:-timeout}
-

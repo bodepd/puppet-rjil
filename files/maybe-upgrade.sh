@@ -8,7 +8,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 # 1: No, no updates
 # 2: Could not reach etcd, so we don't know
 # 3: Could not reach etcd, but we also haven't been initialised ourselves.
-python -m jiocloud.orchestrate --host=etcd.service.consul pending_update
+python -m jiocloud.orchestrate pending_update
 rv=$?
 
 run_puppet() {
@@ -17,7 +17,7 @@ run_puppet() {
         puppet apply --detailed-exitcodes --logdest=syslog `puppet config print manifestdir`/site.pp
         # publish the results of that run
         ret_code=$?
-        python -m jiocloud.orchestrate --host=etcd.service.consul update_own_status puppet $ret_code
+        python -m jiocloud.orchestrate update_own_status puppet $ret_code
         if [[ $ret_code = 1 || $ret_code = 4 || $ret_code = 6 ]]; then
                 echo "Puppet failed with return code ${ret_code}"
                 sleep 5
@@ -28,7 +28,7 @@ run_puppet() {
 validate_service() {
         run-parts --regex=. --verbose --exit-on-error  --report /usr/lib/jiocloud/tests/
         ret_code=$?
-        python -m jiocloud.orchestrate --host=etcd.service.consul update_own_status validation $ret_code
+        python -m jiocloud.orchestrate update_own_status validation $ret_code
         if [[ $ret_code != 0 ]]; then
                 echo "Validation failed with return code ${ret_code}"
                 sleep 5
@@ -38,7 +38,7 @@ validate_service() {
 
 if [ $rv -eq 0 ]
 then
-       pending_version=$(python -m jiocloud.orchestrate --host=etcd.service.consul current_version)
+       pending_version=$(python -m jiocloud.orchestrate current_version)
        echo current_version=$pending_version > /etc/facter/facts.d/current_version.txt
 
        # Update apt sources to point to new snapshot version
@@ -61,4 +61,4 @@ then
 fi
 validate_service
 python -m jiocloud.orchestrate local_version $pending_version
-python -m jiocloud.orchestrate --host=etcd.service.consul update_own_info
+python -m jiocloud.orchestrate update_own_info
