@@ -32,10 +32,10 @@ then
 	echo ETCD_DISCOVERY_PROXY="'${env_https_proxy}'" >> /etc/environment
 	echo https_proxy="'${env_https_proxy}'" >> /etc/environment
 fi
-wget -O puppet.deb -t 2 -T 5 http://apt.puppetlabs.com/puppetlabs-release-\${release}.deb
-wget -O jiocloud.deb -t 2 -T 5 http://jiocloud.rustedhalo.com/ubuntu/jiocloud-apt-\${release}.deb
+wget -O puppet.deb -t 2 -T 30 http://apt.puppetlabs.com/puppetlabs-release-\${release}.deb
+wget -O jiocloud.deb -t 2 -T 30 http://jiocloud.rustedhalo.com/ubuntu/jiocloud-apt-\${release}.deb
 dpkg -i puppet.deb jiocloud.deb
-if http_proxy= wget -t 2 -T 5 -O internal.deb http://apt.internal.jiocloud.com/internal.deb
+if http_proxy= wget -t 2 -T 30 -O internal.deb http://apt.internal.jiocloud.com/internal.deb
 then
        dpkg -i internal.deb
 fi
