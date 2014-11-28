@@ -45,13 +45,8 @@ fi
 apt-get update
 apt-get install -y puppet software-properties-common puppet-jiocloud jiocloud-ssl-certificate
 if [ -n "${python_jiocloud_source_repo}" ]; then
-  if [ -z "${python_jiocloud_source_branch}" ]; then
-    python_jiocloud_source_branch='master'
-  fi
   apt-get install -y python-pip python-jiocloud python-dev libffi-dev libssl-dev git
-#  pip install consulate
-#  pip install tornado
-  pip install -e "${python_jiocloud_source_repo}@\${python_jiocloud_source_branch}#egg=jiocloud"
+  pip install -e "${python_jiocloud_source_repo}@${python_jiocloud_source_branch}#egg=jiocloud"
 fi
 if [ -n "${puppet_modules_source_repo}" ]; then
   apt-get install -y git
