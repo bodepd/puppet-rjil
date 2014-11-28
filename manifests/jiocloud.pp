@@ -24,7 +24,7 @@ class rjil::jiocloud (
     dns_blocker {  $addr:
       try_sleep     => 5,
       tries         => 100,
-      before    => Class["rjil::jiocloud::consul::${consul_role}"]
+      before        => Service['consul'],
     }
   }
   include "rjil::jiocloud::consul::${consul_role}"
