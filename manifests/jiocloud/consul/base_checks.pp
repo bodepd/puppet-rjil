@@ -1,7 +1,7 @@
 class rjil::jiocloud::consul::base_checks(
   # default to 5 days
   $puppet_ttl       = '7200m',
-  $validation_ttl   = '5m',
+  $validation_ttl   = '7200m',
   $puppet_notes     = 'Status of Puppet run',
   $validation_notes = 'Status of configuration validation checks'
 ) {
