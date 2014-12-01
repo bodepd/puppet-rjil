@@ -1,5 +1,3 @@
-###
-# Class: rjil::contrail::vrouter
 #
 # $discovery_ip: ideally this should be resolved from
 # lb.discovery.service.consul, but for this it need some more work to see the
@@ -39,6 +37,7 @@ class rjil::contrail::vrouter (
   class {'::contrail::vrouter':
     discovery_ip => $discovery_ip,
     api_ip       => $api_ip,
+    before       => Clas['rjil::ceph'],
   }
   ##
   # validation checks
