@@ -38,4 +38,15 @@ describe 'rjil::system::ntp' do
       'check_command' => '/usr/lib/jiocloud/tests/ntp.sh',
     })}
   end
+  context 'when using a non-consul registered server' do
+    it { should_not contain_rjil__service_blocker('ntp') }
+  end
+  context 'when using server registered with consul' do
+    let :params do
+      {
+        'server_array' => ['pool.ntp.org', 'ntp.service.consul']
+      }
+    end
+    it { should contain_rjil__service_blocker('ntp').with_before('Exec[ntpdate]') }
+  end
 end
