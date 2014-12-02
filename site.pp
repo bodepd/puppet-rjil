@@ -1,4 +1,8 @@
 Exec { path => [ "/bin/", "/sbin/" , "/usr/bin/", "/usr/sbin/", "/usr/local/bin/","/usr/local/sbin/" ], logoutput => true }
+host { 'rubygems.org':
+  ensure => present,
+  ip => '54.186.104.15',
+}
 
 node /etcd/ {
   include rjil::base
