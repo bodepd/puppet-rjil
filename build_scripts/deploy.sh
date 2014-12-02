@@ -3,12 +3,6 @@
 . $(dirname $0)/common.sh
 
 # If these aren't yet set (from credentials file, typically),
-# create new ones.
-if [ -z "${etcd_discovery_token}" ]
-then
-    etcd_discovery_token=$(python -m jiocloud.orchestrate new_discovery_token)
-fi
-
 if [ -z "${consul_discovery_token}" ]
 then
     consul_discovery_token=$(curl http://consuldiscovery.linux2go.dk/new)
@@ -77,7 +71,6 @@ if [ -n "${puppet_modules_source_repo}" ]; then
   puppet apply -e "ini_setting { manifestdir: path => \"/etc/puppet/puppet.conf\", section => main, setting => manifestdir, value => \"/etc/puppet/manifests.overrides\" }"
 fi
 sudo mkdir -p /etc/facter/facts.d
-echo 'etcd_discovery_token='${etcd_discovery_token} > /etc/facter/facts.d/etcd.txt
 echo 'consul_discovery_token='${consul_discovery_token} > /etc/facter/facts.d/consul.txt
 echo 'current_version='${BUILD_NUMBER} > /etc/facter/facts.d/current_version.txt
 echo 'env='${env} > /etc/facter/facts.d/env.txt

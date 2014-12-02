@@ -21,10 +21,6 @@ mod 'puppetlabs/inifile',
   :git => "#{base_url}/puppetlabs/puppetlabs-inifile",
   :ref => 'ab21bd3'
 
-mod 'jiocloud/etcd',
-  :git => "#{base_url}/JioCloud/puppet-etcd",
-  :ref => "74efce9cbd0f854b33111dc0ffa72b5a349e3f8f"
-
 mod 'saz/sudo',
   :git => "#{base_url}/saz/puppet-sudo",
   :ref => '62b93da'

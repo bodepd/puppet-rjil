@@ -2,15 +2,6 @@ Exec { path => [ "/bin/", "/sbin/" , "/usr/bin/", "/usr/sbin/", "/usr/local/bin/
 
 node /etcd/ {
   include rjil::base
-  if $::etcd_discovery_token {
-    $discovery = true
-  } else {
-    $discovery = false
-  }
-  class { 'rjil::jiocloud::etcd':
-    discovery       => $discovery,
-    discovery_token => $::etcd_discovery_token
-  }
 }
 ##
 # setup ceph configuration and osds on st nodes
