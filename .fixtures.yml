@@ -28,6 +28,11 @@ fixtures:
     memcached:
       repo: git://github.com/saz/puppet-memcached
       ref: fee24ce
+    vcsrepo:
+      repo: git://github.com/puppetlabs/puppetlabs-vcsrepo
+      ref: 1.2.0
+    tempest:
+      repo: git://github.com/jiocloud/puppet-tempest
     ssh:
       repo: https://github.com/saz/puppet-ssh
       ref: v2.3.6

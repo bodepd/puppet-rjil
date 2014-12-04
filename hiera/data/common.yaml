@@ -59,6 +59,7 @@ verbose: 'false'
 region: RegionOne
 rpc_backend: zmq
 api_protocol: http
+public_network_name: public
 
 ########### auth for test user
 ##################################
@@ -129,7 +130,7 @@ neutron::quota::quota_driver: neutron_plugin_contrail.plugins.opencontrail.quota
 rjil::neutron::api_extensions_path: extensions:/usr/lib/python2.7/dist-packages/neutron_plugin_contrail/extensions
 rjil::neutron::service_provider: LOADBALANCER:Opencontrail:neutron_plugin_contrail.plugins.opencontrail.loadbalancer.driver.OpencontrailLoadbalancerDriver:default
 rjil::neutron::keystone_admin_password: "%{hiera('admin_password')}"
-
+rjil::neutron::public_network_name: "%{hiera('public_network_name')}"
 
 ########### Cinder configuration
 ###################################
@@ -576,3 +577,29 @@ gitolite::admin_pub_key: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDT7UcaDrA8FVbepV
 ########## Common apache settings
 #################################
 apache::default_vhost: false
+
+
+######### Tempest settings
+################################
+tempest::tempest_repo_uri: 'https://github.com/openstack/tempest.git'
+tempest::image_name: cirros-0.3.3
+tempest::image_name_alt: cirros-0.3.3
+tempest::flavor_ref: 1
+tempest::admin_password: tempest_admin
+tempest::admin_username: tempest_admin
+tempest::tenant_name: tempest
+tempest::username: tempest
+tempest::password: tempest
+tempest::identity_uri: "%{hiera('keystone::endpoint::public_url')}"
+tempest::neutron_available: true
+tempest::public_network_name: "%{hiera('public_network_name')}"
+tempest::fixed_network_name: net_tempest
+tempest::setup_venv: true
+
+rjil::tempest::keystone_admin_token: "%{hiera('keystone::admin_token')}"
+
+tempest::provision::imagename: "%{hiera('tempest::image_name')}"
+tempest::provision::tenantname: "%{hiera('tempest::tenant_name')}"
+tempest::provision::username: "%{hiera('tempest::username')}"
+tempest::provision::admin_username: "%{hiera('tempest::admin_username')}"
+tempest::provision::networkname: "%{hiera('tempest::fixed_network_name')}"

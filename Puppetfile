@@ -33,6 +33,14 @@ mod 'fsalum/redis',
   :git => "#{base_url}/fsalum/puppet-redis",
   :ref => '0.0.12'
 
+mod 'puppetlabs/vscrepo',
+  :git => "#{base_url}/puppetlabs/puppetlabs-vcsrepo",
+  :ref => '1.2.0'
+
+mod 'stackforge/tempest',
+  :git => "#{base_url}/jiocloud/puppet-tempest",
+  :ref => 'master'
+
 mod 'dprince/qpid',
   :git => "#{base_url}/dprince/puppet-qpid",
   :ref => "1.0.2"
@@ -91,7 +99,7 @@ mod 'enovance/ceph',
 
 mod 'stackforge/glance',
   :git => "#{base_url}/stackforge/puppet-glance",
-  :ref => 'stable/icehouse'
+  :ref => 'f377c02'
 
 mod 'puppetlabs/keystone',
   :git => "#{base_url}/stackforge/puppet-keystone",
