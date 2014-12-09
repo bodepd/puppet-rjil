@@ -174,3 +174,7 @@ mod 'dalen/dnsquery',
 mod 'nvpuppet/gitolite',
   :git => "#{base_url}/nvalentine-puppetlabs/puppet-gitolite",
   :ref => 'origin/master'
+
+mod 'thias/squid3',
+  :git => "#{base_url}/bodepd/puppet-squid3",
+  :ref => 'origin/master'

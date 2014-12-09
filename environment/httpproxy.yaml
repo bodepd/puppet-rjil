@@ -1,0 +1,7 @@
+resources:
+  httpproxy:
+    number: 1
+    flavor: large
+    image: trusty
+    networks: default
+    assign_floating_ip: true
