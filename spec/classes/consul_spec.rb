@@ -1,103 +1,103 @@
 require 'spec_helper'
-require 'hiera-puppet-helper'
+#require 'hiera-puppet-helper'
 
 describe 'rjil::jiocloud::consul' do
 
-  let :hiera_data do
+  let :facts do
     {
-      'keystone::admin_token'            => '123',
+      'env'                    => 'unit_test',
+      'hostname'               => 'foohost',
+      'osfamily'               => 'Debian',
+      'operatingsystem'        => 'Ubuntu',
+      'architecture'           => 'x86_64',
+      'lsbdistrelease'         => '14.04',
+      'consul_discovery_token' => 'testtoken'
     }
   end
 
-  describe 'default resources' do
-    it 'should require config_hash' do
-	  expect {
-        should contain_file('keystone-admin')
-	  }.to raise_error(Puppet::Error, /Must pass config_hash/)
+  let :default_config_hash do
+    {
+      'datacenter'          => 'testtoken',
+      'data_dir'            => '/var/lib/consul-jio',
+      'log_level'           => 'INFO',
+      'enable_syslog'       => true,
+      'server'              => false,
+      'disable_remote_exec' => true,
+    }
+  end
+
+  context 'with defaults' do
+
+    it 'should contain default resources' do
+      should contain_class('dnsmasq')
+      should contain_dnsmasq__conf('consul').with({
+        'ensure'  => 'present',
+        'content' => 'server=/consul/127.0.0.1#8600',
+      })
+      should contain_class('consul').with({
+        'install_method'    => 'package',
+        'ui_package_name'   => 'consul-web-ui',
+        'ui_package_ensure' => 'absent',
+        'bin_dir'           => '/usr/bin',
+        'config_hash'       => default_config_hash,
+      })
+      should contain_exec('reload-consul').with({
+        'command'     => "/usr/bin/consul reload",
+        'refreshonly' => true,
+        'subscribe'   => 'Service[consul]',
+      })
+      should_not contain_rjil__puppet__cert('foohost.consul.cert')
     end
   end
-end
 
-describe 'rjil::jiocloud::consul::bootstrapserver' do
-  let :facts  do
-    {
-      :env             => 'testenv',
-      :osfamily        => 'Debian',
-      :operatingsystem => 'Ubuntu',
-      :architecture    => 'x86_64',
-      :lsbdistrelease  => '14.04',
-      :consul_discovery_token => 'token'
-    }
+  context 'with encryption enabled' do
+    let :params do
+      {'encrypt' => 'foo'}
+    end
+    let :config_hash do
+      default_config_hash.merge({'encrypt' => 'foo'})
+    end
+
   end
 
-  describe 'default resources' do
-    it 'should configure agent as server that bootstraps' do
-      should contain_class('rjil::jiocloud::consul').with({
-        'config_hash' => {
-          'bind_addr'        => '0.0.0.0',
-          'data_dir'         => '/var/lib/consul-jio',
-          'log_level'        => 'INFO',
-          'server'           => true,
-          'bootstrap_expect' => 1,
-          'datacenter'       => 'token'
-        }
+  context 'with ssl enabled' do
+    let :params do
+      {'ssl' => true}
+    end
+    let :config_hash do
+      default_config_hash.merge({
+        'ca_file'         => '/home/consul/.puppet/ssl/certs/ca.pem',
+        'cert_file'       => '/home/consul/.puppet/ssl/certs/foohost.consul.cert.pem',
+        'key_file'        => '/home/consul/.puppet/ssl/private_keys/foohost.consul.cert.pem',
+        'verify_incoming' => true,
+        'verify_outgoing' => true,
+      })
+    end
+    it 'should enable ssl' do
+      should contain_class('consul').with({
+        'config_hash'       => config_hash,
+      })
+      should contain_rjil__puppet__cert('foohost.consul.cert').with({
+        'server' => 'localhost',
       })
     end
   end
-end
 
-describe 'rjil::jiocloud::consul::server' do
-  let :facts  do
-    {
-      :env                    => 'testenv',
-	    :osfamily               => 'Debian',
-	    :operatingsystem        => 'Ubuntu',
-	    :architecture           => 'x86_64',
-	    :lsbdistrelease         => '14.04',
-	    :consul_discovery_token => 'testtoken'
-    }
-  end
+  context 'with overrides' do
 
-  describe 'default resources' do
-    it 'should configure agent as server' do
-      should contain_class('rjil::jiocloud::consul').with({
-        'config_hash' => {
-          'bind_addr'        => '0.0.0.0',
-          'start_join'       => ['testtoken.service.consuldiscovery.linux2go.dk'],
-          'data_dir'         => '/var/lib/consul-jio',
-          'log_level'        => 'INFO',
-          'server'           => true,
-          'datacenter'       => 'testtoken'
-        }
+    let :params do
+      {
+        'override_hash' => {'server' => true}
+      }
+    end
+    let :config_hash do
+      default_config_hash.merge({'server' => true})
+    end
+    it 'should override server to true' do
+      should contain_class('consul').with({
+        'config_hash'       => config_hash,
       })
     end
   end
-end
 
-describe 'rjil::jiocloud::consul::agent' do
-  let :facts  do
-    {
-      :env                    => 'testenv',
-	    :osfamily               => 'Debian',
-	    :operatingsystem        => 'Ubuntu',
-	    :architecture           => 'x86_64',
-	    :lsbdistrelease         => '14.04',
-	    :consul_discovery_token => 'testtoken'
-    }
-  end
-
-  describe 'default resources' do
-    it 'should configure agent as non-server' do
-      should contain_class('rjil::jiocloud::consul').with({
-        'config_hash' => {
-          'bind_addr'        => '0.0.0.0',
-          'start_join'       => ['testtoken.service.consuldiscovery.linux2go.dk'],
-          'data_dir'         => '/var/lib/consul-jio',
-          'log_level'        => 'INFO',
-          'server'           => false,
-          'datacenter'       => 'testtoken'
-        }
-      })
-    end
-  end
 end

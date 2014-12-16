@@ -10,6 +10,8 @@ describe 'rjil::jiocloud' do
       'lsbdistid'       => 'Ubuntu',
       'lsbdistcodename' => 'precise',
       'osfamily'        => 'Debian',
+      'consul_discovery_token' => '123',
+      'env'                    => 'foo',
     }
   end
 

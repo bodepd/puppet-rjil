@@ -683,7 +683,24 @@ radosgw_port: 80
 
 rjil::jiocloud::consul::server::bind_addr: "%{hiera('private_address')}"
 rjil::jiocloud::consul::bootstrapserver::bind_addr: "%{hiera('private_address')}"
+rjil::jiocloud::consul::bootstrapserver::ssl: true
 rjil::jiocloud::consul::agent::bind_addr: "%{hiera('private_address')}"
+rjil::jiocloud::consul::ssl: true
+
+########## puppet master settings
+####################################
+#
+# the puppet master is being used to generate
+# certs for consul
+#
+
+puppet::master::dns_alt_names:
+  - localhost
+  - puppet
+  - puppet-master.service.consul
+  - "%{consul_discovery_token}.service.consuldiscovery.linux2go.dk"
+
+puppet::master::certname: "%{hostname}-puppet-master"
 
 ########### ntp  settings
 ###############################

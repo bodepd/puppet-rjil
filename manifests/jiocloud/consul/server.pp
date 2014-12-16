@@ -8,13 +8,11 @@ class rjil::jiocloud::consul::server(
   }
 
   class { 'rjil::jiocloud::consul':
-    config_hash => {
+    override_hash => {
       'bind_addr'        => $bind_addr,
       'start_join'       => [$join_address],
-      'data_dir'         => '/var/lib/consul-jio',
-      'log_level'        => 'INFO',
       'server'           => true,
-      'datacenter'       => $::consul_discovery_token,
-    }
+    },
+    ca_server => $join_address,
   }
 }
