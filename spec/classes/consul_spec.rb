@@ -25,7 +25,9 @@ describe 'rjil::jiocloud::consul::bootstrapserver' do
 	    :osfamily        => 'Debian',
 	    :operatingsystem => 'Ubuntu',
 	    :architecture    => 'x86_64',
-	    :lsbdistrelease  => '14.04'
+	    :lsbdistrelease  => '14.04',
+      :concat_basedir  => '/tmp/',
+      :operatingsystemrelease => '14.04',
     }
   end
 
@@ -38,7 +40,12 @@ describe 'rjil::jiocloud::consul::bootstrapserver' do
           'data_dir'         => '/var/lib/consul-jio',
           'log_level'        => 'INFO',
           'server'           => true,
-          'bootstrap_expect' => 1
+          'bootstrap_expect' => 1,
+          'ca_file'          => '/home/consul/.puppet/ssl/certs/ca.pem',
+          'cert_file'        => '/home/consul/.puppet/ssl/certs/danslaptop-2.consul.cert.pem',
+          'key_file'         => '/home/consul/.puppet/ssl/private_keys/danslaptop-2.consul.cert.pem',
+          'verify_incoming'  => true,
+          'verify_outgoing'  => true
         }
       })
     end
@@ -95,6 +102,11 @@ describe 'rjil::jiocloud::consul::agent' do
           'data_dir'         => '/var/lib/consul-jio',
           'log_level'        => 'INFO',
           'server'           => false,
+          'ca_file'          => '/home/consul/.puppet/ssl/certs/ca.pem',
+          'cert_file'        => '/home/consul/.puppet/ssl/certs/danslaptop-2.consul.cert.pem',
+          'key_file'         => '/home/consul/.puppet/ssl/private_keys/danslaptop-2.consul.cert.pem',
+          'verify_incoming'  => true,
+          'verify_outgoing'  => true
         }
       })
     end
