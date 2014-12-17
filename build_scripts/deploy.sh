@@ -83,7 +83,7 @@ echo 'env='${env} > /etc/facter/facts.d/env.txt
 echo 'cloud_provider='${cloud_provider} > /etc/facter/facts.d/cloud_provider.txt
 while true
 do
-    puppet apply --detailed-exitcodes --debug -e "include rjil::jiocloud"
+    puppet apply --detailed-exitcodes -e "include rjil::jiocloud"
     ret_code=\$?
     if [[ \$ret_code = 1 || \$ret_code = 4 || \$ret_code = 6 ]]
     then
