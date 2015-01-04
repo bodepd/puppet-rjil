@@ -453,6 +453,12 @@ rustedhalo_apt_repo_release: 'trusty'
 
 rjil::system::apt::enable_puppetlabs: true
 rjil::system::apt::repositories:
+  mariadb:
+    location: 'http://lon1.mirrors.digitalocean.com/mariadb/repo/10.0/ubuntu'
+    release: trusty
+    repos: main
+    include_src: false
+    key: 1BB943DB
   ceph:
     location: 'http://ceph.com/debian-firefly'
     release: 'trusty'

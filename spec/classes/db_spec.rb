@@ -16,6 +16,10 @@ describe 'rjil::db' do
       :osfamily       => 'Debian',
       :processorcount => '40',
       :root_home      => '/etc/mysql',
+      :lsbdistrelease  => '14.04',
+      :lsbdistcodename => 'trusty',
+      :operatingsystem => 'Ubuntu',
+      :lsbdistid       => 'Ubuntu',
     }
   end
 

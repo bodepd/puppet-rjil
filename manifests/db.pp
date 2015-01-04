@@ -15,6 +15,34 @@ class rjil::db (
   $bind_address = '0.0.0.0',
 )  {
 
+  # required for vitess
+  package { 'golang':
+    ensure => present,
+  }
+  package { 'libmariadbclient-dev':
+    ensure => present,
+  }
+  ensure_packages ( ['make', 'automake', 'libtool' ,'memcached' ,'python-dev' ,'libssl-dev' ,'g++' ,'mercurial' ,'git' ,'pkg-config' ,'bison' ,'curl'] )
+  vcsrepo { '/root/src/github.com/youtube/vitess' :
+    ensure   => present,
+    provider => git,
+    source   => 'https://github.com/youtube/vitess.git',
+  } ->
+  file { '/root/install_vitess.sh':
+    content =>
+'#!/bin/bash
+cd /root/src/github.com/youtube/vitess
+export MYSQL_FLAVOR=MariaDB
+./bootstrap.sh
+. ./dev.env
+make build',
+    mode => '755',
+  } ->
+  exec { 'install_vitess':
+    command   => '/bin/bash -x /root/install_vitess.sh',
+    logoutput => true,
+  }
+  include rjil::zookeeper
 
   ## Setup test code
 
