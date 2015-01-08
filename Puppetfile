@@ -160,6 +160,10 @@ mod 'solarkennedy/consul',
   :git => "#{base_url}/solarkennedy/puppet-consul",
   :ref => 'origin/master'
 
+mod 'puppetlabs/firewall',
+  :git => "#{base_url}/bodepd/puppetlabs-firewall",
+  :ref => 'origin/allow_uid_name'
+
 mod 'jiocloud/openstack_zeromq',
   :git => "#{base_url}/jiocloud/puppet-openstack_zeromq"
 

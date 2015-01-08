@@ -113,6 +113,9 @@ fixtures:
     consul:
       repo: https://github.com/solarkennedy/puppet-consul
       ref: origin/master
+    firewall:
+      repo: https://github.com/puppetlabs/puppetlabs-firewall
+      ref:  origin/master
     ntp:
       repo: https://github.com/puppetlabs/puppetlabs-ntp
       ref: 3.0.1

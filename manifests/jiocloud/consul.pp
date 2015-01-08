@@ -6,6 +6,7 @@ class rjil::jiocloud::consul(
   $cert_name           = "${hostname}.consul.cert",
   $disable_remote_exec = true,
   $encrypt             = false,
+  $secure              = false,
 ) {
 
   $defaults_hash = {
@@ -40,6 +41,29 @@ class rjil::jiocloud::consul(
     $encrypt_hash = {'encrypt' => $encrypt}
   } else {
     $encrypt_hash = {}
+  }
+
+  # the secure flag restricts access to consul services to only root and the consul user
+  # and prevents other users from being able to use consul to run malicious commands
+  # across your fleet
+  if $secure {
+    include "firewall"
+    Firewall {
+      chain       => 'OUTPUT',
+      action      => 'accept',
+      destination => '127.0.0.1',
+      proto       => 'tcp',
+      dport       => ['8300', '8400', '8500'],
+    }
+    firewall { '001consul_allow_root':
+      uid         => '0',
+    }
+    firewall { '002consul_allow_consul':
+      uid         => 'consul',
+    }
+    firewall { '999consul_drop':
+      action => 'drop',
+    }
   }
 
   $config_hash = merge($defaults_hash, $ssl_hash, $encrypt_hash, $override_hash)
