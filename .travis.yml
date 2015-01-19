@@ -1,7 +1,9 @@
 ---
+sudo: false
 language: ruby
 bundler_args: --without development
 script: 'bundle exec rake travis'
+cache: bundler
 matrix:
   fast_finish: true
   include:
