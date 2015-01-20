@@ -83,7 +83,6 @@ class rjil::cinder (
   Class['rjil::ceph::mon_config'] ->
   Class['::cinder::volume']
 
-
   include rjil::apache
 
   Service['cinder-api'] -> Service['httpd']
