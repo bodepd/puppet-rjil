@@ -32,7 +32,7 @@ describe 'rjil::neutron' do
 
   context 'with defaults' do
     it  do
-      should contain_file('/usr/lib/jiocloud/tests/neutron.sh').with_content(
+      should contain_file('/usr/lib/jiocloud/tests/service_checks/neutron.sh').with_content(
         /check_http -H 127\.0\.0\.1 -p 9696/
       )
       should contain_file('/usr/lib/jiocloud/tests/floating_ip.sh')
@@ -46,7 +46,7 @@ describe 'rjil::neutron' do
       should contain_rjil__jiocloud__consul__service('neutron').with({
         'tags'      => ['real'],
         'port'      => 9696,
-        'check_command' => "/usr/lib/jiocloud/tests/neutron.sh",
+        'check_command' => "/usr/lib/jiocloud/tests/service_checks/neutron.sh",
       })
 
       should contain_exec('empty_neutron_conf').with({
@@ -76,7 +76,7 @@ describe 'rjil::neutron' do
       {'ssl' => true}
     end
     it do
-      should contain_file('/usr/lib/jiocloud/tests/neutron.sh').with_content(
+      should contain_file('/usr/lib/jiocloud/tests/service_checks/neutron.sh').with_content(
         /check_http -S -H 127\.0\.0\.1 -p 9696/
       )
       should contain_apache__vhost('neutron').with_ssl(true)
