@@ -183,6 +183,10 @@ class rjil::nova::controller (
     interval      => $consul_check_interval,
   }
 
+  rjil::test::check { 'nova-cert':
+    type => 'proc',
+  }
+
   rjil::jiocloud::consul::service {'nova-scheduler':
     port          => 0,
     check_command => "sudo nova-manage service list | grep 'nova-scheduler.*${::hostname}.*enabled.*:-)'",
@@ -195,16 +199,22 @@ class rjil::nova::controller (
     check_command => "sudo nova-manage service list | grep 'nova-conductor.*${::hostname}.*enabled.*:-)'"
   }
 
-  rjil::jiocloud::consul::service {'nova-cert':
-    port          => 0,
-    interval      => $consul_check_interval,
-    check_command => "sudo nova-manage service list | grep 'nova-cert.*${::hostname}.*enabled.*:-)'"
+  rjil::test::check { 'nova-cert':
+    type => 'proc',
   }
 
-  rjil::jiocloud::consul::service {'nova-consoleauth':
+  rjil::jiocloud::consul::service { 'nova-cert':
     port          => 0,
     interval      => $consul_check_interval,
-    check_command => "sudo nova-manage service list | grep 'nova-consoleauth.*${::hostname}.*enabled.*:-)'"
+  }
+
+  rjil::test::check { 'nova-consoleauth':
+    type => 'proc',
+  }
+
+  rjil::jiocloud::consul::service { 'nova-consoleauth':
+    port          => 0,
+    interval      => $consul_check_interval,
   }
 
   rjil::jiocloud::consul::service {'nova-vncproxy':
