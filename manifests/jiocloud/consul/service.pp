@@ -1,6 +1,6 @@
 define rjil::jiocloud::consul::service(
-  $port,
-  $check_command = "/usr/lib/jiocloud/tests/${name}.sh",
+  $port          = 0,
+  $check_command = "/usr/lib/jiocloud/tests/service_checks/${name}.sh",
   $interval      = '10s',
   $tags          = [],
 ) {

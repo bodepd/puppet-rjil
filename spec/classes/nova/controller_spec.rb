@@ -103,23 +103,23 @@ describe 'rjil::nova::controller' do
       should contain_rjil__jiocloud__consul__service('nova').with({
         'tags'          => ['real'],
         'port'          => 100,
-        'check_command' => "/usr/lib/jiocloud/tests/nova.sh"
+        'check_command' => "/usr/lib/jiocloud/tests/service_checks/nova.sh"
       })
       should contain_rjil__jiocloud__consul__service('nova-scheduler').with({
         'port'          => 0,
-        'check_command' => "sudo nova-manage service list | grep 'nova-scheduler.*node1.*enabled.*:-)'"
+        'check_command' => '/usr/lib/jiocloud/tests/service_checks/nova-scheduler.sh'
       })
       should contain_rjil__jiocloud__consul__service('nova-conductor').with({
         'port'          => 0,
-        'check_command' => "sudo nova-manage service list | grep 'nova-conductor.*node1.*enabled.*:-)'"
+        'check_command' => '/usr/lib/jiocloud/tests/service_checks/nova-conductor.sh'
       })
       should contain_rjil__jiocloud__consul__service('nova-cert').with({
         'port'          => 0,
-        'check_command' => "sudo nova-manage service list | grep 'nova-cert.*node1.*enabled.*:-)'"
+        'check_command' => '/usr/lib/jiocloud/tests/service_checks/nova-cert.sh'
       })
       should contain_rjil__jiocloud__consul__service('nova-consoleauth').with({
         'port'          => 0,
-        'check_command' => "sudo nova-manage service list | grep 'nova-consoleauth.*node1.*enabled.*:-)'"
+        'check_command' => '/usr/lib/jiocloud/tests/service_checks/nova-consoleauth.sh'
       })
       should contain_rjil__jiocloud__consul__service('nova-vncproxy').with({
         'port'          => 101,

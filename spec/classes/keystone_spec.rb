@@ -28,8 +28,8 @@ describe 'rjil::keystone' do
 
   describe 'default resources' do
     it 'should contain default resources' do
-      should contain_file('/usr/lib/jiocloud/tests/keystone.sh').with_content(/check_http -H 127\.0\.0\.1 -p 443/)
-      should contain_file('/usr/lib/jiocloud/tests/keystone-admin.sh').with_content(/check_http -H 127\.0\.0\.1 -p 35357/)
+      should contain_file('/usr/lib/jiocloud/tests/service_checks/keystone.sh').with_content(/check_http -H 127\.0\.0\.1 -p 443/)
+      should contain_file('/usr/lib/jiocloud/tests/service_checks/keystone-admin.sh').with_content(/check_http -H 127\.0\.0\.1 -p 35357/)
       should contain_class('keystone')
     end
   end

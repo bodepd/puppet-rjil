@@ -83,7 +83,6 @@ class rjil::cinder (
   Class['rjil::ceph::mon_config'] ->
   Class['::cinder::volume']
 
-
   include rjil::apache
 
   Service['cinder-api'] -> Service['httpd']
@@ -225,19 +224,22 @@ class rjil::cinder (
     port          => $public_port,
   }
 
-  rjil::jiocloud::consul::service { 'cinder-volume':
-    port          => 0,
-    check_command => '/usr/lib/nagios/plugins/check_procs -c 1:10 -C cinder-volume'
+  rjil::test::check { 'cinder-volume':
+    type => 'proc',
   }
 
-  rjil::jiocloud::consul::service { 'cinder-scheduler':
-    port          => 0,
-    check_command => "sudo cinder-manage service list | grep 'cinder-scheduler.*${::hostname}.*enabled.*:-)'"
+  rjil::jiocloud::consul::service { 'cinder-volume': }
+
+  rjil::test::check { 'cinder-scheduler':
+    type => 'proc',
   }
 
-  rjil::jiocloud::consul::service { 'cinder-backup':
-    port          => 0,
-    check_command => "sudo cinder-manage service list | grep 'cinder-backup.*${::hostname}.*enabled.*:-)'"
+  rjil::jiocloud::consul::service { 'cinder-scheduler': }
+
+  rjil::test::check { 'cinder-backup':
+    type => 'proc',
   }
+
+  rjil::jiocloud::consul::service { 'cinder-backup': }
 
 }

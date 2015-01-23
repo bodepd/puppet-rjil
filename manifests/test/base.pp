@@ -22,6 +22,10 @@ class rjil::test::base(
     ensure => directory,
   }
 
+  file { '/usr/lib/jiocloud/tests/service_checks':
+    ensure => 'directory',
+  }
+
   # Add a custom nagios check for killall -0
   file { "${nagios_base_dir}/check_killall_0":
     source  => 'puppet:///modules/rjil/tests/nagios_killall_0',

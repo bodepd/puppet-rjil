@@ -104,8 +104,16 @@ class rjil::glance (
     fail("Unsupported backend ${backend}")
   }
 
+  rjil::test::check { 'glance':
+    type    => 'http',
+    address => $server_name,
+    port    => $api_public_port,
+    ssl     => $ssl,
+  }
+
   rjil::jiocloud::consul::service { "glance":
     tags          => ['real'],
     port          => $::glance::api::bind_port,
   }
+
 }
