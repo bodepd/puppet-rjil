@@ -20,4 +20,15 @@ class rjil::rabbitmq {
 
   include ::rabbitmq
 
+  rjil::test::check { 'rabbitmq':
+    type    => 'tcp',
+    address => '127.0.0.1',
+    port    => 5672,
+  }
+
+  rjil::jiocloud::consul::service { 'rabbitmq':
+    tags          => ['real', 'contrail'],
+    port          => 5672,
+  }
+
 }
