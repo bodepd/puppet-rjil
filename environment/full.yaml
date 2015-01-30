@@ -20,8 +20,13 @@ resources:
     flavor: large
     image: trusty
     networks: default
-  ct:
+  ctleader:
     number: 1
+    flavor: large
+    image: trusty
+    networks: default
+  ct:
+    number: 2
     flavor: large
     image: trusty
     networks: default
