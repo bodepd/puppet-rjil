@@ -9,6 +9,7 @@ describe 'rjil::zookeeper' do
       :osfamily        => 'Debian',
       :lsbdistid       => 'ubuntu',
       :ipaddress       => '10.1.2.3',
+      :hostname        => 'foo',
     }
   end
 
@@ -16,8 +17,75 @@ describe 'rjil::zookeeper' do
     it do
       should contain_file('/usr/lib/jiocloud/tests/check_zookeeper.sh')
       should contain_class('zookeeper').with({
-        'id' => 3
+        'id'      => 3,
+        'servers' => ['server.3=foo:2888:3888']
       })
+      should contain_rjil__test__check('zookeeper').with({
+        'type'    => 'tcp',
+        'address' => '127.0.0.1',
+        'port'    => 2181,
+      })
+      should contain_rjil__jiocloud__consul__service('zookeeper').with({
+        'port' => 2181,
+        'tags' => ['real', 'contrail'],
+      })
+      should contain_rjil__service_blocker('leader.zookeeper').with({})
+      should contain_runtime_fail('zookeeper_list_empty').with_fail(true)
+    end
+  end
+
+  context 'when we discover ourselves from consul' do
+    let :params do
+      {
+        'hosts' => {'foo' => '10.1.2.3'}
+      }
+    end
+    it 'should not add itself twice' do
+      should contain_class('zookeeper').with({
+        'id'      => 3,
+        'servers' => ['server.3=foo:2888:3888']
+      })
+      should contain_runtime_fail('zookeeper_list_empty').with_fail(true)
+    end
+  end
+
+  context 'when we find someone else from consul' do
+    let :params do
+      {
+        'hosts' => {'leader' => '10.1.2.4'}
+      }
+    end
+    it 'should add itself with leader to cluster' do
+      should contain_class('zookeeper').with({
+        'id'      => 3,
+        'servers' => ['server.4=leader:2888:3888', 'server.3=foo:2888:3888']
+      })
+      should_not contain_runtime_fail('zookeeper_list_empty').with_fail(true)
+    end
+  end
+
+  context 'when we are the leader' do
+
+    let :params do
+      {:leader => true}
+    end
+    it 'should configure as leader' do
+      should contain_file('/usr/lib/jiocloud/tests/check_zookeeper.sh')
+      should contain_class('zookeeper').with({
+        'id'      => 3,
+        'servers' => ['server.3=foo:2888:3888']
+      })
+      should contain_rjil__test__check('zookeeper').with({
+        'type'    => 'tcp',
+        'address' => '127.0.0.1',
+        'port'    => 2181,
+      })
+      should contain_rjil__jiocloud__consul__service('zookeeper').with({
+        'port' => 2181,
+        'tags' => ['real', 'contrail', 'leader'],
+      })
+      should_not contain_rjil__service_blocker('leader.zookeeper')
+      should_not contain_runtime_fail('zookeeper_list_empty')
     end
   end
 

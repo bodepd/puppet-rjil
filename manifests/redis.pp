@@ -10,4 +10,16 @@ class rjil::redis {
 
   include ::redis
 
+  rjil::test::check { 'redis':
+    type    => 'tcp',
+    address => '127.0.0.1',
+    port    => 6379,
+  }
+
+  rjil::jiocloud::consul::service { 'redis':
+    tags          => ['real', 'contrail'],
+    port          => 6379,
+  }
+
+
 }
