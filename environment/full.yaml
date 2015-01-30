@@ -25,8 +25,14 @@ resources:
     networks: default
     boot_volume: default_volume
     assign_floating_ip: true
-  ct:
+  ctleader:
     number: 1
+    flavor: large
+    image: trusty
+    networks: default
+    boot_volume: default_volume
+  ct:
+    number: 2
     flavor: large
     image: trusty
     networks: default

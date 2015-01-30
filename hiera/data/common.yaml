@@ -604,6 +604,14 @@ contrail::manage_repo: false
 contrail::vrouter::manage_repo: false
 contrail::neutron_ip: "%{hiera('neutron_public_address')}"
 
+#contrail::control_ip_list: contrail-server.service.consul
+#contrail::config_ip: contrail-server.service.consul
+contrail::cassandra_ip_list: [cassandra.service.consul]
+#contrail::memcache_servers: memcache.service.consul
+contrail::redis_ip: redis.service.consul
+contrail::rabbit_ip: rabbitmq.service.consul
+contrail::zk_ip: zookeeper.service.consul
+
 ##
 # Adding common setting for contrail::interface, this may need to be override in
 # environment specific interface

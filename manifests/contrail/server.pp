@@ -13,4 +13,16 @@ class rjil::contrail::server () {
   rjil::test {$contrail_tests:}
 
   include ::contrail
+
+  rjil::test::check { 'contrail':
+    type    => 'tcp',
+    address => '127.0.0.1',
+    port    => 9160,
+  }
+
+  rjil::jiocloud::consul::service { 'contrail':
+    tags          => ['real', 'contrail'],
+    port          => 9160,
+  }
+
 }
