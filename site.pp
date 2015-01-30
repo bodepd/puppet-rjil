@@ -78,6 +78,19 @@ node /^ct\d+/ {
   include rjil::neutron::contrail
 }
 
+node /^ctleader\d+/ {
+  include rjil::base
+  include rjil::redis
+  include rjil::cassandra
+  include rjil::rabbitmq
+  class { 'rjil::zookeeper':
+    leader => true
+  }
+  include rjil::haproxy
+  include rjil::haproxy::contrail
+  include rjil::contrail::server
+  include rjil::neutron::contrail
+}
 
 ##
 ## oc is openstack controller node which will have all
