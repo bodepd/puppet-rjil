@@ -55,4 +55,15 @@ class rjil::cassandra (
     require           => Host['localhost'],
   }
 
+  rjil::test::check { 'cassandra':
+    type    => 'tcp',
+    address => '127.0.0.1',
+    port    => 9160,
+  }
+
+  rjil::jiocloud::consul::service { 'cassandra':
+    tags          => ['real', 'contrail'],
+    port          => 9160,
+  }
+
 }
