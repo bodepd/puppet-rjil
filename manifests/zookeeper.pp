@@ -46,12 +46,13 @@ class rjil::zookeeper (
     Rjil::Service_blocker['leader.zookeeper'] -> File['/etc/zookeeper/conf/zoo.cfg']
     # if only our entry is in the cluster list
     if size($cluster_with_self) == 1 {
+      notice()
       #
       # fail if our cluster list does not contain at least our entry + the leader
       # NOTE - should I be more strict about how I add the leader?
       runtime_fail {'zookeeper_list_empty':
         fail    => true,
-        message => 'Zookeeper list should contain at least 2 entries for non-leaders',
+        message => "Zookeeper list should contain at least 2 entries for non-leaders, only contained ${cluster_with_self}",
         before  => File['/etc/zookeeper/conf/zoo.cfg'],
         require => Rjil::Service_blocker['leader.zookeeper']
       }
