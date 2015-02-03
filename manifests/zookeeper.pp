@@ -20,7 +20,7 @@
 #
 class rjil::zookeeper (
   $local_ip      = $::ipaddress,
-  $hosts         = service_discover_consul('zookeeper.service.consul'),
+  $hosts         = service_discover_consul('zookeeper'),
   $leader_port   = 2888,
   $election_port = 3888,
   $leader        = false,
