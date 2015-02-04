@@ -69,9 +69,9 @@ node /^stmon\d+/ {
 node /^ct\d+/ {
   include rjil::base
 #  include rjil::redis
-#  include rjil::cassandra
 #  include rjil::rabbitmq
   include rjil::zookeeper
+  include rjil::cassandra
 #  include rjil::haproxy
 #  include rjil::haproxy::contrail
 #  include rjil::contrail::server
@@ -81,7 +81,9 @@ node /^ct\d+/ {
 node /^ctseed\d+/ {
   include rjil::base
   include rjil::redis
-  include rjil::cassandra
+  class { 'rjil::cassandra':
+    seed => true,
+  }
   include rjil::rabbitmq
   class { 'rjil::zookeeper':
     seed => true

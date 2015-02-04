@@ -20,7 +20,7 @@ resources:
     flavor: large
     image: trusty
     networks: default
-  ctleader:
+  ctseed:
     number: 1
     flavor: large
     image: trusty
