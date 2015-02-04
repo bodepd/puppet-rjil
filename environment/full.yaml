@@ -21,7 +21,7 @@ resources:
     image: trusty
     networks: default
     assign_floating_ip: true
-  ctleader:
+  ctseed:
     number: 1
     flavor: large
     image: trusty
