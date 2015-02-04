@@ -78,13 +78,13 @@ node /^ct\d+/ {
 #  include rjil::neutron::contrail
 }
 
-node /^ctleader\d+/ {
+node /^ctseed\d+/ {
   include rjil::base
   include rjil::redis
   include rjil::cassandra
   include rjil::rabbitmq
   class { 'rjil::zookeeper':
-    leader => true
+    seed => true
   }
   include rjil::haproxy
   include rjil::haproxy::contrail
