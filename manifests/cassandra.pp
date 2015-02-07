@@ -33,7 +33,7 @@
 
 class rjil::cassandra (
   $local_ip          = $::ipaddress,
-  $seeds             = values(service_discover_consul('cassandra')),
+  $seeds             = values(service_discover_consul('cassandra', 'seed')),
   $seed              = false,
   $cluster_name      = 'contrail',
   $thread_stack_size = 300,
@@ -41,12 +41,18 @@ class rjil::cassandra (
   $package_name      = 'dsc12',
 ) {
 
-  $seeds_with_self = unique(concat($seeds, [$local_ip]))
-
-  if size($seeds_with_self) < 2 {
-    $fail = true
+  # if we are the seed, add ourselves to the list
+  if $seed == true {
+    $seeds_with_self = unique(concat($seeds, [$local_ip]))
   } else {
-    $fail = false
+    if size($seeds) < 1 {
+      $fail = true
+      # this is just being set so that the cassandra class does not fail to compile
+      $seeds_with_self = ['127.0.0.1']
+    } else {
+      $fail = false
+      $seeds_with_self = $seeds
+    }
   }
 
   rjil::seed_orchestrator { 'cassandra':
