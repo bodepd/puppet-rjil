@@ -18,12 +18,20 @@ describe 'rjil::rabbitmq' do
     }
   end
 
+  let :params do
+    {
+      'cluster_nodes' => []
+    }
+  end
+
   context 'with defaults' do
     it do
       should contain_file('/usr/lib/jiocloud/tests/check_rabbitmq.sh')
       should contain_class('rabbitmq').with({
-        'manage_repos' => false,
-        'admin_enable' => false
+        'manage_repos'   => false,
+        'admin_enable'   => false,
+        'config_cluster' => true,
+        'cluster_nodes'  => [],
       })
     end
   end

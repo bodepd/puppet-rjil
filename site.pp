@@ -68,8 +68,8 @@ node /^stmon\d+/ {
 ##
 node /^ct\d+/ {
   include rjil::base
-#  include rjil::redis
-#  include rjil::rabbitmq
+  include rjil::redis
+  include rjil::rabbitmq
   include rjil::zookeeper
   include rjil::cassandra
 #  include rjil::haproxy
