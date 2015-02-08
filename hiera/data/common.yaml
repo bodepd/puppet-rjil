@@ -558,7 +558,7 @@ rjil::system::apt::repositories:
 
 rabbitmq::manage_repos: false
 rabbitmq::admin_enable: false
-rabbitmq::cluster_node_type: disk
+rabbitmq::cluster_node_type: disc
 
 contrail::keystone_address: "%{hiera('keystone_public_address')}"
 contrail::keystone_admin_token: "%{hiera('keystone::admin_token')}"
