@@ -115,7 +115,7 @@ fixtures:
       ref: origin/master
     firewall:
       repo: https://github.com/puppetlabs/puppetlabs-firewall
-      ref:  origin/master
+      ref:  1.4.0
     ntp:
       repo: https://github.com/puppetlabs/puppetlabs-ntp
       ref: 3.0.1

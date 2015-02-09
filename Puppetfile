@@ -161,8 +161,8 @@ mod 'solarkennedy/consul',
   :ref => 'origin/master'
 
 mod 'puppetlabs/firewall',
-  :git => "#{base_url}/bodepd/puppetlabs-firewall",
-  :ref => 'origin/allow_uid_name'
+  :git => "#{base_url}/puppetlabs/puppetlabs-firewall",
+  :ref => '1.4.0'
 
 mod 'jiocloud/openstack_zeromq',
   :git => "#{base_url}/jiocloud/puppet-openstack_zeromq"
