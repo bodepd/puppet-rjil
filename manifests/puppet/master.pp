@@ -1,6 +1,4 @@
-class rjil::puppet::master(
-  $discovered_address = "",
-) {
+class rjil::puppet::master() {
 
   Service['httpd'] -> Rjil::Puppet::Cert<||>
 
