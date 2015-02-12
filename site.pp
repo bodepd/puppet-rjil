@@ -72,10 +72,9 @@ node /^ct\d+/ {
   include rjil::rabbitmq
   include rjil::zookeeper
   include rjil::cassandra
-#  include rjil::haproxy
-#  include rjil::haproxy::contrail
-#  include rjil::contrail::server
-#  include rjil::neutron::contrail
+  include rjil::haproxy
+  include rjil::haproxy::contrail
+  include rjil::neutron::contrail
 }
 
 node /^ctseed\d+/ {
@@ -90,7 +89,6 @@ node /^ctseed\d+/ {
   }
   include rjil::haproxy
   include rjil::haproxy::contrail
-  include rjil::contrail::server
   include rjil::neutron::contrail
 }
 
