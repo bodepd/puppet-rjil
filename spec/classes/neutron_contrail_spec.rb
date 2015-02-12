@@ -64,4 +64,19 @@ describe 'rjil::neutron::contrail' do
     end
 
   end
+  context 'with seed set to false' do
+
+    let :params do
+      {
+        'public_cidr'             => '1.1.1.0/24',
+        'keystone_admin_password' => 'pass',
+        'seed'                    => false,
+      }
+    end
+    it 'should not create objects' do
+      should_not contain_neutron_network('public')
+      should_not contain_neutron_subnet('pub_subnet1')
+      should_not contain_contrail_rt('default-domain:services:public')
+    end
+  end
 end
