@@ -89,7 +89,7 @@ ironic_internal_address: ironic.jiocloud.com
 ###################################
 
 admin_email: cloud.devops@ril.com
-db_host: mysql.service.consul
+db_host: master.mysql.service.consul
 debug: 'false'
 verbose: 'false'
 region: RegionOne

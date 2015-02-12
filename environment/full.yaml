@@ -15,7 +15,7 @@ resources:
     flavor: large
     image: trusty
     networks: default
-  ocdb:
+  ocdbm:
     number: 1
     flavor: large
     image: trusty
