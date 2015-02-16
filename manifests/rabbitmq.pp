@@ -14,7 +14,7 @@
 #   disabling it.
 #
 class rjil::rabbitmq(
-  $cluster_nodes  = values(service_discover_consul('rabbitmq')),
+  $cluster_nodes  = sort(values(service_discover_consul('rabbitmq'))),
 ){
 
   class {'::rabbitmq':
