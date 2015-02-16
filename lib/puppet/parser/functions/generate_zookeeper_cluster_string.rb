@@ -28,7 +28,7 @@ EOS
       res_str = "server.#{id}=#{k}:#{leader_port}:#{election_port}"
       results.push(res_str)
     end
-    return results
+    return results.sort
 
   end
 

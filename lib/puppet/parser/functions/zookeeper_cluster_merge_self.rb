@@ -26,8 +26,8 @@ EOS
     res_str = "server.#{id}=#{hostname}:#{leader_port}:#{election_port}"
 
     res = zk_cluster_set.add?(res_str)
-    return res.to_a if res
-    return address_array if ! res
+    return res.to_a.sort if res
+    return address_array.sort if ! res
 
   end
 
