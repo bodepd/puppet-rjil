@@ -61,7 +61,7 @@ describe 'rjil::zookeeper' do
     it 'should add itself with seed to cluster' do
       should contain_class('zookeeper').with({
         'id'      => 3,
-        'servers' => ['server.4=seed:2888:3888', 'server.3=foo:2888:3888']
+        'servers' => ['server.3=foo:2888:3888', 'server.4=seed:2888:3888']
       })
       should_not contain_runtime_fail('zookeeper_list_empty').with_fail(true)
     end
