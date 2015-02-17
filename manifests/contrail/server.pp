@@ -3,6 +3,15 @@
 ###
 class rjil::contrail::server () {
 
+  # put more dependencies between contrail and things that
+  # it depends on. Contrail services seem to get stuck in
+  # bad states and I have a feeling that it is because certain
+  # type of connection failures are not recoverable
+  #
+  Service['zookeeper'] ~> Service['contrail-api']
+  Service['cassandra'] ~> Service['contrail-api']
+  Service['rabbitmq-server']  ~> Service['contrail-api']
+
   ##
   # Added tests
   ##
