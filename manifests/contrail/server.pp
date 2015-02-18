@@ -8,9 +8,21 @@ class rjil::contrail::server () {
   # bad states and I have a feeling that it is because certain
   # type of connection failures are not recoverable
   #
-  Service<| title == 'zookeeper' |>        ~> Anchor['contrail::end_base_services']
-  Service<| title == 'cassandra' |>        ~> Anchor['contrail::end_base_services']
-  Service<| title == 'rabbitmq-server' |>  ~> Anchor['contrail::end_base_services']
+  anchor{'contrail_dep_apps':}
+  Service<| title == 'zookeeper' |>       ~> Anchor['contrail_dep_apps']
+  Service<| title == 'cassandra' |>       ~> Anchor['contrail_dep_apps']
+  Service<| title == 'rabbitmq-server' |> ~> Anchor['contrail_dep_apps']
+
+  Anchor['contrail_dep_apps'] -> Service['contrail-api']
+  Anchor['contrail_dep_apps'] -> Service['contrail-schema']
+  Anchor['contrail_dep_apps'] -> Service['contrail-analytics-api']
+  Anchor['contrail_dep_apps'] -> Service['contrail-collector']
+  Anchor['contrail_dep_apps'] -> Service['contrail-query-engine']
+  Anchor['contrail_dep_apps'] -> Service['contrail-svc-monitor']
+  Anchor['contrail_dep_apps'] -> Service['contrail-discovery']
+  Anchor['contrail_dep_apps'] -> Service['contrail-dns']
+  Anchor['contrail_dep_apps'] -> Service['contrail-control']
+  Anchor['contrail_dep_apps'] -> Service['ifmap-server']
 
   ##
   # Added tests
