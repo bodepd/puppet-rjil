@@ -1,7 +1,10 @@
 ###
 ## Class: rjil::contrail
 ###
-class rjil::contrail::server () {
+class rjil::contrail::server (
+  $zk_ip_list        = values(service_discover_consul('zookeeper')),
+  $cassandra_ip_list = values(service_discover_consul('cassandra')),
+) {
 
   # put more dependencies between contrail and things that
   # it depends on. Contrail services seem to get stuck in
@@ -32,7 +35,10 @@ class rjil::contrail::server () {
                       'contrail-webui-webserver.sh','contrail-webui-jobserver.sh']
   rjil::test {$contrail_tests:}
 
-  include ::contrail
+  class { 'contrail':
+    #zk_ip_list        => $zk_ip_list,
+    cassandra_ip_list => $cassandra_ip_list
+  }
 
   rjil::test::check { 'contrail':
     type    => 'tcp',
