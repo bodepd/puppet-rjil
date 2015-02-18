@@ -8,9 +8,9 @@ class rjil::contrail::server () {
   # bad states and I have a feeling that it is because certain
   # type of connection failures are not recoverable
   #
-  Service['zookeeper'] ~> Service['contrail-api']
-  Service['cassandra'] ~> Service['contrail-api']
-  Service['rabbitmq-server']  ~> Service['contrail-api']
+  Service<| title == 'zookeeper' |>        ~> Anchor['contrail::end_base_services']
+  Service<| title == 'cassandra' |>        ~> Anchor['contrail::end_base_services']
+  Service<| title == 'rabbitmq-server' |>  ~> Anchor['contrail::end_base_services']
 
   ##
   # Added tests
