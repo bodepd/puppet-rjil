@@ -2,8 +2,8 @@
 ## Class: rjil::contrail
 ###
 class rjil::contrail::server (
-  $zk_ip_list        = values(service_discover_consul('zookeeper')),
-  $cassandra_ip_list = values(service_discover_consul('cassandra')),
+  $zk_ip_list        = sort(values(service_discover_consul('zookeeper'))),
+  $cassandra_ip_list = sort(values(service_discover_consul('cassandra'))),
 ) {
 
   # put more dependencies between contrail and things that
