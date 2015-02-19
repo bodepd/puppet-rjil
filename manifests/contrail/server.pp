@@ -4,6 +4,7 @@
 class rjil::contrail::server (
   $zk_ip_list        = sort(values(service_discover_consul('zookeeper'))),
   $cassandra_ip_list = sort(values(service_discover_consul('cassandra'))),
+  $config_ip_list    = sort(values(service_discover_consul('contrail', 'real'))),
 ) {
 
   # put more dependencies between contrail and things that
@@ -31,9 +32,17 @@ class rjil::contrail::server (
   ##
   $contrail_tests = ['ifmap.sh','contrail-analytics.sh','contrail-api.sh',
                       'contrail-control.sh','contrail-discovery.sh',
-                      'contrail-dns.sh','contrail-schema.sh',
+                      'contrail-dns.sh',
                       'contrail-webui-webserver.sh','contrail-webui-jobserver.sh']
+
   rjil::test {$contrail_tests:}
+
+  file { '/usr/lib/jiocloud/tests/contrail-schema.sh':
+    content => template('rjil/tests/contrail-schema.sh.erb'),
+    owner   => 'root',
+    group   => 'root',
+    mode    => '755',
+  }
 
   class { 'contrail':
     zk_ip_list        => $zk_ip_list,
