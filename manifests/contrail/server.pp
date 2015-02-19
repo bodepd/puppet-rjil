@@ -36,7 +36,7 @@ class rjil::contrail::server (
   rjil::test {$contrail_tests:}
 
   class { 'contrail':
-    #zk_ip_list        => $zk_ip_list,
+    zk_ip_list        => $zk_ip_list,
     cassandra_ip_list => $cassandra_ip_list
   }
 
