@@ -4,44 +4,53 @@ resources:
     flavor: small
     image: trusty
     networks: default
-    assign_floating_ip: true
+    assign_floating_ip: assign_floating_ip
+    config_drive: config_drive
   haproxy:
     number: 1
     flavor: medium
     image: trusty
     networks: default
+    config_drive: config_drive
   oc:
     number: 1
     flavor: large
     image: trusty
     networks: default
+    config_drive: config_drive
   ocdb:
     number: 1
     flavor: large
     image: trusty
     networks: default
+    config_drive: config_drive
   ct:
     number: 1
     flavor: large
     image: trusty
     networks: default
+    config_drive: config_drive
   stmonleader:
     number: 1
     flavor: storage
     image: trusty
     networks: default
+    config_drive: config_drive
   stmon:
     number: 2
     flavor: storage
     image: trusty
     networks: default
+    config_drive: config_drive
   cp:
     number: 2
     flavor: large
     image: trusty
     networks: default
+    config_drive: config_drive
   gcp:
     number: 1
     flavor: large
     image: trusty
     networks: default
+    config_drive: config_drive

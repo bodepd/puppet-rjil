@@ -1,0 +1,14 @@
+public_address: "%{ipaddress_eth1}"
+public_interface: eth1
+private_address: "%{ipaddress_vhost0_or_eth1}"
+private_interface: eth1
+
+rjil::system::proxies:
+  "no":
+    url: "127.0.0.1,169.254.169.254,localhost,consul,jiocloud.com"
+  http:
+    url: "http://10.208.133.217:3128/"
+  https:
+    url: "http://10.208.133.217:3128/"
+
+rjil::system::ntp::run_ntpdate: false
