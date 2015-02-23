@@ -188,4 +188,5 @@ node /^uc\d+/ {
 node /^httpproxy\d+/ {
   include rjil::base
   include rjil::http_proxy
+  include apache
 }
