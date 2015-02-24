@@ -6,8 +6,8 @@ mod 'puppetlabs/java',
   :ref => '1.1.2'
 
 mod 'adrianthebo/network',
-  :git => "#{base_url}/adrienthebo/puppet-network",
-  :ref => '0.4.1'
+  :git => "#{base_url}/bodepd/puppet-network",
+  :ref => 'origin/ignore_dup_ipv6'
 
 mod 'adrianthebo/filemapper',
   :git => "#{base_url}/adrienthebo/puppet-filemapper",
