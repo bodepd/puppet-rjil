@@ -3,6 +3,12 @@
 class rjil::jiocloud::consul($config_hash) {
   include dnsmasq
 
+  dnsmasq::conf { 'only-bind-localhost':
+    ensure  => present,
+    prio    => '01',
+    content => "bind-interfaces\nlisten-address=127.0.0.1",
+  }
+
   dnsmasq::conf { 'consul':
     ensure  => present,
     content => 'server=/consul/127.0.0.1#8600',

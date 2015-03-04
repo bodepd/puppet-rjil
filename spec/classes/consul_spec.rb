@@ -18,6 +18,30 @@ describe 'rjil::jiocloud::consul' do
   end
 end
 
+describe 'rjil::jiocloud::consul' do
+  let :facts  do
+    {
+      :env             => 'testenv',
+      :osfamily        => 'Debian',
+      :operatingsystem => 'Ubuntu',
+      :architecture    => 'x86_64',
+      :lsbdistrelease  => '14.04',
+      :consul_discovery_token => 'token'
+    }
+  end
+  it 'should configure dnsmasq' do
+    should_contain_dnsmasq__conf('only-bind-localhost').with({
+      'ensure'  => 'present',
+      'prio'    => '01',
+      'content' => "bind-interfaces\nlisten-address=127.0.0.1",
+    })
+    should_contian_dnsmasq__conf('consul').with({
+      'ensure'  => 'present',
+      'content' => 'server=/consul/127.0.0.1#8600',
+    })
+  end
+end
+
 describe 'rjil::jiocloud::consul::bootstrapserver' do
   let :facts  do
     {
