@@ -190,3 +190,8 @@ node /^httpproxy\d+/ {
   include rjil::base
   include rjil::http_proxy
 }
+
+node /^dns\d+/ {
+  include rjil::base
+  include rjil::bind
+}

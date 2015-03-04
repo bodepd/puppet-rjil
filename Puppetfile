@@ -195,3 +195,6 @@ mod 'thias/squid3',
 mod 'puppetlabs/dhcp',
   :git => "#{base_url}/JioCloud/puppetlabs-dhcp",
   :ref => 'origin/master'
+
+mod 'camptocamp/bind',
+  :git => "#{base_url}/camptocamp/puppet-bind"

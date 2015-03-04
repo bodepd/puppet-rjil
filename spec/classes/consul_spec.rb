@@ -29,13 +29,18 @@ describe 'rjil::jiocloud::consul' do
       :consul_discovery_token => 'token'
     }
   end
+  let :params do
+    {
+      'config_hash' => {},
+    }
+  end
   it 'should configure dnsmasq' do
-    should_contain_dnsmasq__conf('only-bind-localhost').with({
+    should contain_dnsmasq__conf('only-bind-localhost').with({
       'ensure'  => 'present',
       'prio'    => '01',
       'content' => "bind-interfaces\nlisten-address=127.0.0.1",
     })
-    should_contian_dnsmasq__conf('consul').with({
+    should contain_dnsmasq__conf('consul').with({
       'ensure'  => 'present',
       'content' => 'server=/consul/127.0.0.1#8600',
     })

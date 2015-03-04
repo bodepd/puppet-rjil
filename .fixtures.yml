@@ -142,3 +142,6 @@ fixtures:
     squid3:
       repo: https://github.com/bodepd/puppet-squid3
       ref: origin/master
+    bind:
+      repo: https://github.com/camptocamp/puppet-bind
+      ref: origin/master

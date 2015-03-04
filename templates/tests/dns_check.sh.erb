@@ -1,0 +1,4 @@
+#!/bin/bash
+set -e
+# verify that we can resolve something
+usr/lib/nagios/plugins/check_dns -s <%= @address %> -H google.com
