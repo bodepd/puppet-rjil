@@ -8,6 +8,7 @@
 class rjil::openstack_objects(
   $identity_address,
   $override_ips      = false,
+  $magic_ip          = false,
 ) {
 
   if $override_ips {
@@ -16,7 +17,11 @@ class rjil::openstack_objects(
     $identity_ips = dns_resolve($identity_address)
   }
 
-  if $identity_ips == '' {
+  $ip_array = split($identity_ips, ',')
+
+  $ips_without_magic_ip = delete($ip_array, $magic_ip)
+
+  if $ips_without_magic_ip == [] {
     $fail = true
   } else {
     $fail = false
