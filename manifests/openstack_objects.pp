@@ -36,7 +36,7 @@ class rjil::openstack_objects(
   Runtime_fail['keystone_endpoint_not_resolvable'] -> Class['keystone::endpoint']
   Runtime_fail['keystone_endpoint_not_resolvable'] -> Class['keystone::roles::admin']
   Runtime_fail['keystone_endpoint_not_resolvable'] -> Class['rjil::keystone::test_user']
-  Runtime_fail['keystone_endpoint_not_resolvable'] -> Class['tempest::provision']
+  Runtime_fail['keystone_endpoint_not_resolvable'] -> Class['rjil::tempest::provision']
 
   # provision keystone objects for all services
   include openstack_extras::keystone_endpoints

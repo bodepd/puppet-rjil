@@ -106,7 +106,7 @@ class rjil::glance (
 
   rjil::test::check { 'glance':
     type    => 'http',
-    address => $server_name,
+    address => 'localhost',
     port    => $api_public_port,
     ssl     => $ssl,
   }
