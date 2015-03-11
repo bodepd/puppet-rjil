@@ -32,11 +32,20 @@ class rjil::openstack_objects(
   runtime_fail {'keystone_endpoint_not_resolvable':
     fail => $fail
   }
-  Runtime_fail['keystone_endpoint_not_resolvable'] -> Class['openstack_extras::keystone_endpoints']
-  Runtime_fail['keystone_endpoint_not_resolvable'] -> Class['keystone::endpoint']
-  Runtime_fail['keystone_endpoint_not_resolvable'] -> Class['keystone::roles::admin']
-  Runtime_fail['keystone_endpoint_not_resolvable'] -> Class['rjil::keystone::test_user']
-  Runtime_fail['keystone_endpoint_not_resolvable'] -> Class['rjil::tempest::provision']
+
+  Runtime_fail['keystone_endpoint_not_resolvable'] -> Keystone_user<||>
+  Runtime_fail['keystone_endpoint_not_resolvable'] -> Keystone_role<||>
+  Runtime_fail['keystone_endpoint_not_resolvable'] -> Keystone_tenant<||>
+  Runtime_fail['keystone_endpoint_not_resolvable'] -> Keystone_service<||>
+  Runtime_fail['keystone_endpoint_not_resolvable'] -> Keystone_endpoint<||>
+  Runtime_fail['keystone_endpoint_not_resolvable'] -> Rjil::Service_blocker['lb.glance']
+  Runtime_fail['keystone_endpoint_not_resolvable'] -> Rjil::Service_blocker['lb.neutron']
+
+  ensure_resource('rjil::service_blocker', 'lb.glance', {})
+  ensure_resource('rjil::service_blocker', 'lb.neutron', {})
+
+  Rjil::Service_blocker['lb.glance'] -> Glance_image<||>
+  Rjil::Service_blocker['lb.neutron'] -> Neutron_network<||>
 
   # provision keystone objects for all services
   include openstack_extras::keystone_endpoints

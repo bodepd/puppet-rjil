@@ -42,17 +42,6 @@ class rjil::tempest::provision (
   }
 
   include ::tempest::provision
-  ensure_resource('rjil::service_blocker', 'lb.glance', {})
-  ensure_resource('rjil::service_blocker', 'lb.neutron', {})
-  ensure_resource('rjil::service_blocker', 'lb.keystone', {})
-
-  Rjil::Service_blocker['lb.glance'] -> Glance_image<||>
-  Rjil::Service_blocker['lb.neutron'] -> Neutron_network<||>
-  Rjil::Service_blocker['lb.neutron'] -> Neutron_subnet<||>
-  Rjil::Service_blocker['lb.keystone'] -> Keystone_user<||>
-  Rjil::Service_blocker['lb.keystone'] -> Keystone_role<||>
-  Rjil::Service_blocker['lb.keystone'] -> Keystone_user_role<||>
-  Rjil::Service_blocker['lb.keystone'] -> Keystone_tenant<||>
 
 }
 
