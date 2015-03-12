@@ -66,11 +66,11 @@ class rjil::neutron::contrail(
       require => Contrail_rt["default-domain:services:${public_network_name}"],
     }
 
-     if $public_cidr {
-       neutron_network {$public_network_name:
-         ensure          => present,
-         router_external => true,
-       }
+    if $public_cidr {
+      neutron_network {$public_network_name:
+        ensure          => present,
+        router_external => true,
+      }
 
       if $public_subnet_ip_start {
         if !$public_subnet_ip_end {
@@ -81,7 +81,7 @@ class rjil::neutron::contrail(
           ensure           => present,
           cidr             => $public_cidr,
           network_name     => $public_network_name,
-          allocation_pools => ["start=$public_subnet_ip_start,end=$public_subnet_ip_end"],
+          allocation_pools => ["start=${public_subnet_ip_start},end=${public_subnet_ip_end}"],
           before           => Contrail_rt["default-domain:services:${public_network_name}"],
         }
       } else {
