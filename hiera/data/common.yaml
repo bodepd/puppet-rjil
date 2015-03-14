@@ -787,6 +787,4 @@ tempest::provision::admin_password: "%{hiera('tempest::admin_password')}"
 tempest::provision::networkname: "%{hiera('tempest::fixed_network_name')}"
 
 apache::trace_enable: 'Off'
-apache::mod::ssl::ssl_cipher: "HIGH:MEDIUM:!aNULL:!MD5:!RC4"
-
-consul::package_name: consul0.5.0
+pache::mod::ssl::ssl_cipher: "HIGH:MEDIUM:!aNULL:!MD5:!RC4"
