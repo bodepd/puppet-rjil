@@ -4,17 +4,27 @@ define rjil::jiocloud::consul::service(
   $interval      = '10s',
   $tags          = [],
 ) {
-  $service_hash = {
+  $default_hash = {
     service => {
       name  => $name,
       port  => $port + 0,
       tags  => $tags,
+    }
+  }
+
+  if $check_command {
+    $check_hash = {
       check => {
         script => $check_command,
         interval => $interval
       }
     }
+  } else {
+    $check_hash = {}
   }
+
+  $service_hash_inner = merge($default_hash['service'], $check_hash)
+  $service_hash       = {service => $service_hash_inner}
 
   ensure_resource( 'file', '/etc/consul',
     {'ensure' => 'directory'}

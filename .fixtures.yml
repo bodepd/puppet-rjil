@@ -111,7 +111,7 @@ fixtures:
       repo: https://github.com/JioCloud/puppet-dnsmasq
       ref: origin/master
     consul:
-      repo: https://github.com/solarkennedy/puppet-consul
+      repo: https://github.com/jiocloud/puppet-consul
       ref: origin/master
     ntp:
       repo: https://github.com/puppetlabs/puppetlabs-ntp
