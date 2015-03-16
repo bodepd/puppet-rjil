@@ -142,3 +142,6 @@ fixtures:
     squid3:
       repo: https://github.com/bodepd/puppet-squid3
       ref: origin/master
+    collectd:
+      repo: https://github.com/pdxcat/puppet-module-collectd
+      ref: v3.2.0

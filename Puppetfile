@@ -195,3 +195,7 @@ mod 'thias/squid3',
 mod 'puppetlabs/dhcp',
   :git => "#{base_url}/JioCloud/puppetlabs-dhcp",
   :ref => 'origin/master'
+
+mod 'pdxcat/collectd',
+  :git => "#{base_url}/pdxcat/puppet-module-collectd",
+  :ref => 'v3.2.0'

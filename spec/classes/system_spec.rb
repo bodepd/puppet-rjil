@@ -35,6 +35,7 @@ describe 'rjil::system' do
       should contain_class('timezone')
       should contain_class('rjil::system::ntp')
       should contain_class('rjil::system::apt')
+      should contain_class('rjil::system::metrics')
       should contain_class('rjil::system::accounts')
       should contain_package('molly-guard')
 

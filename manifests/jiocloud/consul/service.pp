@@ -3,17 +3,32 @@ define rjil::jiocloud::consul::service(
   $check_command = "/usr/lib/jiocloud/tests/service_checks/${name}.sh",
   $interval      = '10s',
   $tags          = [],
+  $ttl           = false,
 ) {
-  $service_hash = {
-    service => {
-      name  => $name,
-      port  => $port + 0,
-      tags  => $tags,
+
+  $basic_hash = {
+    name  => $name,
+    port  => $port + 0,
+    tags  => $tags,
+  }
+
+  if $check_command {
+    $check_hash = {
       check => {
-        script => $check_command,
+        script   => $check_command,
         interval => $interval
       }
     }
+  } elsif $ttl {
+    $check_hash = {
+      check => {
+        ttl => $ttl
+      }
+    }
+  }
+
+  $service_hash = {
+    service => merge($basic_hash, $check_hash)
   }
 
   ensure_resource( 'file', '/etc/consul',

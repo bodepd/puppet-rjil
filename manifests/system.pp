@@ -16,6 +16,7 @@ class rjil::system(
 
   include rjil::system::apt
   include rjil::system::accounts
+  include rjil::system::metrics
 
   ensure_packages(['molly-guard'])
 
