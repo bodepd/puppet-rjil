@@ -70,7 +70,7 @@ node /^ct\d+/ {
   include rjil::base
   include rjil::redis
   include rjil::rabbitmq
-  include rjil::zookeeper
+#  include rjil::zookeeper
   include rjil::cassandra
   include rjil::haproxy
   include rjil::haproxy::contrail
