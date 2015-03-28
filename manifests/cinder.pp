@@ -81,7 +81,7 @@ class rjil::cinder (
   ensure_resource('rjil::service_blocker', 'stmon', {})
   Rjil::Service_blocker['stmon']  ->
   Class['rjil::ceph::mon_config'] ->
-  Class['::cinder::volume']
+  Service['cinder-volume']
 
   include rjil::apache
 

@@ -44,7 +44,6 @@ describe 'rjil::cinder' do
       )
       should contain_Cinder_config('database/connection').that_requires('Rjil::Service_blocker[mysql]')
       should contain_class('rjil::ceph::mon_config').that_requires('Rjil::Service_blocker[stmon]')
-      should contain_class('cinder::volume').that_requires('Class[rjil::ceph::mon_config]')
       should contain_ceph__auth('cinder_volume').that_requires('Class[cinder]')
       should contain_cinder_config('DEFAULT/rpc_zmq_bind_address').with_value('*')
       should contain_cinder_config('DEFAULT/ring_file').with_value('/etc/oslo/matchmaker_ring.json')
