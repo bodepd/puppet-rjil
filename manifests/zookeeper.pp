@@ -93,6 +93,27 @@ class rjil::zookeeper (
     notify => Service['zookeeper'],
   }
 
+  $session_name = "zookeeper_${::hostname}"
+  $key_name     = 'zookeeper_restart'
+  $zk_cfg       = '/etc/zookeeper/conf'
+
+  consul_session { $session_name:
+    ensure => present,
+  }
+  # acquire a lock if anything will trigger a zookeeper restart
+  consul_kv_lock { $key_name:
+    session_name => $session_name,
+    subscribe    => File[
+                      "${zk_cfg}/zoo.cfg",
+                      "${zk_cfg}/environment",
+                      "${zk_cfg}/log4j.properties",
+                      "${zk_cfg}/myid"],
+  }
+  # release the lock when our service restart is done
+  consul_kv_release { $key_name:
+    session_name => $session_name,
+    subscribe    => [Consul_kv_lock[$key_name], Service['zookeeper']]
+  }
 
   rjil::test { 'check_zookeeper.sh': }
 

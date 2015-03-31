@@ -135,8 +135,8 @@ fixtures:
       repo: https://github.com/adrienthebo/puppet-filemapper
       ref: 1.1.3
     orchestration_utils:
-      repo: https://github.com/jiocloud/puppet-orchestration_utils
-      ref: origin/master
+      repo: https://github.com/bodepd/puppet-orchestration_utils
+      ref: origin/lock_release
     squid3:
       repo: https://github.com/bodepd/puppet-squid3
       ref: origin/master
