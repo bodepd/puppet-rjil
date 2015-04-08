@@ -28,16 +28,20 @@ class rjil::openstack_objects(
     fail => $fail
   }
 
-  Runtime_fail['keystone_endpoint_not_resolvable'] -> Keystone_user<||>
-  Runtime_fail['keystone_endpoint_not_resolvable'] -> Keystone_role<||>
-  Runtime_fail['keystone_endpoint_not_resolvable'] -> Keystone_tenant<||>
-  Runtime_fail['keystone_endpoint_not_resolvable'] -> Keystone_service<||>
-  Runtime_fail['keystone_endpoint_not_resolvable'] -> Keystone_endpoint<||>
-  Runtime_fail['keystone_endpoint_not_resolvable'] -> Rjil::Service_blocker['lb.glance']
-  Runtime_fail['keystone_endpoint_not_resolvable'] -> Rjil::Service_blocker['lb.neutron']
+  Runtime_fail['keystone_endpoint_not_resolvable'] -> Keystone_user<||> -> Anchor['after_keystone_obj']
+  Runtime_fail['keystone_endpoint_not_resolvable'] -> Keystone_role<||> -> Anchor['after_keystone_obj']
+  Runtime_fail['keystone_endpoint_not_resolvable'] -> Keystone_tenant<||> -> Anchor['after_keystone_obj']
+  Runtime_fail['keystone_endpoint_not_resolvable'] -> Keystone_service<||> -> Anchor['after_keystone_obj']
+  Runtime_fail['keystone_endpoint_not_resolvable'] -> Keystone_endpoint<||> -> Anchor['after_keystone_obj']
+  # the endpoints aren't usable until after the keystone objects exist
+  Anchor['after_keystone_obj'] -> Rjil::Service_blocker['lb.glance']
+  Anchor['after_keystone_obj'] -> Rjil::Service_blocker['lb.neutron']
 
   ensure_resource('rjil::service_blocker', 'lb.glance', {})
   ensure_resource('rjil::service_blocker', 'lb.neutron', {})
+
+  # create a simple anchor so that we can have things block on all keystone objects
+  anchor { 'after_keystone_obj':}
 
   Rjil::Service_blocker['lb.glance'] -> Glance_image<||>
   Rjil::Service_blocker['lb.neutron'] -> Neutron_network<||>
