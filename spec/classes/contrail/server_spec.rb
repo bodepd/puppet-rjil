@@ -12,12 +12,20 @@ describe 'rjil::contrail::server' do
       :lsbdistcodename  => 'trusty',
     }
   end
+  let :params do
+    {
+      'zk_ip_list'        => [],
+      'cassandra_ip_list' => [],
+      'config_ip_list'    => [],
+    }
+  end
   let :hiera_data do
     {
       'contrail::keystone_address'        => 'keystone_public_address',
       'contrail::keystone_admin_token'    => 'admin_token',
       'contrail::keystone_admin_password' => 'admin_pass',
       'contrail::keystone_auth_password'  => 'auth_pass',
+      'rjil::zookeeper'                   => {},
     }
   end
 

@@ -37,6 +37,10 @@ describe 'rjil::neutron::contrail' do
                                                               :cidr         => '1.1.1.1/24',
                                                             }
                                                         }
+      'rjil::zookeeper'                             => {},
+      'rjil::contrail::server::zk_ip_list'          => [],
+      'rjil::contrail::server::cassandra_ip_list'   => [],
+      'rjil::contrail::server::config_ip_list'      => [],
     }
   end
 

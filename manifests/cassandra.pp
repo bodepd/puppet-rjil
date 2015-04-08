@@ -27,27 +27,58 @@
 # rjil::cassandra::package_name:
 #    Cassandra package name, the package name contains the major versions, so
 #    have to set the package name.
+#
+# [*seed*] If we are the seed node used for bootstrapping
+#
 
 class rjil::cassandra (
-  $seeds        = [$::ipaddress],
-  $cluster_name =  'contrail',
+  $local_ip          = $::ipaddress,
+  $seeds             = values(service_discover_consul('cassandra', 'seed')),
+  $seed              = false,
+  $cluster_name      = 'contrail',
   $thread_stack_size = 300,
-  $version      = '1.2.18-1',
-  $package_name  = 'dsc12',
+  $version           = '1.2.18-1',
+  $package_name      = 'dsc12',
 ) {
+
+  # if we are the seed, add ourselves to the list
+  if $seed == true {
+    $seeds_with_self = unique(concat($seeds, [$local_ip]))
+  } else {
+    if size($seeds) < 1 {
+      $fail = true
+      # this is just being set so that the cassandra class does not fail to compile
+      $seeds_with_self = ['127.0.0.1']
+    } else {
+      $fail = false
+      $seeds_with_self = $seeds
+    }
+  }
+
+  rjil::seed_orchestrator { 'cassandra':
+    port              => 9160,
+    check_type        => 'tcp',
+    tags              => ['real', 'contrail'],
+    seed              => $seed,
+    dep_resources     => File['/etc/cassandra/cassandra.yaml'],
+    follower_fail     => $fail,
+    follower_fail_msg => "Cassandra follower cannot be deployed without a seed, only contained ${cluster_with_self}"
+  }
 
   rjil::test { 'check_cassandra.sh': }
   # make sure that hostname is resolvable or cassandra fails
   host { 'localhost':
-    ip => '127.0.0.1',
+    ip           => '127.0.0.1',
     host_aliases => ['localhost.localdomain', $::hostname],
   }
 
   if $thread_stack_size < 229 {
     fail("JVM Thread stack size (thread_stack_size) must be > 230")
   }
+
   class {'::cassandra':
-    seeds             => $seeds,
+    listen_address    => $local_ip,
+    seeds             => $seeds_with_self,
     cluster_name      => $cluster_name,
     thread_stack_size => $thread_stack_size,
     version           => $version,
