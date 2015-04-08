@@ -626,6 +626,13 @@ contrail::neutron_ip: "%{hiera('neutron_public_address')}"
 rjil::zookeeper::datastore: /var/lib/contrail-zookeeper
 rjil::zookeeper::local_ip: "%{hiera('private_address')}"
 rjil::cassandra::local_ip: "%{hiera('private_address')}"
+
+# this still needs to be scaled out, but atm, it is hard-coded to $::ipadress
+rjil::haproxy::contrail::api_backend_ips:
+  - "%{hiera('private_address')}"
+rjil::haproxy::contrail::discovery_backend_ips:
+  - "%{hiera('private_address')}"
+
 ##
 # Adding common setting for contrail::interface, this may need to be override in
 # environment specific interface
