@@ -1,0 +1,2 @@
+rjil::neutron::contrail::seed: false
+contrail::config::seed: false

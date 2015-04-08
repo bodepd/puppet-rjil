@@ -70,15 +70,28 @@ node /^stmon\d+/ {
 node /^ct\d+/ {
   include rjil::base
   include rjil::redis
-  include rjil::cassandra
   include rjil::rabbitmq
   include rjil::zookeeper
+  include rjil::cassandra
   include rjil::haproxy
   include rjil::haproxy::contrail
-  include rjil::contrail::server
   include rjil::neutron::contrail
 }
 
+node /^ctseed\d+/ {
+  include rjil::base
+  include rjil::redis
+  class { 'rjil::cassandra':
+    seed => true,
+  }
+  include rjil::rabbitmq
+  class { 'rjil::zookeeper':
+    seed => true
+  }
+  include rjil::haproxy
+  include rjil::haproxy::contrail
+  include rjil::neutron::contrail
+}
 
 ##
 ## oc is openstack controller node which will have all
