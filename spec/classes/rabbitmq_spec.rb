@@ -20,6 +20,12 @@ describe 'rjil::rabbitmq' do
     }
   end
 
+  let :params do
+    {
+      'cluster_nodes' => []
+    }
+  end
+
   context 'with defaults' do
     it do
       should contain_file('/usr/lib/jiocloud/tests/check_rabbitmq.sh')
@@ -28,6 +34,8 @@ describe 'rjil::rabbitmq' do
         'admin_enable' => false,
         'delete_guest_user' => true,
         'port' => '5672',
+        'config_cluster' => true,
+        'cluster_nodes'  => [],
       })
     end
   end
