@@ -1,0 +1,7 @@
+#!/bin/bash
+<% @config_ip_list.each do |x| -%>
+if /usr/lib/nagios/plugins/check_http -H <%= x %> -p 8087 -u / -r sandesh_uve.xml ; then
+  exit 0
+fi
+<% end -%>
+exit 2

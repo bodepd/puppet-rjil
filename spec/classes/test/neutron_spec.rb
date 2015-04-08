@@ -8,14 +8,20 @@ describe 'rjil::test::neutron' do
     }
   end
 
+  let :facts do
+    {
+      'hostname' => 'foo',
+    }
+  end
+
   context 'with defaults' do
-    it do 
+    it do
       should contain_class('rjil::test::base')
     end
 
     it do
       should contain_file('/usr/lib/jiocloud/tests/neutron-service.sh') \
-        .with_source('puppet:///modules/rjil/tests/neutron.sh') \
+        .with_content(/netname=testnetfoo/) \
         .with_owner('root') \
         .with_group('root') \
         .with_mode('0755')

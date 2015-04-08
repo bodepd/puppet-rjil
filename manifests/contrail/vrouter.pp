@@ -8,10 +8,11 @@
 ###
 
 class rjil::contrail::vrouter (
-  $discovery_address = join(service_discover_dns('real.neutron.service.consul','name')),
-  $api_address       = undef,
+  $discovery_addresses = values(service_discover_consul('neutron', 'real')),
+  $api_address         = undef,
 ) {
 
+  $discovery_address = $discovery_addresses[0]
 
   ##
   # Vgw need floating IP pool to be created before it can successfully created.
