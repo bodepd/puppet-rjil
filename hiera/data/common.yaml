@@ -644,6 +644,10 @@ contrail::enable_analytics: false
 
 rjil::contrail::server::enable_analytics: false
 
+# once we configure zookeeper switch to a custom data location to
+# prevent initialization issues
+rjil::zookeeper::datastore: /var/lib/contrail-zookeeper
+rjil::zookeeper::local_ip: "%{hiera('private_address')}"
 ##
 # Adding common setting for contrail::interface, this may need to be override in
 # environment specific interface
