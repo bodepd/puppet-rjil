@@ -30,6 +30,10 @@ describe 'rjil::neutron::contrail' do
       'neutron::quota::quota_driver'                => 'contraildriver',
       'rjil::neutron::api_extensions_path'          => 'extensionspath',
       'rjil::neutron::service_provider'             => 'serviceprovider',
+      'rjil::zookeeper'                             => {},
+      'rjil::contrail::server::zk_ip_list'          => [],
+      'rjil::contrail::server::cassandra_ip_list'   => [],
+      'rjil::contrail::server::config_ip_list'      => [],
     }
   end
 

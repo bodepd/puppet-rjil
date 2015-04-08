@@ -20,11 +20,17 @@ describe 'rjil::cassandra' do
     }
   end
 
+  let :params do
+    {
+      'seeds'             => [],
+    }
+  end
+
   context 'with hieraconfig' do
     it do
       should contain_file('/usr/lib/jiocloud/tests/check_cassandra.sh')
       should contain_class('cassandra').with({
-        'seeds'             => ['10.1.2.3'],
+        'seeds'             => ['127.0.0.1'],
         'cluster_name'      => 'testcluster',
         'thread_stack_size' => 400,
         'version'           => '1.2.18-1',
