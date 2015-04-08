@@ -607,6 +607,10 @@ contrail::manage_repo: false
 contrail::vrouter::manage_repo: false
 contrail::neutron_ip: "%{hiera('neutron_public_address')}"
 
+# once we configure zookeeper switch to a custom data location to
+# prevent initialization issues
+rjil::zookeeper::datastore: /var/lib/contrail-zookeeper
+rjil::zookeeper::local_ip: "%{hiera('private_address')}"
 ##
 # Adding common setting for contrail::interface, this may need to be override in
 # environment specific interface
