@@ -12,7 +12,7 @@ class rjil::openstack_objects(
   $tenants           = undef,
 ) {
 
-  if $override_ips {
+  if $override_ips  != false {
     $identity_ips = $override_ips
   } else {
     $identity_ips = dns_resolve($identity_address)
