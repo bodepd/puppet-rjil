@@ -6,7 +6,23 @@ class rjil::contrail::server (
   $zk_ip_list        = sort(values(service_discover_consul('zookeeper'))),
   $cassandra_ip_list = sort(values(service_discover_consul('cassandra'))),
   $config_ip_list    = sort(values(service_discover_consul('contrail', 'real'))),
+  $min_members       = 3,
 ) {
+
+  # Do not initialize contrail services until the entire data plane has been
+  # correctly scaled and configured. This is intended to prevent any issues
+  # where scaling the data sources causes inconsistencies with data initializations
+  # in contrail
+  if size($zk_ip_list) < $min_members or size($cassandra_ip_list) < $min_members {
+    $fail = true
+  } else {
+    $fail = false
+  }
+  runtime_fail { 'contrail_data_not_ready':
+    fail    => $fail,
+    message => "Waiting for ${min_members} zk and cassandra for contrail",
+    before  => Anchor['contrail_dep_apps'],
+  }
 
   # put more dependencies between contrail and things that
   # it depends on. Contrail services seem to get stuck in
