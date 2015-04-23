@@ -49,19 +49,19 @@ class rjil::openstack_objects(
   Runtime_fail['keystone_endpoint_not_resolvable'] -> Keystone_tenant<||>
   Runtime_fail['keystone_endpoint_not_resolvable'] -> Keystone_service<||>
   Runtime_fail['keystone_endpoint_not_resolvable'] -> Keystone_endpoint<||>
-  Runtime_fail['keystone_endpoint_not_resolvable'] -> Rjil::Service_blocker[$glance_service_name]
-  Runtime_fail['keystone_endpoint_not_resolvable'] -> Rjil::Service_blocker[$neutron_service_name]
-
-  ensure_resource('rjil::service_blocker', $glance_service_name, {})
-  ensure_resource('rjil::service_blocker', $neutron_service_name, {})
-
-  Rjil::Service_blocker[$glance_service_name] -> Glance_image<||>
-  Rjil::Service_blocker[$neutron_service_name] -> Neutron_network<||>
+#  Runtime_fail['keystone_endpoint_not_resolvable'] -> Rjil::Service_blocker[$glance_service_name]
+#  Runtime_fail['keystone_endpoint_not_resolvable'] -> Rjil::Service_blocker[$neutron_service_name]
+#
+#  ensure_resource('rjil::service_blocker', $glance_service_name, {})
+#  ensure_resource('rjil::service_blocker', $neutron_service_name, {})
+#
+#  Rjil::Service_blocker[$glance_service_name] -> Glance_image<||>
+#  Rjil::Service_blocker[$neutron_service_name] -> Neutron_network<||>
 
   # provision keystone objects for all services
   include openstack_extras::keystone_endpoints
   # provision tempest resources like images, network, users etc.
-  include tempest::provision
+  #include tempest::provision
 
   # create users, tenants, roles, default networks
   create_resources('rjil::keystone::user',$users)
