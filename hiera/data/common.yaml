@@ -613,7 +613,7 @@ rjil::system::apt::repositories:
     release: trusty-updates/kilo
     repos: main
     include_src: false
-    required_packages: 'ubuntu-cloud-keyring'
+    key: 'EC4926EA'
     key_content: |
       -----BEGIN PGP PUBLIC KEY BLOCK-----
       Version: GnuPG v1
