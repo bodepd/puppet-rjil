@@ -19,9 +19,18 @@ class rjil::system::apt (
   }
   Apt::Source<||> -> Package<||>
   Apt::Pin<||> -> Package<||>
+  File['/etc/apt/preferences.d/ignore_rusted_halo_openstack'] -> Package<||>
 
   if $enable_puppetlabs {
     include puppet::repo::puppetlabs
+  }
+
+  file { '/etc/apt/preferences.d/ignore_rusted_halo_openstack':
+    content =>
+'Package:  *
+Pin: release o=JioCloud
+Pin-Priority: 1',
+    tag   => 'package',
   }
 
   if ($proxy) {
