@@ -113,6 +113,20 @@ node /^ocdb\d+/ {
   include rjil::openstack_objects
 }
 
+
+node /^keystone\d+/ {
+  include rjil::base
+  #include rjil::memcached
+  include openstack_extras::client
+  include rjil::db
+  include rjil::keystone
+  #include rjil::cinder
+  #include rjil::glance
+  #include rjil::nova::controller
+  include rjil::openstack_zeromq
+  include rjil::openstack_objects
+}
+
 #
 # A variation of the controller that also runs a load balancer
 #

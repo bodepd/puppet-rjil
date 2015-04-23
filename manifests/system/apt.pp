@@ -38,5 +38,5 @@ class rjil::system::apt (
       tag   => 'package',
     }
   }
-  create_resources(rjil::system::apt::repo, $repositories, {'tag' => 'package'} )
+  create_resources(apt::source, $repositories, {'tag' => 'package'} )
 }
