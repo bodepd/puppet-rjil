@@ -126,6 +126,9 @@ node /^keystone\d+/ {
   #include rjil::nova::controller
   include rjil::openstack_zeromq
   include rjil::openstack_objects
+  Exec <| title == 'keystone-manage db_sync' |> {
+    logoutput => on_failure
+  }
 }
 
 #
