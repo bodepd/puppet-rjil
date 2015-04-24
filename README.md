@@ -717,6 +717,10 @@ Protocol to use when fetching puppet modules. Defaults to `git`.
 export git_protocol=https
 ````
 
+### override\_repo
+
+a file location for a tgz file that stores a repo that needs to be added for development or testing of new repo features.
+
 ## Example of a full invocation
 
 This is what I used for testing:

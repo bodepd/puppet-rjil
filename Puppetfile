@@ -61,10 +61,6 @@ mod 'saz/timezone',
   :git => "#{base_url}/saz/puppet-timezone",
   :ref => 'v2.0.0'
 
-mod 'nanliu/staging',
-  :git => "#{base_url}/nanliu/puppet-staging",
-  :ref => '0.4.1'
-
 mod 'puppetlabs/apache',
   :git => "#{base_url}/puppetlabs/puppetlabs-apache",
   :ref => '1.2.0'
@@ -199,3 +195,11 @@ mod 'puppetlabs/dhcp',
 mod 'rodjek/logrotate',
   :git => "#{base_url}/rodjek/puppet-logrotate/",
   :ref => '89ee645e2350045be48df7ac3ef86cbe4cd9b096'
+
+mod 'nanliu/staging',
+  :git => "#{base_url}/nanliu/puppet-staging",
+  :ref => '9c1c08af301dabe35c0d95ee7de9ab6ef2343139'
+
+mod 'community/archive',
+  :git => "#{base_url}/puppet-community/puppet-archive",
+  :ref => 'f875114ecb962a0d02b4496fab6a871ca1e637c1'

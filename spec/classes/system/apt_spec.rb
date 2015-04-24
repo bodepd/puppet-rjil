@@ -44,4 +44,30 @@ describe 'rjil::system::apt' do
     it { should_not contain_apt__source('puppetlabs') }
   end
 
+  describe 'with override repo' do
+    let :params do
+      {
+        'override_repo' => 'http://foo/tar.tgz'
+      }
+    end
+    it 'should contain override resources' do
+      ['/var/lib/jiocloud', '/var/lib/jiocloud/overrides'].each do |x|
+        should contain_file(x).with_ensure('directory')
+      end
+      should contain_archive('/var/lib/jiocloud/overrides/repo.tgz').with({
+        'source'       => 'http://foo/tar.tgz',
+        'extract'      => true,
+        'extract_path' => '/var/lib/jiocloud/overrides',
+        'creates'      => '/var/lib/jiocloud/overrides/Packages',
+        'before'       => 'Apt::Source[overrides]',
+      })
+      should contain_apt__source('overrides').with({
+        'location'    => 'file:/var/lib/jiocloud/overrides',
+        'release'     => './',
+        'repos'       => '',
+        'include_src' => false,
+      })
+    end
+  end
+
 end
