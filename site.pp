@@ -90,7 +90,7 @@ node /^oc\d+/ {
   include rjil::base
   include rjil::memcached
   include rjil::keystone
-  include openstack_extras::client
+  include openstacklib::openstackclient
   include rjil::cinder
   include rjil::glance
   include rjil::openstack_zeromq
@@ -104,7 +104,7 @@ node /^oc\d+/ {
 node /^ocdb\d+/ {
   include rjil::base
   include rjil::memcached
-  include openstack_extras::client
+  include openstacklib::openstackclient
   include rjil::db
   include rjil::keystone
   include rjil::cinder
@@ -118,7 +118,7 @@ node /^ocdb\d+/ {
 node /^keystone\d+/ {
   include rjil::base
   #include rjil::memcached
-  include openstack_extras::client
+  include openstacklib::openstackclient
   include rjil::db
   include rjil::keystone
   #include rjil::cinder
@@ -137,7 +137,7 @@ node /^keystone\d+/ {
 
 node /^oclb\d+/ {
   include rjil::base
-  include openstack_extras::client
+  include openstacklib::openstackclient
   include rjil::memcached
   include rjil::db
   include rjil::keystone
@@ -161,7 +161,7 @@ node /^oclb\d+/ {
 node /^gcp\d+/ {
   include rjil::base
   include rjil::ceph
-  include openstack_extras::client
+  include openstacklib::openstackclient
   include rjil::contrail::vrouter
   include rjil::openstack_zeromq
   include rjil::nova::compute
@@ -172,7 +172,7 @@ node /^gcp\d+/ {
 node /^cp\d+/ {
   include rjil::base
   include rjil::ceph
-  include openstack_extras::client
+  include openstacklib::openstackclient
   include rjil::contrail::vrouter
   include rjil::openstack_zeromq
   include rjil::nova::compute
@@ -187,7 +187,7 @@ node /^haproxy\d+/ {
 node /^uc\d+/ {
   include rjil::base
   include rjil::memcached
-  include openstack_extras::client
+  include openstacklib::openstackclient
   include rjil::db
   include rjil::keystone
   include rjil::glance
