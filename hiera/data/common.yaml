@@ -464,10 +464,10 @@ keystone::admin_bind_host: "%{hiera('localbind_host')}"
 keystone::admin_endpoint: "%{hiera('api_protocol')}://%{hiera('keystone_private_address')}:%{hiera('keystone_admin_port')}"
 keystone::public_endpoint: "%{hiera('api_protocol')}://%{hiera('keystone_public_address')}:%{hiera('keystone_port')}"
 
-# these changes are just from our fork and need to be moved to the profile
-rjil::keystone::cache_enabled: true
-rjil::keystone::cache_backend: dogpile.cache.memcached
-rjil::keystone::cache_backend_argument: url:127.0.0.1:11211
+# enable keystone caching with memcache.pool
+keystone::memcache_servers: ['127.0.0.1:11211']
+keystone::cache_backend: keystone.cache.memcache_pool
+keystone::debug_cache_backend: "%{hiera('debug')}"
 
 rjil::openstack_objects::identity_address: "%{hiera('keystone_public_address')}"
 
