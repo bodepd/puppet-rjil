@@ -117,7 +117,7 @@ node /^ocdb\d+/ {
 
 node /^keystone\d+/ {
   include rjil::base
-  #include rjil::memcached
+  include rjil::memcached
   include openstacklib::openstackclient
   include rjil::db
   include rjil::keystone
