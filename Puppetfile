@@ -94,8 +94,8 @@ mod 'stackforge/glance',
   :ref => 'f377c0229c006b02f43a14be4979553e983cb98e'
 
 mod 'puppetlabs/keystone',
-  :git => "#{base_url}/stackforge/puppet-keystone",
-  :ref => 'master'
+  :git => "#{base_url}/bodepd/puppet-keystone",
+  :ref => 'include_openstacklib'
 
 mod 'puppetlabs/mysql',
   :git => "#{base_url}/puppetlabs/puppetlabs-mysql",
