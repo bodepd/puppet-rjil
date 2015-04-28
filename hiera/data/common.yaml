@@ -170,6 +170,7 @@ rjil::glance::backend: rbd
 
 ### Start: rbd backend specific settings
 rjil::glance::ceph_mon_key: "%{hiera('rjil::ceph::mon::key')}"
+glance::api::known_stores: ['rbd']
 rjil::glance::rbd_user: glance
 rjil::glance::admin_email: "%{hiera('admin_email')}"
 rjil::glance::server_name: "%{hiera('glance_public_address')}"
