@@ -71,7 +71,7 @@ mod 'puppetlabs/apt',
 
 mod 'stackforge/cinder',
   :git => "#{base_url}/stackforge/puppet-cinder",
-  :ref => 'stable/icehouse'
+  :ref => 'master'
 
 mod 'stackforge/openstacklib',
   :git => "#{base_url}/bodepd/puppet-openstacklib",
@@ -90,8 +90,8 @@ mod 'enovance/ceph',
   :ref => 'svn_to_git_2'
 
 mod 'stackforge/glance',
-  :git => "#{base_url}/stackforge/puppet-glance",
-  :ref => 'f377c0229c006b02f43a14be4979553e983cb98e'
+  :git => "#{base_url}/bodepd/puppet-glance",
+  :ref => 'service_description_param'
 
 mod 'puppetlabs/keystone',
   :git => "#{base_url}/bodepd/puppet-keystone",
