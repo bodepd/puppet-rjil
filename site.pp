@@ -83,6 +83,11 @@ node /^ct\d+/ {
     version  => '0.8.15-1contrail1',
     priority => '1000',
   }
+  file_line { 'java_security_hack':
+    ensure => absent,
+    line => 'jdk.tls.disabledAlgorithms=SSLv3',
+    path => '/etc/java-7-openjdk/security/java.security',
+  } -> Service<| title == 'ifmap-server' |>
 }
 
 
