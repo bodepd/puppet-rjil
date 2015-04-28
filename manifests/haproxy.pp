@@ -66,7 +66,7 @@ class rjil::haproxy (
 
   haproxy::listen { 'lb-stats':
     ipaddress => '0.0.0.0',
-    ports     => '8094',
+    ports     => '8095',
     mode      => 'http',
     options   => {
       'option'  => [
@@ -81,8 +81,8 @@ class rjil::haproxy (
   }
 
   rjil::jiocloud::consul::service { "haproxy":
-    port          => 8094,
-    check_command => "/usr/lib/nagios/plugins/check_haproxy -u 'http://0.0.0.0:8094/lb-stats;csv'",
+    port          => 8095,
+    check_command => "/usr/lib/nagios/plugins/check_haproxy -u 'http://0.0.0.0:8095/lb-stats;csv'",
     tags          => $consul_service_tags
   }
 
