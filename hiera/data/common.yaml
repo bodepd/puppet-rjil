@@ -203,6 +203,8 @@ glance::api::registry_host: "localhost"
 glance::api::registry_port: "%{hiera('glance_registry_localbind_port')}"
 glance::api::registry_client_protocol: http
 
+# this field needs to be set to the old value b/c it cannot be upgraded.
+glance::keystone::auth::service_description: 'Openstack Image Service'
 glance::api::auth_host: "%{hiera('keystone_public_address')}"
 glance::api::auth_protocol: "%{hiera('rjil::keystone::protocol')}"
 glance::api::auth_uri: "%{hiera('rjil::keystone::protocol')}://%{hiera('glance::api::auth_host')}:%{hiera('keystone_port')}/%{hiera('rjil::keystone::version')}"

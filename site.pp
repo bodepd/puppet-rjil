@@ -119,8 +119,8 @@ node /^ocdb\d+/ {
   include openstacklib::openstackclient
   include rjil::db
   include rjil::keystone
-  #include rjil::cinder
-  #include rjil::glance
+  include rjil::cinder
+  include rjil::glance
   #include rjil::nova::controller
   include rjil::openstack_zeromq
   include rjil::openstack_objects
