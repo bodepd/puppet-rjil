@@ -77,6 +77,11 @@ node /^ct\d+/ {
   include rjil::haproxy::contrail
   include rjil::contrail::server
   include rjil::neutron::contrail
+  apt::pin { 'nodejs':
+    packages => 'nodejs',
+    version  => '0.8.15-1contrail1',
+    priority => '1000',
+  }
 }
 
 

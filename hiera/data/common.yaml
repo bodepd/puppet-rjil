@@ -603,6 +603,41 @@ rjil::system::apt::repositories:
       8+w98auNwA18
       =uX7x
       -----END PGP PUBLIC KEY BLOCK-----
+  contrail:
+    location: 'http://ppa.launchpad.net/syseleven-platform/contrail-2.0/ubuntu'
+    release: trusty
+    repos: main
+    include_src: false
+    key: '24911626'
+    key_content: |
+      -----BEGIN PGP PUBLIC KEY BLOCK-----
+      Version: SKS 1.1.4
+      Comment: Hostname: keyserver.ubuntu.com
+
+      mQINBFPJEQIBEADY6QrZM5ST/6rNut+hRS82Msgw3IraNc8llBugPqUNXgUoyEWKM6Zqv3n4
+      u4XV8dtSefu9r+f3zK9q01s2N/LIOyNCY7pyxi5o+bYRyMDj+Cp7uSzYyp2Cves1OrAfGwY3
+      QNqnqJUVpp8UeiPQWg+KFGIKSxO1vKemOR47ZNbVaGWycfseD+SvxCKubei+bH2EAiRxtZst
+      Hj2/zFb+N+Z3IukHIp5Rg36/ttl8c0HsPVz9IyLAHGnnag0XlTFGJqI2MOIk9mHVsvZ0+o4Z
+      CufCDFepXhU0oSHOkhKIG1zjAEg1MNQpdmORciz546Ai4Rl84VOVhc7xSuchywWoYSDJDlEh
+      fgKksLhAjl7u6+H/JyhYwzEPtExd4R/6iPHGSe/Hzu7xMryj/ydNrxoOr7aCigtMJP2HiOIC
+      7MLdGXofoH8KRlvGOW8lOlYcNJRiBXQJDwDmqHE35lJKUXn8yaNrM+16BUXz/zISgUBgXkKE
+      lcfbv/lSN1UIn5+MnwLQFCb+H8cbSwhDIf4Uyyj866zL9wgEwTc/BdYYtxxOuxqCsZI7Z1fy
+      gzT0lAulUeK4AGTyHAClJty/bBZ66iNTr+PoneirXyxiByaB8WTJ8Fu9BS5mCkeTCnodQqS3
+      8MMSIlomo/G3YvAhKCZy52IApz/VrlJUzDv1prw4Os4bsDwyqwARAQABtCRMYXVuY2hwYWQg
+      UFBBIGZvciBzeXNlbGV2ZW4tcGxhdGZvcm2JAjgEEwECACIFAlPJEQICGwMGCwkIBwMCBhUI
+      AgkKCwQWAgMBAh4BAheAAAoJEHc2IjckkRYm3SoQAKkrRXSVE0nmfsL9EBpLhS9Eig9FIcU1
+      0bTCeUqnhiFlgFVTmo7HXhzfy50VZUp4m2RBMG0TWOGdYl0iSEadhvlfMvHo9puSCXlNCySR
+      +QIqnTJ0sDF50OlGZYLoB4Z081TcfT5V+dRiA9zRfqhVZxbCRjuDtYyKlwHPwZrOCEUvbRI1
+      XbktyUZlAx5cO1/X3I0LjfWhx9AmzI0ZuvZDonyjDi3HGF3W1dDHwQHdNDUR132PcMu3u2hL
+      XNYk6dsLvmhIzV8YrLg8FnLiH+iGFNVa6qRFtGftZSpLLOCu4PWGUYL4a21OfawSkxnsKlXt
+      i7bl3e/eRa/5t5W7jiz+/Xn/lQBOvwXrrE4bsKai12Whd2c615bvPKWuLC6zIMyCnK6Ix0wx
+      TpiMLQvmBeSIzpp7Nna5AEZXyjB2T8xw29kfyzgldYKujxX2oC2zriQR9ORfOLci60u5b6lx
+      WhP95xSrGxq/qKWru5mBfRNyCDBEGy+Zhrp9Ox1O5pvtqvGvr5aSYH1O6AsbGoZfcP6/NnzX
+      5g39xPR+PQBRd6ivuFW6cBjMeGPTJv34C0k8Ne+dnYGd/u27QKcXKtK0s5a9eCFogSN3Lp2j
+      VNqIyt8g5OIsuT0EoSWRbOkplXzsRQI+WQNPu4dOOC2TzDMsEMTvRjTgUuyBhw0TvDBaA7U9
+      OcFv
+      =lBrI
+      -----END PGP PUBLIC KEY BLOCK-----
   rustedhalo:
     location: 'http://jiocloud.rustedhalo.com/ubuntu/'
     release: "%{hiera('rustedhalo_apt_repo_release')}"
