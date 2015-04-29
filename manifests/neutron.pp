@@ -37,7 +37,6 @@ class rjil::neutron (
   ##
 
   include rjil::apache
-  Service['neutron-server'] -> Service['httpd']
 
   ## Configure apache reverse proxy
   apache::vhost { 'neutron':
