@@ -2,7 +2,6 @@
 # Class: rjil::neutron
 #
 class rjil::neutron (
-  $api_extensions_path  = undef,
   $service_provider     = undef,
   $admin_email          = 'root@localhost',
   $server_name          = 'localhost',
@@ -82,12 +81,6 @@ class rjil::neutron (
   # Below configs are not there in neutron module, so adding here for now.
   # These are required for contrail configuration.
   ##
-
-  if $api_extensions_path {
-    neutron_config {'DEFAULT/api_extensions_path':
-      value => $api_extensions_path,
-    }
-  }
 
   if $service_provider {
     neutron_config { 'service_providers/service_provider':
