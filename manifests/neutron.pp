@@ -13,6 +13,11 @@ class rjil::neutron (
   $headers              = undef,
 ) {
 
+  file { '/usr/lib/python2.7/dist-packages/neutron/noopquota.py':
+    source => 'puppet:///modules/rjil/neutron_noop_quota_driver.py',
+    mode   => '0644',
+  }
+
   ##
   # Rjil tests
   ##
