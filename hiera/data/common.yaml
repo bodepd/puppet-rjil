@@ -238,10 +238,12 @@ neutron::server::auth_protocol: "%{hiera('rjil::keystone::protocol')}"
 neutron::server::mysql_module: 2.3
 neutron::rabbit_user: "%{hiera('rabbit_admin_user')}"
 neutron::rabbit_password: "%{hiera('rabbit_admin_pass')}"
-neutron::core_plugin: neutron_plugin_contrail.plugins.opencontrail.contrail_plugin.NeutronPluginContrailCoreV2
-neutron::service_plugins:
-  - neutron_plugin_contrail.plugins.opencontrail.loadbalancer.plugin.LoadBalancerPlugin
-neutron::quota::quota_driver: neutron_plugin_contrail.plugins.opencontrail.quota.driver.QuotaDriver
+neutron::core_plugin: neutron.plugins.opencontrail.contrail_plugin.NeutronPluginContrailCoreV2
+# disabling these until they work with kilo
+#neutron::service_plugins:
+#  - neutron_plugin_contrail.plugins.opencontrail.loadbalancer.plugin.LoadBalancerPlugin
+#neutron::quota::quota_driver: neutron_plugin_contrail.plugins.opencontrail.quota.driver.QuotaDriver
+neutron::quota::quota_driver: neutron.noopquota.NoopQuotaDriver
 neutron::plugins::ovs::tenant_network_type: vlan
 neutron::plugins::ovs::network_vlan_ranges: ctlplane
 
