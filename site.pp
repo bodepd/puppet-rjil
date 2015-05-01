@@ -131,7 +131,7 @@ node /^ocdb\d+/ {
   include rjil::keystone
   include rjil::cinder
   include rjil::glance
-  #include rjil::nova::controller
+  include rjil::nova::controller
   include rjil::openstack_zeromq
   include rjil::openstack_objects
   Exec <| title == 'keystone-manage db_sync' |> {
