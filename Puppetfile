@@ -106,8 +106,8 @@ mod 'stackforge/neutron',
   :ref => 'kilo'
 
 mod 'stackforge/nova',
-  :git => "#{base_url}/jiocloud/puppet-nova",
-  :ref => 'origin/master'
+  :git => "#{base_url}/bodepd/puppet-nova",
+  :ref => 'kilo'
 
 mod 'puppetlabs/rabbitmq',
   :git => "#{base_url}/puppetlabs/puppetlabs-rabbitmq",
