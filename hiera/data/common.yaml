@@ -385,7 +385,7 @@ rjil::nova::compute::rbd::ceph_mon_key: "%{hiera('rjil::ceph::mon::key')}"
 rjil::nova::controller::nova_auth:
   username: nova
   password: "%{hiera('nova::keystone::auth::password')}"
-  tenant_name: services
+  project_name: services
   auth_url: "%{hiera('rjil::keystone::protocol')}://%{hiera('nova::api::auth_host')}:%{hiera('keystone_port')}/%{hiera('rjil::keystone::version')}"
 
 rjil::nova::controller::flavors:
