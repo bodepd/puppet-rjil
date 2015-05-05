@@ -1071,6 +1071,7 @@ rjil::tempest::provision::auth_protocol: "%{hiera('api_protocol')}"
 rjil::tempest::provision::neutron_admin_password: "%{hiera('neutron::keystone::auth::password')}"
 
 tempest::provision::imagename: "%{hiera('tempest::image_name')}"
+tempest::provision::image_source: '/usr/lib/jiocloud/cirros-0.3.3-x86_64-disk.img'
 tempest::provision::tenantname: "%{hiera('tempest::tenant_name')}"
 tempest::provision::username: "%{hiera('tempest::username')}"
 tempest::provision::password: "%{hiera('tempest::password')}"
