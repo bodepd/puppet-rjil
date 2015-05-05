@@ -65,6 +65,10 @@ mod 'nanliu/staging',
   :git => "#{base_url}/nanliu/puppet-staging",
   :ref => '0.4.1'
 
+mod 'community/archive',
+  :git => "#{base_url}/puppet-community/puppet-archive",
+  :ref => 'f875114ecb962a0d02b4496fab6a871ca1e637c1'
+
 mod 'puppetlabs/apache',
   :git => "#{base_url}/puppetlabs/puppetlabs-apache",
   :ref => '1.2.0'
