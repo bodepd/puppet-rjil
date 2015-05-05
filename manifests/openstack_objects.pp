@@ -61,6 +61,11 @@ class rjil::openstack_objects(
   # provision keystone objects for all services
   include openstack_extras::keystone_endpoints
   # provision tempest resources like images, network, users etc.
+  include ::archive
+  archive { '/usr/lib/jiocloud/cirros-0.3.3-x86_64-disk.img':
+    source   => 'http://download.cirros-cloud.net/0.3.3/cirros-0.3.3-x86_64-disk.img',
+    before   => Glance_image['cirros-0.3.3'],
+  }
   include tempest::provision
 
   # create users, tenants, roles, default networks
