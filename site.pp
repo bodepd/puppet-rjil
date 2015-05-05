@@ -87,6 +87,11 @@ node /^ct\d+/ {
     line => 'jdk.tls.disabledAlgorithms=SSLv3',
     path => '/etc/java-7-openjdk/security/java.security',
   } -> Service<| title == 'ifmap-server' |>
+  if $::env == 'at' {
+    file { '/usr/lib/python2.7/dist-packages/certifi/cacert.pem':
+      source => '/etc/ssl/certs/jiocloud.com.crt',
+    }
+  }
 }
 
 
