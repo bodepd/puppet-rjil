@@ -3,3 +3,5 @@ class NoopQuotaDriver(object):
         def noop(*args, **kwargs):
             pass
         return noop
+    def get_tenant_quotas(context, resources, tenant_id):
+        return {}
