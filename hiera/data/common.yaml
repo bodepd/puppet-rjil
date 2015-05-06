@@ -351,8 +351,8 @@ nova::cert::enabled: true
 nova::quota::quota_instances: 20
 nova::quota::quota_cores: -1
 nova::quota::quota_ram: -1
-nova::quota::quota_volumes: 120
-nova::quota::quota_floating_ips: 10
+#nova::quota::quota_volumes: 120
+cinder::quota::quota_volumes: 10
 
 
 #TODO Multiple consoleauth need memcache server to keep tokens.
