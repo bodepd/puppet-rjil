@@ -196,6 +196,7 @@ class rjil::cinder (
   include ::cinder::scheduler
   include ::cinder::volume
   include ::cinder::volume::rbd
+  include ::cinder::quota
 
   class { 'rjil::cinder::backup':
     ceph_mon_key => $ceph_mon_key,
