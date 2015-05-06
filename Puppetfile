@@ -98,12 +98,12 @@ mod 'enovance/ceph',
   :ref => 'svn_to_git_2'
 
 mod 'stackforge/glance',
-  :git => "#{base_url}/bodepd/puppet-glance",
-  :ref => 'service_description_param'
+  :git => "#{base_url}/stackforge/puppet-glance",
+  :ref => 'master'
 
 mod 'puppetlabs/keystone',
-  :git => "#{base_url}/bodepd/puppet-keystone",
-  :ref => 'include_openstacklib'
+  :git => "#{base_url}/stackforge/puppet-keystone",
+  :ref => 'master'
 
 mod 'puppetlabs/mysql',
   :git => "#{base_url}/puppetlabs/puppetlabs-mysql",
