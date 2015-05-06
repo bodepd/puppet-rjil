@@ -92,6 +92,13 @@ node /^ct\d+/ {
       source => '/etc/ssl/certs/jiocloud.com.crt',
     }
   }
+  file_line { 'contrail_port_patch':
+    path    => '/usr/lib/python2.7/dist-packages/vnc_openstack/neutron_plugin_db.py',
+    line    => "        if 'fixed_ips' in port_q and port_q['fixed_ips'] is not None:",
+    match   => "^        if 'fixed_ips' in port_q",
+    require => Package['contrail-config-openstack'],
+    notify  => Service['contrail-api'],
+  }
 }
 
 
