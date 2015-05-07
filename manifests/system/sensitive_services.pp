@@ -5,7 +5,7 @@
 class rjil::system::sensitive_services(
   $service_list = [ 'zookeeper', 'cassandra',
                     'contrail-api', 'contrail-schema', 'contrail-svc-monitor', 'contrail-discovery',
-                    'contrail-control', 'contrail-dns',
+                    'contrail-control', 'contrail-dns', 'bind9',
                     'contrail-query-engine', 'contrail-collector', 'contrail-analytics-api',
                     'collectd']
 ) {
