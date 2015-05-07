@@ -573,6 +573,65 @@ rustedhalo_apt_repo_release: 'trusty'
 
 rjil::system::apt::enable_puppetlabs: true
 rjil::system::apt::repositories:
+  overcast:
+    location: 'http://apt.overcastcloud.com/'
+    release: 'trusty'
+    repos: 'main'
+    include_src: false
+    key: '8465095D'
+    key_content: |
+      -----BEGIN PGP PUBLIC KEY BLOCK-----
+      Version: GnuPG v1
+
+      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
+      9NQSs+Q=
+      =8nge
+      -----END PGP PUBLIC KEY BLOCK-----
   ceph:
     location: 'http://ceph.com/debian-hammer'
     release: 'trusty'
