@@ -610,7 +610,7 @@ rjil::system::apt::repositories:
       =uX7x
       -----END PGP PUBLIC KEY BLOCK-----
   contrail:
-    location: 'http://ppa.launchpad.net/syseleven-platform/contrail-2.10/ubuntu'
+    location: 'http://ppa.launchpad.net/syseleven-platform/contrail-2.0/ubuntu'
     release: trusty
     repos: main
     include_src: false
