@@ -58,6 +58,7 @@ then
     else
       pip-accel install -e git+https://github.com/JioCloud/python-jiocloud#egg=jiocloud
     fi
+    pip-accel  install python-swiftclient
     deactivate
 fi
 

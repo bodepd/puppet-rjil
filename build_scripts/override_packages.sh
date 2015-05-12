@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+. $(dirname $0)/common.sh
+
 #
 # build local packages to override the system ones if
 # the variable *repoconf_repo_source* is set.
