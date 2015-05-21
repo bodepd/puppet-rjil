@@ -36,9 +36,6 @@ class rjil::contrail::server (
 
   Anchor['contrail_dep_apps'] -> Service['contrail-api']
   Anchor['contrail_dep_apps'] -> Service['contrail-schema']
-  Anchor['contrail_dep_apps'] -> Service['contrail-analytics-api']
-  Anchor['contrail_dep_apps'] -> Service['contrail-collector']
-  Anchor['contrail_dep_apps'] -> Service['contrail-query-engine']
   Anchor['contrail_dep_apps'] -> Service['contrail-discovery']
   Anchor['contrail_dep_apps'] -> Service['contrail-dns']
   Anchor['contrail_dep_apps'] -> Service['contrail-control']
