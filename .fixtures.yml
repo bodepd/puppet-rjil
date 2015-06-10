@@ -32,7 +32,8 @@ fixtures:
       repo: https://github.com/saz/puppet-ssh
       ref: v2.3.6
     contrail:
-      repo: https://github.com/jiocloud/jiocloud-contrail
+      repo: https://github.com/hkumarmk/jiocloud-contrail
+      ref: cb968c1a5f
     sudo:
       repo: https://github.com/saz/puppet-sudo
       ref: 62b93da

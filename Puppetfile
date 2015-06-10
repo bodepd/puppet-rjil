@@ -138,8 +138,8 @@ mod 'stephenrjohnson/puppet',
   :ref => '1.0.0'
 
 mod 'jiocloud/contrail',
-  :git => "#{base_url}/jiocloud/jiocloud-contrail",
-  :ref => 'master'
+  :git => "#{base_url}/hkumarmk/jiocloud-contrail",
+  :ref => 'optionally_disable_services'
 
 mod 'deric/zookeeper',
   :git => "#{base_url}/deric/puppet-zookeeper",
