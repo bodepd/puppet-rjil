@@ -18,7 +18,7 @@ define rjil::system::accounts::sudo::conf (
     $commands_allowed_list = join($commands_allowed,',')
 
     $sudo_conf = "#Managed By Puppet
-Cmnd_Alias 'CMND_${cmdalias_name_uc}' = ${commands_allowed_list}
+Cmnd_Alias CMND_${cmdalias_name_uc} = ${commands_allowed_list}
 ${user} ALL=(ALL) NOPASSWD: 'CMND_${cmdalias_name_uc}'"
   }
 
