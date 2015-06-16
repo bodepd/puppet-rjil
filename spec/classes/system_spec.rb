@@ -21,7 +21,11 @@ describe 'rjil::system' do
           'u3' => {'realname' => 'u3', 'sshkeys' => 'ssh-dsskey'},
         },
       'rjil::system::accounts::active_users' => ['u2','u3'],
-      'rjil::system::accounts::sudo_users' => ['u3'],
+      'rjil::system::accounts::sudo_users' => {'admin' =>
+                                                {
+                                                  'users' => ['u3'],
+                                                }
+                                              },
       'ntp::servers' => ['server1']
     }
   end
