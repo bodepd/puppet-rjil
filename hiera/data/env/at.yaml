@@ -8,7 +8,12 @@ rjil::ceph::osd::osd_journal_size: 2
 nova::compute::libvirt::libvirt_virt_type: qemu
 
 rjil::system::accounts::active_users: [soren,bodepd,hkumar,jenkins,consul,pandeyop,jaspreet,vivek,ahmad,vaidy,himanshu,rohit,sanjayu,alokjani,amar,ynshenoy,abhishekl,mayankkapoor,soumit,anshup,varunarya,prashant,punituee,saju,ajayaa,swami,karansa,abhidixit,shashankchakelam]
-rjil::system::accounts::sudo_users: [soren,bodepd,hkumar,jenkins,consul,pandeyop,jaspreet,vivek,ahmad,vaidy,himanshu,rohit,sanjayu,alokjani,amar,ynshenoy,abhishekl,mayankkapoor,soumit,anshup,varunarya,prashant,punituee,saju,ajayaa,swami,karansa,abhidixit,shashankchakelam]
+rjil::system::accounts::sudo_users:
+  admin:
+    users: [soren,bodepd,jenkins,consul,pandeyop,jaspreet,vivek,ahmad,vaidy,himanshu,rohit,sanjayu,alokjani,amar,ynshenoy,abhishekl,mayankkapoor,soumit,anshup,varunarya,prashant,punituee,saju,ajayaa,swami,karansa,abhidixit,shashankchakelam]
+  readonly:
+    users: [hkumar]
+    commands_allowed: [/bin/cat,/usr/bin/less]
 
 rjil::base::self_signed_cert: true
 

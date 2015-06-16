@@ -550,7 +550,9 @@ rjil::system::dhclient_override_domain_name: node.consul
 ############################
 
 rjil::system::accounts::active_users: [soren,bodepd,hkumar,jenkins, consul]
-rjil::system::accounts::sudo_users: [soren,bodepd,hkumar,jenkins, consul]
+rjil::system::accounts::sudo_users:
+  admin:
+    users: [soren,bodepd,hkumar,jenkins, consul]
 
 ########### Apt settings
 ############################
