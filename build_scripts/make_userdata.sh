@@ -44,7 +44,7 @@ fi
 n=0
 while [ \$n -le 5 ]
 do
-  apt-get update && apt-get install -y puppet software-properties-common puppet-jiocloud jiocloud-ssl-certificate && break
+  time apt-get update && apt-get install -y puppet software-properties-common puppet-jiocloud jiocloud-ssl-certificate && break
   n=\$((\$n+1))
   sleep 5
 done
@@ -53,8 +53,8 @@ if [ -n "${override_repo}" ]; then
   time gem install faraday faraday_middleware --no-ri --no-rdoc;
 fi
 if [ -n "${python_jiocloud_source_repo}" ]; then
-  apt-get install -y python-pip python-jiocloud python-dev libffi-dev libssl-dev git
-  pip install -e "${python_jiocloud_source_repo}@${python_jiocloud_source_branch}#egg=jiocloud"
+  time apt-get install -y python-pip python-jiocloud python-dev libffi-dev libssl-dev git
+  time pip install -e "${python_jiocloud_source_repo}@${python_jiocloud_source_branch}#egg=jiocloud"
 fi
 if [ -n "${puppet_modules_source_repo}" ]; then
   apt-get install -y git
@@ -66,7 +66,7 @@ if [ -n "${puppet_modules_source_repo}" ]; then
   fi
   if [ -n "${pull_request_id}" ]; then
     pushd /tmp/rjil
-    git fetch origin pull/${pull_request_id}/head:test_${pull_request_id}
+    time git fetch origin pull/${pull_request_id}/head:test_${pull_request_id}
     git config user.email "testuser@localhost.com"
     git config user.name "Test User"
     git merge -m 'Merging Pull Request' test_${pull_request_id}
@@ -78,13 +78,13 @@ if [ -n "${puppet_modules_source_repo}" ]; then
   mkdir -p /etc/puppet/hiera.overrides
   sed  -i "s/  :datadir: \/etc\/puppet\/hiera\/data/  :datadir: \/etc\/puppet\/hiera.overrides\/data/" /tmp/rjil/hiera/hiera.yaml
   cp /tmp/rjil/hiera/hiera.yaml /etc/puppet
-  cp -Rvf /tmp/rjil/hiera/data /etc/puppet/hiera.overrides
+  cp -Rf /tmp/rjil/hiera/data /etc/puppet/hiera.overrides
   mkdir -p /etc/puppet/modules.overrides/rjil
-  cp -Rvf /tmp/rjil/* /etc/puppet/modules.overrides/rjil/
+  cp -Rf /tmp/rjil/* /etc/puppet/modules.overrides/rjil/
   if [ -n "${module_git_cache}" ]
   then
     cd /etc/puppet/modules.overrides
-    wget -O cache.tar.gz "${module_git_cache}"
+    time wget -O cache.tar.gz "${module_git_cache}"
     tar xvzf cache.tar.gz
     time librarian-puppet update --puppetfile=/tmp/rjil/Puppetfile --path=/etc/puppet/modules.overrides
   else
@@ -96,7 +96,7 @@ if [ -n "${puppet_modules_source_repo}" ]; then
   ini_setting { disable_per_environment_manifest: path => "/etc/puppet/puppet.conf", section => main, setting => disable_per_environment_manifest, value => "true" }
 INISETTING
 else
-  puppet apply --config_version='echo settings' -e "ini_setting { default_manifest: path => \"/etc/puppet/puppet.conf\", section => main, setting => default_manifest, value => \"/etc/puppet/manifests/site.pp\" }"
+  time puppet apply --config_version='echo settings' -e "ini_setting { default_manifest: path => \"/etc/puppet/puppet.conf\", section => main, setting => default_manifest, value => \"/etc/puppet/manifests/site.pp\" }"
 fi
 echo 'consul_discovery_token='${consul_discovery_token} > /etc/facter/facts.d/consul.txt
 echo 'current_version='${BUILD_NUMBER} > /etc/facter/facts.d/current_version.txt
@@ -115,13 +115,15 @@ if [ -e /dev/disk/by-label/swap1 ] && [ `grep -cP '^LABEL=swap1[\s\t]+' /etc/fst
   swapon -a
 fi
 
+date
+
 while true
 do
   # first install all packages to make the build as fast as possible
-  puppet apply --detailed-exitcodes \`puppet config print default_manifest\` --config_version='echo packages' --tags package
+  time puppet apply --detailed-exitcodes \`puppet config print default_manifest\` --config_version='echo packages' --tags package
   ret_code_package=\$?
   # now perform base config
-  (echo 'File<| title == "/etc/consul" |> { purge => false }'; echo 'include rjil::jiocloud' ) | puppet apply --config_version='echo bootstrap' --detailed-exitcodes --debug
+  time (echo 'File<| title == "/etc/consul" |> { purge => false }'; echo 'include rjil::jiocloud' ) | puppet apply --config_version='echo bootstrap' --detailed-exitcodes --debug
   ret_code_jio=\$?
   if [[ \$ret_code_jio = 1 || \$ret_code_jio = 4 || \$ret_code_jio = 6 || \$ret_code_package = 1 || \$ret_code_package = 4 || \$ret_code_package = 6 ]]
   then
