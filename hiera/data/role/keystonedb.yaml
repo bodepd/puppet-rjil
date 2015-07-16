@@ -1,0 +1,11 @@
+# don't require a loadbalancer
+rjil::jiocloud::dns::entries:
+  identity.jiocloud.com:
+    cname: keystone.service.consul
+
+# disable creation of other types of non-keystone objects
+rjil::openstack_objects::glance_enabled: false
+rjil::openstack_objects::neutron_enabled: false
+rjil::openstack_objects::tempest_enabled: false
+
+rjil::keystone::disable_db_sync: false

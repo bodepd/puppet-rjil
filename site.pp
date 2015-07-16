@@ -101,6 +101,18 @@ node /^oc\d+/ {
 # this is a variation of the controller that has a database installed
 #
 
+#
+# just keystone and a db
+#
+node /^keystonedb\d+/ {
+  include rjil::base
+  include rjil::memcached
+  include openstack_extras::client
+  include rjil::db
+  include rjil::keystone
+  include rjil::openstack_objects
+}
+
 node /^ocdb\d+/ {
   include rjil::base
   include rjil::memcached
