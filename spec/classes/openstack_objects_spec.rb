@@ -43,6 +43,10 @@ describe 'rjil::openstack_objects' do
       should contain_runtime_fail('keystone_endpoint_not_resolvable').with({
         'fail'   => false,
       })
+      should contain_class('openstack_extras::keystone_endpoints')
+      should contain_class('archive')
+      should contain_archive('/usr/lib/jiocloud/cirros-0.3.3-x86_64-disk.img')
+      should contain_class('tempest::provision')
     end
   end
   context 'without lb' do
@@ -57,6 +61,40 @@ describe 'rjil::openstack_objects' do
     it do
       should contain_rjil__service_blocker('glance')
       should contain_rjil__service_blocker('neutron')
+    end
+  end
+  context 'disable keystone' do
+    before do
+      params.merge!(:keystone_enabled => false)
+    end
+    it 'should not contain keystone objects' do
+      should_not contain_class('openstack_extras::keystone_endpoints')
+    end
+  end
+  context 'disable glance' do
+    before do
+      params.merge!(:glance_enabled => false)
+    end
+    it 'should not contain glance objects' do
+      should_not contain_rjil__service_blocker('lb.glance')
+      should_not contain_class('archive')
+      should_not contain_archive('/usr/lib/jiocloud/cirros-0.3.3-x86_64-disk.img')
+    end
+  end
+  context 'disable neutron' do
+    before do
+      params.merge!(:neutron_enabled => false)
+    end
+    it 'should not contain neutron objects' do
+      should_not contain_rjil__service_blocker('lb.neutron')
+    end
+  end
+  context 'disable tempest' do
+    before do
+      params.merge!(:tempest_enabled => false)
+    end
+    it 'should not contain tempest objects' do
+      should_not contain_class('tempest::provision')
     end
   end
 end
