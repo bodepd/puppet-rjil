@@ -136,6 +136,18 @@ node /^oc\d+/ {
 #  include rjil::openstack_objects
 #}
 
+#
+# just keystone and a db
+#
+node /^keystonedb\d+/ {
+  include rjil::base
+  include rjil::memcached
+  include openstacklib::openstackclient
+  include rjil::db
+  include rjil::keystone
+  include rjil::openstack_objects
+}
+
 node /^ocdb\d+/ {
   include rjil::base
   include rjil::memcached
