@@ -67,7 +67,7 @@ class rjil::openstack_objects(
     if is_array($tenants) {
       rjil::keystone::tenant { $tenants: }
     } elsif is_hash($tenants) {
-      create_resources('rjil::keystone::tenants',$tenants)
+      create_resources('rjil::keystone::tenant',$tenants)
     }
   }
   if $glance_enabled {
