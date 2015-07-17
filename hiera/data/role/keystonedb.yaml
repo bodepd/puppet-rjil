@@ -9,3 +9,10 @@ rjil::openstack_objects::neutron_enabled: false
 rjil::openstack_objects::tempest_enabled: false
 
 rjil::keystone::disable_db_sync: false
+
+# do not create networks for tenants
+rjil::openstack_objects::tenants:
+  mgmt_tenant:
+    create_network: false
+  internal_tenant:
+    create_network: false
