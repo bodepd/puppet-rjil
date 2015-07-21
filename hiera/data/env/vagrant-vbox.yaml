@@ -1,3 +1,8 @@
+public_address: "%{ipaddress_192_168_100_0_24}"
+public_interface: "%{interface_192_168_100_0_24}"
+private_address: "%{ipaddress_192_168_100_0_24}"
+private_interface: "%{interface_192_168_100_0_24}"
+
 rjil::ceph::osd::autogenerate: true
 rjil::ceph::osd::autodisk_size: 10
 rjil::ceph::osd::osd_journal_size: 2
