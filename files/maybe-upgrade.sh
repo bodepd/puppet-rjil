@@ -14,6 +14,7 @@ rv=$?
 run_puppet() {
         # ensure that our service catalog hiera data is available
         # now run puppet
+        export OS_AUTH_URL=https://identity.jiocloud.com:35357/v3/
         puppet apply --config_version='python -m jiocloud.orchestrate current_version' --detailed-exitcodes --logdest=syslog `puppet config print default_manifest`
         # publish the results of that run
         ret_code=$?
