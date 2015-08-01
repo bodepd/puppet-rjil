@@ -3,6 +3,21 @@
 # When we're run from cron, we only have /usr/bin and /bin. That won't cut it.
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
+##
+# Check if puppet is enabled for this host in consul
+# Exit codes:
+# 0 = Yes
+# 9 = No (Nein)
+##
+python -m jiocloud.orchestrate check_puppet
+puppet_enabled=$?
+
+if [ "$puppet_enabled" -eq 9 ]
+  then
+    echo "[WARN]: Puppet run is disabled, exitting."
+    exit 9
+fi
+
 # Exit codes:
 # 0: Yup, there's an update
 # 1: No, no updates
