@@ -3,29 +3,6 @@
 # When we're run from cron, we only have /usr/bin and /bin. That won't cut it.
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-##
-# Check if puppet is enabled for this host in consul
-# Exit codes:
-# 0 = Yes
-# 9 = No (Nein)
-##
-python -m jiocloud.orchestrate check_puppet
-puppet_enabled=$?
-
-if [ "$puppet_enabled" -eq 9 ]
-  then
-    echo "[WARN]: Puppet run is disabled, exitting."
-    exit 9
-fi
-
-# Exit codes:
-# 0: Yup, there's an update
-# 1: No, no updates
-# 2: Could not reach consul, so we don't know
-# 3: Could not reach consul, but we also haven't been initialised ourselves.
-python -m jiocloud.orchestrate pending_update
-rv=$?
-
 run_puppet() {
         # ensure that our service catalog hiera data is available
         # now run puppet
@@ -51,6 +28,32 @@ validate_service() {
                 exit 1
         fi
 }
+
+#Verify validation irrespective of enable_puppet
+validate_service
+
+##
+# Check if puppet is enabled for this host in consul
+# Exit codes:
+# 0 = Yes
+# 9 = No (Nein)
+##
+python -m jiocloud.orchestrate check_puppet
+puppet_enabled=$?
+
+if [ "$puppet_enabled" -eq 9 ]
+  then
+    echo "[WARN]: Puppet run is disabled, exitting."
+    exit 9
+fi
+
+# Exit codes:
+# 0: Yup, there's an update
+# 1: No, no updates
+# 2: Could not reach consul, so we don't know
+# 3: Could not reach consul, but we also haven't been initialised ourselves.
+python -m jiocloud.orchestrate pending_update
+rv=$?
 
 if [ $rv -eq 0 ]
 then
