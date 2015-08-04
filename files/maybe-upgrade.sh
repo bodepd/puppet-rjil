@@ -29,9 +29,6 @@ validate_service() {
         fi
 }
 
-#Verify validation irrespective of enable_puppet
-validate_service
-
 ##
 # Check if puppet is enabled for this host in consul
 # Exit codes:
@@ -44,6 +41,8 @@ puppet_enabled=$?
 if [ "$puppet_enabled" -eq 9 ]
   then
     echo "[WARN]: Puppet run is disabled, exitting."
+    # even if puppet is disabled, still perform service validation checks
+    validate_service
     exit 9
 fi
 
