@@ -29,14 +29,12 @@ validate_service() {
         fi
 }
 
-#Verify validation irrespective of enable_puppet
-validate_service
-
 ##
 # Check if puppet is enabled for this host in consul
 # Exit codes:
-# 0 = Yes
-# 9 = No (Nein)
+# 0: Run Puppet
+# 9: Do not run Puppet (Nein)
+# 1: Something went wrong, abort!
 ##
 python -m jiocloud.orchestrate check_puppet
 puppet_enabled=$?
@@ -44,7 +42,16 @@ puppet_enabled=$?
 if [ "$puppet_enabled" -eq 9 ]
   then
     echo "[WARN]: Puppet run is disabled, exitting."
+    # even if puppet is disabled, still perform service validation checks
+    validate_service
     exit 9
+fi
+
+if [ "${puppet_enabled}" -eq 1 ]
+  then
+    echo "Puppet run check failed unexpectedly, not running Puppet"
+    validate_service
+    exit 1
 fi
 
 # Exit codes:
