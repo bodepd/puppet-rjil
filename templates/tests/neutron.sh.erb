@@ -5,6 +5,14 @@ function fail {
   exit 2
 }
 
+function force_delete_network {
+  echo "Deleting leftover network $1"
+  subnet=`neutron net-show $1 | grep subnets | awk '{print $4}'`
+  port_id=`neutron port-list | grep $subnet | awk '{print $2}'`
+  neutron port-delete $port_id
+  neutron net-delete $1
+}
+
 if [ -f /root/openrc ]; then
   source /root/openrc
   neutron net-list -D || fail 'neutron net-list failed'
@@ -12,7 +20,7 @@ if [ -f /root/openrc ]; then
   netname=`hostname`
   for net in `neutron net-list -D | grep $netname | awk '/[a-z][a-z]*[0-9][0-9]*/ {print $2}'`; do
     echo "Found unexpected network leftover from previous test"
-    neutron net-delete $net || fail 'neutron net-delete failed'
+    force_delete_network $net || fail 'neutron net-delete failed'
   done
   netid=`neutron net-create $netname | grep ' id ' | awk  '{print $4}'` || fail 'failed to create network'
   neutron subnet-create $netid 10.0.0.0/24 || fail 'neutron subnet-create failed'
