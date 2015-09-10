@@ -9,3 +9,10 @@ rjil::openstack_objects::neutron_enabled: false
 rjil::openstack_objects::tempest_enabled: false
 
 rjil::keystone::disable_db_sync: false
+
+#
+# for my docker prototype, bind to all interfaces of container
+#
+keystone::public_bind_host: "0.0.0.0"
+keystone::admin_bind_host: "0.0.0.0"
+keystone::enabled: false

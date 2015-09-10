@@ -207,3 +207,7 @@ mod 'community/archive',
 mod 'pdxcat/collectd',
   :git => "#{base_url}/pdxcat/puppet-module-collectd",
   :ref => 'v3.2.0'
+
+mod 'garethr/docker',
+  :git => "#{base_url}/garethr/garethr-docker",
+  :ref => "v4.1.1"

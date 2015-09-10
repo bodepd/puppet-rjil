@@ -65,6 +65,40 @@ class rjil::keystone(
   include rjil::apache
   include ::keystone
 
+  # these resources are here just until I ca refactor them out of the upstream
+  # code
+  Package<| title == 'keystone' |> {
+    ensure => absent,
+  }
+
+  # switch to a custom provider that does nothing
+  Service<| title == 'keystone' |> {
+    provider => 'noop',
+  }
+
+  # not sure that I even want to do this, bringing down the whole
+  # services container is a pain...
+  Keystone_config<||> ~> Docker::Run['keystone']
+
+  Docker::Run['keystone'] -> Keystone_user<||>
+  Docker::Run['keystone'] -> Keystone_role<||>
+  Docker::Run['keystone'] -> Keystone_tenant<||>
+  Docker::Run['keystone'] -> Keystone_service<||>
+  Docker::Run['keystone'] -> Keystone_endpoint<||>
+
+  docker::run { 'keystone':
+    image      => 'bodepd/keystone',
+    detach     => true,
+    # just for testing expose to differnet ports so that I can
+    # run keystone next to the existing keystone
+    ports      => ["${public_port_internal}:${public_port_internal}",
+                   "${admin_port_internal}:${admin_port_internal}"],
+    # attach entire etc volume
+    volumes    => ['/etc/keystone/:/opt/keystone/conf'],
+    dns        => [$::ipaddress_eth1],
+    dns_search => ['node.consul', 'service.consul'],
+  }
+
   ## Configure apache reverse proxy
   apache::vhost { 'keystone':
     servername      => $server_name,

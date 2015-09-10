@@ -106,6 +106,7 @@ node /^oc\d+/ {
 #
 node /^keystonedb\d+/ {
   include rjil::base
+  include rjil::docker
   include rjil::memcached
   include openstack_extras::client
   include rjil::db
