@@ -71,9 +71,11 @@ class rjil::openstack_objects(
     # params for rjil::keystone::tenant
     ##
     if is_array($tenants) {
-      rjil::keystone::tenant { $tenants: }
+      rjil::keystone::tenant { $tenants:
+        create_network => $neutron_enabled,
+      }
     } elsif is_hash($tenants) {
-      create_resources('rjil::keystone::tenant',$tenants)
+      create_resources('rjil::keystone::tenant', $tenants, {'create_network' => $neutron_enabled})
     }
   }
   if $glance_enabled {
