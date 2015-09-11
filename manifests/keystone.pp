@@ -10,7 +10,6 @@ class rjil::keystone(
   $admin_port             = '35357',
   $admin_port_internal    = '35357',
   $ssl                    = false,
-  $ceph_radosgw_enabled   = false,
   $cache_enabled          = false,
   $cache_config_prefix    = 'cache.keystone',
   $cache_expiration_time  = '600',
@@ -65,10 +64,6 @@ class rjil::keystone(
 
   include rjil::apache
   include ::keystone
-
-  if $ceph_radosgw_enabled {
-    include rjil::keystone::radosgw
-  }
 
   ## Configure apache reverse proxy
   apache::vhost { 'keystone':

@@ -7,15 +7,17 @@
 #
 class rjil::openstack_objects(
   $identity_address,
-  $override_ips      = false,
-  $users             = {},
-  $tenants           = undef,
-  $roles             = undef,
-  $lb_available      = true,
-  $keystone_enabled  = true,
-  $glance_enabled    = true,
-  $neutron_enabled   = true,
-  $tempest_enabled   = true,
+  $override_ips         = false,
+  $users                = {},
+  $tenants              = undef,
+  $roles                = undef,
+  $lb_available         = true,
+  $keystone_enabled     = true,
+  $glance_enabled       = true,
+  $neutron_enabled      = true,
+  $tempest_enabled      = true,
+  $ceph_radosgw_enabled = true,
+
 ) {
 
   if $override_ips {
@@ -56,6 +58,9 @@ class rjil::openstack_objects(
     Runtime_fail['keystone_endpoint_not_resolvable'] -> Keystone_service<||>
     Runtime_fail['keystone_endpoint_not_resolvable'] -> Keystone_endpoint<||>
     # provision keystone objects for all services
+    if $rados_gw_enabled {
+      include ::rjil::keystone::radosgw
+    }
     include openstack_extras::keystone_endpoints
     # provision tempest resources like images, network, users etc.
     create_resources('rjil::keystone::user',$users)

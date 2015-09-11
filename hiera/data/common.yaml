@@ -548,7 +548,6 @@ nova::keystone::auth::admin_address: "%{hiera('nova_internal_address')}"
 nova::keystone::auth::internal_address: "%{hiera('nova_internal_address')}"
 nova::keystone::auth::region: "%{hiera('region')}"
 
-rjil::keystone::ceph_radosgw_enabled: true
 rjil::keystone::radosgw::admin_address: "%{hiera('radosgw_internal_address')}"
 rjil::keystone::radosgw::internal_address: "%{hiera('radosgw_internal_address')}"
 rjil::keystone::radosgw::public_protocol: "%{hiera('radosgw_protocol')}"
