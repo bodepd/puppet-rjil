@@ -9,6 +9,7 @@
   - "secrets/%{env}"
   - "role/%{env}/%{jiocloud_role}"
   - "role/%{jiocloud_role}"
+  - "layout/%{layout}"
   - "hw/%{cloud_provider}/%{productname}"
   - "cloud_provider/%{cloud_provider}"
   - "env/%{env}"

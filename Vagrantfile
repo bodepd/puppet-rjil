@@ -70,6 +70,8 @@ Vagrant.configure("2") do |config|
 
       config.vm.provision 'shell', :inline =>
       "echo env=#{environment} > /etc/facter/facts.d/env.txt"
+      config.vm.provision 'shell', :inline =>
+      "echo layout=#{layout} > /etc/facter/facts.d/layout.txt"
 
       if ENV['http_proxy']
         config.vm.provision 'shell', :inline =>
