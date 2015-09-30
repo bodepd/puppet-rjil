@@ -104,6 +104,7 @@ echo 'consul_gossip_encrypt'=`echo ${consul_discovery_token} | cut -b 1-15 | bas
 echo 'current_version='${BUILD_NUMBER} > /etc/facter/facts.d/current_version.txt
 echo 'env='${env} > /etc/facter/facts.d/env.txt
 echo 'cloud_provider='${cloud_provider} > /etc/facter/facts.d/cloud_provider.txt
+echo 'layout'='${layout} > /etc/facter/facts.d/layout.txt'
 if [ -n "${slack_url}" ]; then
   echo 'slack_url=${slack_url}' > /etc/facter/facts.d/slack_url.txt
 fi
