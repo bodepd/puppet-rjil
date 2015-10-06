@@ -59,4 +59,26 @@ describe 'rjil::openstack_objects' do
       should contain_rjil__service_blocker('neutron')
     end
   end
+  context 'with tenants as a hash' do
+    let :params do
+      {
+        :identity_address => 'address',
+        :tenants => ['foo'],
+      }
+    end
+    it do
+      should contain_rjil__keystone__tenant('foo')
+    end
+  end
+  context 'with tenants as a hash' do
+    let :params do
+      {
+        :identity_address => 'address',
+        :tenants => {'foo' => {}}
+      }
+    end
+    it do
+      should contain_rjil__keystone__tenant('foo')
+    end
+  end
 end
