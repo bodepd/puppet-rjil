@@ -5,7 +5,8 @@ describe 'rjil::haproxy' do
   let :facts do
     {
       :osfamily       => 'Debian',
-      :concat_basedir => '/tmp'
+      :concat_basedir => '/tmp',
+      :architecture   => 'amd64'
     }
   end
 

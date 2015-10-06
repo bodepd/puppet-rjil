@@ -27,6 +27,8 @@ class rjil::haproxy (
                             ],
   $global_maxconn          = 5000,
   $stats                   = 'socket /var/run/haproxy mode 777',
+  $consul_wait             = '5s:30s',
+  $consul_log_level        = 'debug',
 ) {
 
   rjil::test { 'haproxy.sh': }
@@ -53,16 +55,16 @@ class rjil::haproxy (
     'stats'     => $stats,
   }
 
-  class { '::haproxy':
-    global_options   => $haproxy_globals,
-    defaults_options => $haproxy_defaults
-  }
+
+  # TODO - add all services for openstack here, and get rid of the
+  # haproxy/openstack and haproxy_service classes
 
   rjil::jiocloud::logrotate { 'haproxy': }
-#
-# commented out configuration related to keepalive d
-# for multiple lbs
-#
+
+  #
+  # commented out configuration related to keepalive d
+  # for multiple lbs
+  #
 
   haproxy::listen { 'lb-stats':
     ipaddress => '0.0.0.0',
@@ -74,6 +76,7 @@ class rjil::haproxy (
       ],
       'stats' => ['enable', 'uri /lb-stats'],
     },
+    collect_exported => false,
   }
 
   package { ['nagios-plugins-contrib', 'libwww-perl', 'libnagios-plugin-perl']:
@@ -86,13 +89,23 @@ class rjil::haproxy (
     tags          => $consul_service_tags
   }
 
-  # Openstack services depend on being able to access db and mq, so make
-  # sure our VIPs and LB are active before we deal with them.
-  Haproxy::Listen<||> -> Anchor <| title == 'mysql::server::start' |>
-  Haproxy::Listen<||> -> Anchor <| title == 'rabbitmq::begin' |>
-  Haproxy::Balancermember<||> -> Anchor <| title == 'mysql::server::start' |>
-  Haproxy::Balancermember<||> -> Anchor <| title == 'rabbitmq::begin' |>
-  Service<| title == 'haproxy' |> -> Anchor <| title == 'rabbitmq::begin' |>
-  Service<| title == 'haproxy' |> -> Anchor <| title == 'mysql::server::start' |>
+  class { 'consul_template':
+    init_style     => 'upstart',
+    log_level      => $consul_log_level,
+    consul_wait    => $consul_wait,
+  }
+
+  class { '::haproxy':
+    global_options   => $haproxy_globals,
+    defaults_options => $haproxy_defaults,
+    config_file      => "${consul_template::config_dir}/haproxy.ctmpl",
+  }
+
+  Service['consul-template'] -> Service['haproxy']
+
+  consul_template::watch { 'haproxy':
+    destination   => '/etc/haproxy/haproxy.cfg',
+    command       => '/etc/init.d/haproxy reload',
+  }
 
 }

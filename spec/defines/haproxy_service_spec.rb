@@ -12,7 +12,7 @@ describe 'rjil::haproxy_service' do
     let (:params) { { :name => 'testname', } }
     it do
       should_not contain_haproxy__listen('testname')
-      should_not contain_haproxy__balancermember('testname')
+      should_not contain_haproxy__balancermember_consul('real.testname')
       should_not contain_file('/etc/consul/testname.json')
     end
   end
@@ -42,11 +42,8 @@ describe 'rjil::haproxy_service' do
         'collect_exported' => false,
       })
 
-      should contain_haproxy__balancermember('testname').with({
+      should contain_haproxy__balancermember_consul('real.testname').with({
         'listening_service' => 'testname',
-        'ports'             => '100',
-        'server_names'      => ['10.1.1.1','10.1.1.2'],
-        'ipaddresses'       => ['10.1.1.1','10.1.1.2'],
       })
       should contain_file('/etc/consul/testname.json').with_content(/\"port\": 100/)
    end
@@ -67,11 +64,8 @@ describe 'rjil::haproxy_service' do
         'collect_exported' => false,
       })
 
-      should contain_haproxy__balancermember('testname').with({
+      should contain_haproxy__balancermember_consul('real.testname').with({
         'listening_service' => 'testname',
-        'ports'             => '90',
-        'server_names'      => ['10.1.1.1','10.1.1.2'],
-        'ipaddresses'       => ['10.1.1.1','10.1.1.2'],
       })
       should contain_file('/etc/consul/testname.json').with_content(/\"port\": 90/)
     end
@@ -93,11 +87,8 @@ describe 'rjil::haproxy_service' do
         'collect_exported' => false,
       })
 
-      should contain_haproxy__balancermember('testname').with({
+      should contain_haproxy__balancermember_consul('real.testname').with({
         'listening_service' => 'testname',
-        'ports'             => '90',
-        'server_names'      => ['10.1.1.1','10.1.1.2'],
-        'ipaddresses'       => ['10.1.1.1','10.1.1.2'],
       })
       should contain_file('/etc/consul/testname.json').with_content(/\"port\": 100/)
     end

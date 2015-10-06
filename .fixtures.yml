@@ -3,8 +3,8 @@ fixtures:
     rjil: "#{source_dir}"
   repositories:
     haproxy:
-      repo: git://github.com/puppetlabs/puppetlabs-haproxy
-      ref: 1.0.0
+      repo: git://github.com/bodepd/puppetlabs-haproxy
+      ref: e79b440d79faf6ff9f4f2f0e7212d45111c855cf
     inifile:
       repo: git://github.com/puppetlabs/puppetlabs-inifile.git
       ref: 41e2ddbc1cd861247e57d16b778cbe891602f509
@@ -148,3 +148,6 @@ fixtures:
     collectd:
       repo: https://github.com/pdxcat/puppet-module-collectd
       ref: v3.2.0
+    consul_template:
+      repo: https://github.com/gdhbashton/puppet-consul_template
+      ref: d76c1f62d744ab1c9b12c8fc6f17a5576e1da49b

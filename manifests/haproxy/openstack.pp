@@ -52,8 +52,6 @@ class rjil::haproxy::openstack(
     ssl => true,
   }
 
-  rjil::test { 'haproxy.sh': }
-
   if $horizon_enabled {
     rjil::haproxy_service { 'horizon':
       balancer_ports    => $horizon_port,

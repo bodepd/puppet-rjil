@@ -13,9 +13,10 @@ mod 'adrianthebo/filemapper',
   :git => "#{base_url}/adrienthebo/puppet-filemapper",
   :ref => '1.1.3'
 
+# based on bodepd until his work adding consul balancemembers is merged upstream
 mod 'puppetlabs/haproxy',
-  :git => "#{base_url}/puppetlabs/puppetlabs-haproxy",
-  :ref => '1.0.0'
+  :git => "#{base_url}/bodepd/puppetlabs-haproxy",
+  :ref => 'e79b440d79faf6ff9f4f2f0e7212d45111c855cf'
 
 mod 'puppetlabs/inifile',
   :git => "#{base_url}/puppetlabs/puppetlabs-inifile",
@@ -207,3 +208,7 @@ mod 'community/archive',
 mod 'pdxcat/collectd',
   :git => "#{base_url}/pdxcat/puppet-module-collectd",
   :ref => 'v3.2.0'
+
+mod 'gdhbashton/consul_template',
+  :git => "#{base_url}/gdhbashton/puppet-consul_template",
+  :ref => 'd76c1f62d744ab1c9b12c8fc6f17a5576e1da49b'

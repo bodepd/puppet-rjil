@@ -54,11 +54,8 @@ define rjil::haproxy_service(
       bind_options     => $bind_options
     }
 
-    ::haproxy::balancermember { $name:
+    ::haproxy::balancermember_consul { "real.${name}":
       listening_service => $name,
-      ports             => $balancer_ports_orig,
-      server_names      => $cluster_addresses,
-      ipaddresses       => $cluster_addresses,
       options           => $balancer_options,
       define_cookies    => $balancer_cookie
     }
