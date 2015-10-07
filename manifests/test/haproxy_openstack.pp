@@ -9,14 +9,21 @@ class rjil::test::haproxy_openstack(
   $glance_ips            = [],
   $cinder_ips            = [],
   $nova_ips              = [],
+  $keystone_enabled      = true,
+  $glance_enabled        = true,
+  $neutron_enabled       = true,
 ) {
 
   include openstack_extras::auth_file
 
   include rjil::test::base
 
-  include keystone::client
-  include glance::client
+  if $keystone_enabled {
+    include keystone::client
+  }
+  if $glance_enabled {
+    include glance::client
+  }
 
   file { "/usr/lib/jiocloud/tests/haproxy_openstack.sh":
     content => template('rjil/tests/haproxy_openstack.sh.erb'),

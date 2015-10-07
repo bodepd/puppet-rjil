@@ -2,6 +2,12 @@
 set -e
 test -f /root/openrc
 source /root/openrc
+<% if @keystone_enabled -%>
 keystone catalog
+<% end -%>
+<% if @glance_enabled -%>
 glance image-list
+<% end -%>
+<% if @neutron_enabled -%>
 neutron net-list
+<% end -%>
